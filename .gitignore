@@ -19,11 +19,9 @@ dist/
 .env.test.local
 .env.production.local
 
-# Database
+# Database (unused in V1, kept for future)
 *.sqlite
 *.db
-/data/
-migrations/applied/
 
 # IDE
 .vscode/*
