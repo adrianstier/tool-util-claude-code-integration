@@ -1,11 +1,23 @@
 import { test, expect } from '@playwright/test'
 
+const baseURL = 'http://localhost:3001'
+
+/** Navigate to a page in light mode so "Switch to dark mode" button is available */
+async function gotoInLightMode(page: import('@playwright/test').Page, url: string) {
+  // Set theme before any page script runs
+  await page.addInitScript(() => {
+    localStorage.setItem('theme', 'light')
+  })
+  await page.goto(url)
+  await page.waitForLoadState('networkidle')
+}
+
 test.describe('Dark Mode', () => {
   test.beforeEach(async ({ page }) => {
-    // Clear localStorage before each test
-    await page.goto('http://localhost:3001')
-    await page.evaluate(() => localStorage.clear())
-    await page.reload()
+    // Set light mode so "Switch to dark mode" button is available
+    await page.addInitScript(() => {
+      localStorage.setItem('theme', 'light')
+    })
   })
 
   test('should toggle between light and dark mode', async ({ page }) => {
@@ -191,11 +203,16 @@ test.describe('Search Modal', () => {
     const searchInput = page.locator('input[placeholder="Search documentation..."]')
     await expect(searchInput).toBeVisible()
 
-    // Click on an item
-    await page.locator('button:has-text("Data Analysis")').first().click()
+    // Type to filter results
+    await searchInput.fill('Start Here')
+    await page.waitForTimeout(300)
+
+    // Click on the first matching result
+    const result = page.locator('button:has-text("Start Here")').first()
+    await result.click()
 
     // Check navigation occurred
-    await expect(page).toHaveURL(/\/data-analysis/)
+    await expect(page).toHaveURL(/\/start-here/)
   })
 
   test('should show "no results" message for invalid search', async ({ page }) => {
@@ -426,7 +443,7 @@ test.describe('Cheat Sheets', () => {
 
   test('should display all cheat sheets', async ({ page }) => {
     // Check cheat sheets are displayed
-    const sheets = page.locator('.rounded-xl.border')
+    const sheets = page.locator('.grid.gap-6 > .rounded-xl.border')
     await expect(sheets).toHaveCount(7)
   })
 
@@ -699,7 +716,7 @@ test.describe('Progress Tracking', () => {
 
 test.describe('Cross-feature Integration', () => {
   test('should maintain dark mode when navigating between pages', async ({ page }) => {
-    await page.goto('http://localhost:3001')
+    await gotoInLightMode(page, baseURL)
 
     // Set dark mode (use first() as there are desktop and mobile versions)
     const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
@@ -718,7 +735,7 @@ test.describe('Cross-feature Integration', () => {
   })
 
   test('should search work in dark mode', async ({ page }) => {
-    await page.goto('http://localhost:3001')
+    await gotoInLightMode(page, baseURL)
 
     // Set dark mode (use first() as there are desktop and mobile versions)
     const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
@@ -749,13 +766,8 @@ test.describe('Cross-feature Integration', () => {
   })
 
   test('should preserve progress when switching themes', async ({ page }) => {
-    // Clear localStorage first
-    await page.goto('http://localhost:3001')
-    await page.evaluate(() => localStorage.clear())
-
-    // Reload to pick up clean state
-    await page.reload()
-    await page.waitForLoadState('networkidle')
+    // Navigate in light mode
+    await gotoInLightMode(page, baseURL)
 
     // Set some progress in localStorage
     await page.evaluate(() => {
@@ -785,7 +797,7 @@ test.describe('Mobile Responsiveness', () => {
   test.use({ viewport: { width: 375, height: 667 } })
 
   test('should show theme toggle on mobile', async ({ page }) => {
-    await page.goto('http://localhost:3001')
+    await gotoInLightMode(page, baseURL)
 
     // Theme toggle should be visible on mobile (use last() since desktop is first but hidden)
     const themeToggle = page.locator('button[aria-label="Switch to dark mode"]').last()
@@ -823,7 +835,7 @@ test.describe('Mobile Responsiveness', () => {
 
 test.describe('Accessibility', () => {
   test('should have proper aria labels on theme toggle button', async ({ page }) => {
-    await page.goto('http://localhost:3001')
+    await gotoInLightMode(page, baseURL)
 
     // The theme toggle is a single button that changes label based on current state
     // In light mode it says "Switch to dark mode"
@@ -868,7 +880,7 @@ test.describe('Accessibility', () => {
 
 test.describe('Edge Cases', () => {
   test('should handle rapid theme switching', async ({ page }) => {
-    await page.goto('http://localhost:3001')
+    await gotoInLightMode(page, baseURL)
 
     // Rapidly switch themes (use first() as there are desktop and mobile versions)
     for (let i = 0; i < 5; i++) {
@@ -929,7 +941,7 @@ test.describe('Edge Cases', () => {
   })
 
   test('should handle localStorage being full', async ({ page }) => {
-    await page.goto('http://localhost:3001')
+    await gotoInLightMode(page, baseURL)
 
     // Fill localStorage (this is a simplified test)
     await page.evaluate(() => {

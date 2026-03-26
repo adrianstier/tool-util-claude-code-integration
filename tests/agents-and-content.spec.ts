@@ -2,6 +2,16 @@ import { test, expect } from '@playwright/test'
 
 const baseURL = 'http://localhost:3001'
 
+/** Navigate to a page in light mode so "Switch to dark mode" button is available */
+async function gotoInLightMode(page: import('@playwright/test').Page, url: string) {
+  // Set theme before any page script runs
+  await page.addInitScript(() => {
+    localStorage.setItem('theme', 'light')
+  })
+  await page.goto(url)
+  await page.waitForLoadState('networkidle')
+}
+
 test.describe('AI Agents Track', () => {
   test.describe('Agents Main Page', () => {
     test('should load agents track page', async ({ page }) => {
@@ -50,8 +60,9 @@ test.describe('AI Agents Track', () => {
 
   test.describe('Agents Dark Mode', () => {
     test.beforeEach(async ({ page }) => {
-      await page.goto(baseURL)
-      await page.evaluate(() => localStorage.clear())
+      await page.addInitScript(() => {
+        localStorage.setItem('theme', 'light')
+      })
     })
 
     test('should apply dark mode to agents main page', async ({ page }) => {
@@ -179,6 +190,8 @@ test.describe('Claude Code vs Web Content Page', () => {
   })
 
   test('should apply dark mode correctly', async ({ page }) => {
+    await gotoInLightMode(page, `${baseURL}/start-here/claude-code-vs-web`)
+
     // Set dark mode
     const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
     await darkButton.click()
@@ -225,8 +238,7 @@ test.describe('Track Pages Dark Mode', () => {
 
   for (const track of tracks) {
     test(`${track.name} track page has dark mode support`, async ({ page }) => {
-      await page.goto(`${baseURL}${track.url}`)
-      await page.waitForLoadState('networkidle')
+      await gotoInLightMode(page, `${baseURL}${track.url}`)
 
       // Set dark mode
       const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
@@ -246,8 +258,7 @@ test.describe('Track Pages Dark Mode', () => {
     })
 
     test(`${track.name} track page cards have dark mode`, async ({ page }) => {
-      await page.goto(`${baseURL}${track.url}`)
-      await page.waitForLoadState('networkidle')
+      await gotoInLightMode(page, `${baseURL}${track.url}`)
 
       // Set dark mode
       const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
@@ -276,8 +287,7 @@ test.describe('Content Module Pages Dark Mode', () => {
 
   for (const url of contentPages) {
     test(`${url} has dark mode support`, async ({ page }) => {
-      await page.goto(`${baseURL}${url}`)
-      await page.waitForLoadState('networkidle')
+      await gotoInLightMode(page, `${baseURL}${url}`)
 
       // Set dark mode
       const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
@@ -293,8 +303,7 @@ test.describe('Content Module Pages Dark Mode', () => {
     })
 
     test(`${url} inline code has dark mode`, async ({ page }) => {
-      await page.goto(`${baseURL}${url}`)
-      await page.waitForLoadState('networkidle')
+      await gotoInLightMode(page, `${baseURL}${url}`)
 
       // Set dark mode
       const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
@@ -309,8 +318,7 @@ test.describe('Content Module Pages Dark Mode', () => {
 
 test.describe('Tools Pages Dark Mode Extended', () => {
   test('Templates page has full dark mode support', async ({ page }) => {
-    await page.goto(`${baseURL}/tools/templates`)
-    await page.waitForLoadState('networkidle')
+    await gotoInLightMode(page, `${baseURL}/tools/templates`)
 
     // Set dark mode
     const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
@@ -332,8 +340,7 @@ test.describe('Tools Pages Dark Mode Extended', () => {
   })
 
   test('Snippets page has full dark mode support', async ({ page }) => {
-    await page.goto(`${baseURL}/tools/snippets`)
-    await page.waitForLoadState('networkidle')
+    await gotoInLightMode(page, `${baseURL}/tools/snippets`)
 
     // Set dark mode
     const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
@@ -348,8 +355,7 @@ test.describe('Tools Pages Dark Mode Extended', () => {
   })
 
   test('Cheatsheets page has full dark mode support', async ({ page }) => {
-    await page.goto(`${baseURL}/tools/cheatsheets`)
-    await page.waitForLoadState('networkidle')
+    await gotoInLightMode(page, `${baseURL}/tools/cheatsheets`)
 
     // Set dark mode
     const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
@@ -367,8 +373,7 @@ test.describe('Tools Pages Dark Mode Extended', () => {
   })
 
   test('MCP Explorer page has full dark mode support', async ({ page }) => {
-    await page.goto(`${baseURL}/tools/mcp-explorer`)
-    await page.waitForLoadState('networkidle')
+    await gotoInLightMode(page, `${baseURL}/tools/mcp-explorer`)
 
     // Set dark mode
     const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
@@ -554,8 +559,7 @@ test.describe('Forms and Interactive Components', () => {
 
 test.describe('Visual Consistency', () => {
   test('dark mode applies to all major elements on homepage', async ({ page }) => {
-    await page.goto(baseURL)
-    await page.waitForLoadState('networkidle')
+    await gotoInLightMode(page, baseURL)
 
     // Set dark mode
     const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
@@ -594,8 +598,7 @@ test.describe('Visual Consistency', () => {
   })
 
   test('code blocks render correctly in dark mode', async ({ page }) => {
-    await page.goto(`${baseURL}/start-here/claude-code-vs-web`)
-    await page.waitForLoadState('networkidle')
+    await gotoInLightMode(page, `${baseURL}/start-here/claude-code-vs-web`)
 
     // Set dark mode
     const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
