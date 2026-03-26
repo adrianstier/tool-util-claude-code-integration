@@ -64,28 +64,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]
 
-  // Track pages
-  const tracks = getAllTracks()
-  const trackPages: MetadataRoute.Sitemap = tracks.map((track) => ({
-    url: `${baseUrl}/${track}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.9,
-  }))
-
-  // Content pages
+  // Track pages — exclude 'blog' directory (handled separately)
+  const tracks = getAllTracks().filter((track) => track !== 'blog')
+  const trackPages: MetadataRoute.Sitemap = []
   const contentPages: MetadataRoute.Sitemap = []
+
   for (const track of tracks) {
     const content = getAllContent(track)
-    for (const item of content) {
-      if (item.slug !== 'index') {
-        contentPages.push({
-          url: `${baseUrl}/${track}/${item.slug}`,
-          lastModified: new Date(),
-          changeFrequency: 'weekly',
-          priority: 0.7,
-        })
-      }
+    const subArticles = content.filter((item) => item.slug !== 'index')
+
+    // Tracks with sub-articles get higher priority than single-page tracks
+    trackPages.push({
+      url: `${baseUrl}/${track}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: subArticles.length > 0 ? 0.9 : 0.7,
+    })
+
+    for (const item of subArticles) {
+      contentPages.push({
+        url: `${baseUrl}/${track}/${item.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.7,
+      })
     }
   }
 

@@ -155,9 +155,9 @@ const learningTracks = [
     bgColor: 'bg-plum-50 dark:bg-plum-950/30',
     borderColor: 'border-plum-200 dark:border-plum-800',
     iconBg: 'bg-plum-100 dark:bg-plum-900/50',
-    duration: 'Coming Soon',
-    tag: 'Coming Soon',
-    tagColor: 'bg-ink-100 dark:bg-ink-800 text-ink-500 dark:text-ink-400',
+    duration: '6-8 hours',
+    tag: 'Hands-On',
+    tagColor: 'bg-plum-100 dark:bg-plum-900/40 text-plum-700 dark:text-plum-300',
   },
   {
     title: 'Automation',
@@ -168,9 +168,9 @@ const learningTracks = [
     bgColor: 'bg-amber-50 dark:bg-amber-950/30',
     borderColor: 'border-amber-200 dark:border-amber-800',
     iconBg: 'bg-amber-100 dark:bg-amber-900/50',
-    duration: 'Coming Soon',
-    tag: 'Coming Soon',
-    tagColor: 'bg-ink-100 dark:bg-ink-800 text-ink-500 dark:text-ink-400',
+    duration: '3-4 hours',
+    tag: 'Practical',
+    tagColor: 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300',
   },
   {
     title: 'AI Agents',
@@ -214,6 +214,20 @@ const tools = [
     href: '/tools/slash-commands',
     icon: Keyboard,
     features: ['12+ production commands', 'Search & filter', 'Usage examples'],
+  },
+  {
+    title: 'MCP Explorer',
+    description: 'Discover and browse MCP servers to extend Claude Code with external tools and data.',
+    href: '/tools/mcp-explorer',
+    icon: Server,
+    features: ['Server catalog', 'Install commands', 'Use case guides'],
+  },
+  {
+    title: 'Cheatsheets',
+    description: 'Quick-reference cheatsheets for Claude Code, Git, Python, and more.',
+    href: '/tools/cheatsheets',
+    icon: Code2,
+    features: ['Copy-paste commands', 'Organized by topic', 'Print-friendly'],
   },
 ]
 
@@ -322,7 +336,7 @@ export default function Home() {
 
             {/* Track cards grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {learningTracks.map((track, index) => {
+              {learningTracks.map((track) => {
                 const Icon = track.icon
                 return (
                   <Link
@@ -421,6 +435,17 @@ export default function Home() {
                   </Link>
                 )
               })}
+            </div>
+
+            {/* Link to all resources */}
+            <div className="text-center mt-10">
+              <Link
+                href="/resources"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-ink-600 dark:text-ink-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              >
+                <span>Browse all resources</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
           </div>
         </section>
