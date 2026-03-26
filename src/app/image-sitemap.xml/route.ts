@@ -70,6 +70,25 @@ export async function GET() {
     })
   }
 
+  // Additional static pages
+  const additionalPages = [
+    { path: '/glossary', title: 'Glossary - Programming & AI Development Terms' },
+    { path: '/blog', title: 'Blog & Updates - Claude Code Learning Hub' },
+    { path: '/authors', title: 'Authors & Contributors - Claude Code Learning Hub' },
+  ]
+
+  for (const page of additionalPages) {
+    pages.push({
+      url: `${baseUrl}${page.path}`,
+      images: [
+        {
+          loc: `${baseUrl}/og-image.png`,
+          title: page.title,
+        },
+      ],
+    })
+  }
+
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">

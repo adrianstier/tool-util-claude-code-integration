@@ -1,10 +1,37 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { Book, ArrowLeft } from 'lucide-react'
+import { siteConfig } from '@/lib/metadata'
 
 export const metadata: Metadata = {
-  title: 'Glossary | Claude Code Learning Hub',
-  description: 'Definitions of common terms used in Claude Code, VS Code, Git, and programming.',
+  title: 'Glossary - Programming & AI Development Terms',
+  description:
+    'Comprehensive glossary of programming, AI development, and Claude Code terms. Beginner-friendly definitions for technical concepts.',
+  keywords: [
+    'programming glossary',
+    'coding terms',
+    'Claude Code glossary',
+    'Git terminology',
+    'developer definitions',
+    'AI development terms',
+  ],
+  openGraph: {
+    title: 'Glossary | Claude Code Learning Hub',
+    description:
+      'Comprehensive glossary of programming, AI development, and Claude Code terms. Beginner-friendly definitions for technical concepts.',
+    url: `${siteConfig.url}/glossary`,
+    siteName: siteConfig.name,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Glossary | Claude Code Learning Hub',
+    description:
+      'Beginner-friendly definitions for programming, AI development, and Claude Code terms.',
+  },
+  alternates: {
+    canonical: `${siteConfig.url}/glossary`,
+  },
 }
 
 interface Term {
