@@ -1,18 +1,23 @@
 import Link from 'next/link'
-import { Rocket, BarChart3, Hammer, Zap, Terminal, Github, BookOpen, ExternalLink } from 'lucide-react'
+import { Rocket, BarChart3, Hammer, Zap, Terminal, Github, BookOpen, ExternalLink, Bot, Plug, GraduationCap, GitBranch } from 'lucide-react'
 import NewsletterSignup from './NewsletterSignup'
 
 const footerLinks = {
   learn: [
     { name: 'Start Here', href: '/start-here', icon: Rocket },
+    { name: 'Git & GitHub', href: '/git-github', icon: GitBranch },
     { name: 'Data Analysis', href: '/data-analysis', icon: BarChart3 },
     { name: 'App Builder', href: '/app-builder', icon: Hammer },
     { name: 'Automation', href: '/automation', icon: Zap },
+    { name: 'AI Agents', href: '/agents', icon: Bot },
+    { name: 'MCP Integration', href: '/mcp', icon: Plug },
+    { name: 'Advanced Topics', href: '/advanced-topics', icon: GraduationCap },
   ],
   resources: [
     { name: 'Blog & Updates', href: '/blog' },
-    { name: 'Git & GitHub', href: '/git-github' },
     { name: 'Glossary', href: '/glossary' },
+    { name: 'Tools & Templates', href: '/tools/templates' },
+    { name: 'Resources', href: '/resources' },
     { name: 'Claude Code Docs', href: 'https://docs.claude.com/en/docs/claude-code/overview', external: true },
     { name: 'VS Code Docs', href: 'https://code.visualstudio.com/docs', external: true },
   ],
