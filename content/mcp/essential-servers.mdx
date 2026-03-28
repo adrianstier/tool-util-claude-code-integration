@@ -3,12 +3,12 @@ title: 'Essential MCP Servers'
 description: 'The top 10 MCP servers for developers — with install commands, configurations, and real-world prompt examples'
 order: 2
 duration: '45 minutes'
-lastUpdated: "2025-03-25"
+lastUpdated: "2026-03-28"
 ---
 
 # Essential MCP Servers
 
-MCP servers are plugins that give Claude Code access to external tools, data sources, and services. This guide covers the 10 most essential servers with exact installation commands and real-world examples.
+MCP servers are plugins that give Claude Code access to external tools, data sources, and services. This guide covers the most essential servers with exact installation commands and real-world examples.
 
 <Callout type="info" title="How to Read This Guide">
 Every server includes two setup methods: the `claude mcp add` CLI command (fastest) and the equivalent JSON config (for `.mcp.json`). Pick whichever you prefer — they produce the same result.
@@ -35,6 +35,7 @@ Every server includes two setup methods: the `claude mcp add` CLI command (faste
     { server: 'Memory / Context7', what: 'Persistent memory, live documentation', best: 'Long-running projects' },
     { server: 'Fetch', what: 'URL fetching, HTML-to-markdown conversion', best: 'Reading external docs & APIs' },
     { server: 'Slack', what: 'Read/send messages, search workspace history', best: 'Team communication' },
+    { server: 'Figma', what: 'Read designs, screenshots, Code Connect mappings', best: 'Design-to-code workflows' },
   ]}
 />
 
@@ -454,6 +455,66 @@ this week based on my recent git commits. Show me the draft first.
 
 ---
 
+## 11. Figma (Design-to-Code)
+
+**The official Figma MCP server — read designs, take screenshots, and use Code Connect to map Figma components to your codebase.**
+
+<Callout type="tip" title="Best For">
+Design-to-code workflows where you want Claude to read a Figma file and generate code that matches your components and design tokens.
+</Callout>
+
+### Setup
+
+Figma MCP is available as a remote server with OAuth:
+
+**CLI:**
+```bash
+claude mcp add --transport http figma https://figma.com/mcp
+```
+
+**JSON Config:**
+```json
+{
+  "mcpServers": {
+    "figma": {
+      "type": "http",
+      "url": "https://figma.com/mcp"
+    }
+  }
+}
+```
+
+<Callout type="info" title="OAuth Authentication">
+Figma uses OAuth — you will be prompted to log in through your browser the first time Claude connects. No API key is needed.
+</Callout>
+
+### Key Capabilities
+
+- **Read designs** — extract layout, components, tokens, and annotations from any Figma file
+- **Screenshots** — capture specific frames or components for visual context
+- **Code Connect** — if your team maintains Code Connect mappings, Claude gets direct references to your codebase components instead of generating from scratch
+- **Design system search** — search your team's design system for components, variables, and tokens
+
+### Real-World Prompts
+
+```
+Here's the Figma URL for our new dashboard card component:
+figma.com/design/abc123/MyProject?node-id=42:1337
+Generate a React component that matches it using our existing shadcn/ui primitives.
+```
+
+```
+Get a screenshot of the mobile navigation in our Figma file and compare
+it to what's currently live at localhost:3000. What's different?
+```
+
+```
+Search our Figma design system for all button variants and list
+their Code Connect mappings.
+```
+
+---
+
 ## Managing Your Servers
 
 ```bash
@@ -488,11 +549,60 @@ Then add Brave Search and Memory as your second round — and project-specific s
 
 ---
 
+## MCP Elicitation (March 2026)
+
+MCP servers can now request structured input from the user mid-task using **elicitation**. Instead of failing or guessing when they need a credential, configuration choice, or confirmation, servers surface an interactive dialog and wait for your response.
+
+<Callout type="info" title="What Changes for You">
+Before elicitation, an MCP server that needed a missing API key would either fail silently or ask Claude to ask you in plain text. Now the server can present a structured form — a dropdown of options, a confirmation prompt, or a text field — directly in your terminal.
+</Callout>
+
+### How It Works
+
+1. A server tool runs and realizes it needs user input (e.g., which database environment to target)
+2. The server sends an **elicitation request** with a schema describing the fields it needs
+3. Claude Code presents the dialog to you in the terminal
+4. You fill in the values and the server continues execution
+
+### When Servers Use This
+
+- **Credentials** — a database server asks for a connection string it was not pre-configured with
+- **Configuration choices** — a deployment server asks which environment (staging vs. production) to target
+- **Confirmation** — a destructive operation asks "Are you sure you want to drop this table?"
+- **Multi-step workflows** — a server collects parameters incrementally rather than requiring all upfront
+
+### Hook Events
+
+If you use [plugins and hooks](/advanced-topics/plugins-and-hooks), you can intercept elicitation with two events:
+
+- `Elicitation` — fires when a server requests input; your hook can modify or pre-fill the request
+- `ElicitationResult` — fires after the user responds; your hook can transform the result before the server receives it
+
+This is useful for automation: a hook can auto-fill known credentials from a secrets manager so you never see the dialog.
+
+---
+
+## OAuth and Authentication Improvements (2026)
+
+MCP servers that use OAuth have gotten more reliable. Key improvements:
+
+- **RFC 9728 Protected Resource Metadata** — servers can now advertise their OAuth requirements using the standard discovery protocol, so Claude Code automatically knows which scopes and endpoints to use
+- **Manual paste fallback** — when the `localhost` redirect fails (common on remote machines and WSL), Claude Code now lets you paste the authorization code manually instead of hanging
+- **MCP connectors** — MCP servers configured as connectors on [claude.ai](https://claude.ai) can now be used in Claude Code too, so you do not need to set up OAuth separately for both
+
+<Callout type="tip" title="Troubleshooting OAuth">
+If a server's OAuth flow opens a browser tab but never completes, look for the manual paste prompt in your terminal. Copy the code from the browser's URL bar and paste it back. This works even when you are SSH'd into a remote machine.
+</Callout>
+
+---
+
 ## Next Steps
 
 - [Building Custom MCPs →](./building-custom-mcps) — When existing servers don't cover your needs
 - [Workflows & Troubleshooting →](./workflows-and-troubleshooting) — Combine servers into real workflows
 - [MCP Fundamentals →](./mcp-fundamentals) — Deeper protocol understanding
+- [Plugins & Hooks →](/advanced-topics/plugins-and-hooks) — Plugins can bundle MCP servers and intercept elicitation events
+- [Agent SDK →](/agents/agent-sdk) — The Anthropic SDK can use MCP tools to build custom agents
 
 ---
 

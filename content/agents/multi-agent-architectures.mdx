@@ -6,7 +6,7 @@ duration: '45-60 min'
 prerequisites:
   - 'Building Agents'
   - 'Using Agents Effectively'
-lastUpdated: "2025-03-25"
+lastUpdated: "2026-03-28"
 ---
 
 # Multi-Agent Architectures
@@ -183,14 +183,109 @@ Once defined, use subagents naturally in conversation:
 
 Claude Code will spawn the subagent, run it with the specified tools and context, and return a summary to your main session.
 
+<Callout type="note">
+Subagents run inside Claude Code. If you need to build standalone agent systems that run in production — CI pipelines, serverless functions, or custom applications — see the [Agent SDK](/agents/agent-sdk) guide.
+</Callout>
+
+---
+
+## Background Agents & Worktree Isolation
+
+Subagents run inside your current session. Background agents go a step further — they spin up as fully independent processes, each working in its own **git worktree** so they can read and write files without interfering with your foreground work or each other.
+
+### Launching Background Agents
+
+Use the `run_in_background: true` parameter on the Agent tool to dispatch work that doesn't need your immediate attention:
+
+```
+Run the security-audit agent in the background on src/auth/
+```
+
+The background agent starts in its own git worktree (a separate checkout of the same repo). You keep working in the foreground — no blocking. When the agent finishes, its results appear in your session.
+
+<Callout type="tip">
+Press `Ctrl+F` to view running background agents. Press it again on a selected agent to kill it (two-press confirmation prevents accidental termination).
+</Callout>
+
+To make a custom agent always run in the background, add `background: true` to its frontmatter:
+
+```markdown
+---
+name: lint-sweep
+description: Runs linting fixes across the entire codebase.
+background: true
+tools:
+  - Read
+  - Grep
+  - Glob
+  - Edit
+  - Bash
+---
+
+Find and fix all ESLint warnings. Commit each fix separately with a descriptive message.
+```
+
+### Worktree Isolation
+
+Every background agent works in its own git worktree automatically. You can also use worktrees directly from the CLI for any Claude Code session:
+
+```bash
+# Start Claude Code in an isolated worktree
+claude --worktree
+claude -w
+```
+
+For subagent definitions, set isolation explicitly:
+
+```markdown
+---
+name: refactor-worker
+description: Refactors a module in an isolated worktree.
+isolation: "worktree"
+tools:
+  - Read
+  - Grep
+  - Glob
+  - Edit
+  - Bash
+---
+```
+
+#### Sparse Checkouts for Monorepos
+
+In large monorepos, checking out the entire tree is wasteful. Use `worktree.sparsePaths` to limit what gets checked out:
+
+```json
+{
+  "worktree": {
+    "sparsePaths": [
+      "packages/auth/**",
+      "packages/shared/**",
+      "package.json",
+      "tsconfig.json"
+    ]
+  }
+}
+```
+
+Only the specified directories and files are checked out in the worktree, saving disk space and checkout time.
+
+#### Programmatic Worktree Control
+
+Claude Code provides `EnterWorktree` and `ExitWorktree` tools for agents that need to switch between the main checkout and an isolated worktree mid-task. This is useful for agents that need to compare behavior across branches or test changes in isolation before merging back.
+
+<Callout type="note">
+For a deeper dive on worktrees and background agents — including real-world workflow patterns — see the [Productivity Features](/advanced-topics/productivity-features) guide.
+</Callout>
+
 ---
 
 ## Agent Teams (The Swarm)
 
-Agent Teams, shipped as a research preview alongside Claude Opus 4.6, go far beyond subagents. Instead of a parent-child relationship, teams are **fully independent Claude Code instances** that work in parallel, message each other directly, and coordinate through a shared task list with dependency tracking.
+Agent Teams go far beyond subagents. Instead of a parent-child relationship, teams are **fully independent Claude Code instances** that work in parallel, message each other directly, and coordinate through a shared task list with dependency tracking. Originally shipped as a research preview alongside Claude Opus 4.6, Agent Teams have stabilized significantly — though they remain experimental, they now work reliably across API providers including Bedrock, Vertex, and Foundry.
 
 <Callout type="warning">
-Agent Teams are experimental and disabled by default. Enable them by adding `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` to your settings or environment.
+Agent Teams are still experimental and disabled by default. Enable them by setting the `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` environment variable or adding it to your `settings.json`. They now work on all major providers (API, Bedrock, Vertex, Foundry).
 </Callout>
 
 ### Enabling Agent Teams
@@ -631,6 +726,16 @@ The agent runs in isolation, reads your diff, and returns a structured review.
   <InfoCard
     title="Using Agents Effectively"
     description="Master prompting techniques and debugging strategies for reliable agents"
+  />
+  <InfoCard
+    title="Agent SDK"
+    description="Build production agents outside Claude Code using the standalone Agent SDK"
+    href="/agents/agent-sdk"
+  />
+  <InfoCard
+    title="Productivity Features"
+    description="Deep dive on background agents, worktrees, and other power-user workflows"
+    href="/advanced-topics/productivity-features"
   />
   <InfoCard
     title="Agent Products"
