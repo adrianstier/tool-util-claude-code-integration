@@ -1,0 +1,370 @@
+---
+title: 'Voice Mode and Remote Control'
+description: 'Talk to Claude Code with your voice and control your desktop session from anywhere'
+order: 8
+track: 'start-here'
+duration: '20 minutes'
+lastUpdated: "2026-03-28"
+---
+
+# Voice Mode and Remote Control
+
+Claude Code is not limited to typed commands. You can talk to it with your voice, and you can control a running session from your phone or the web while you are away from your desk. These two features turn Claude Code into something you can use hands-free, on the go, or across devices.
+
+<Callout type="info" title="Plan Requirements">
+**Voice Mode** requires a Pro or Max plan (rolling out gradually to Team and Enterprise).
+**Remote Control** works on any paid plan (Pro, Max, Team, or Enterprise).
+Both features require a local Claude Code session running on your computer.
+</Callout>
+
+<Diagram title="Voice and Remote Control Overview" type="flowchart" caption="Two ways to interact with Claude Code beyond the keyboard">
+{`flowchart TB
+    A[Your Computer] --> B[Claude Code Session]
+    B --> C[Voice Mode]
+    B --> D[Remote Control]
+    C --> E[Speak commands via microphone]
+    D --> F[claude.ai/code on web]
+    D --> G[Claude mobile app]
+`}
+</Diagram>
+
+---
+
+## Voice Mode
+
+Voice Mode lets you speak to Claude Code instead of typing. It uses push-to-talk, so Claude only listens when you hold down a key. This makes it reliable in noisy environments and gives you full control over when input is captured.
+
+### Activating Voice Mode
+
+<Steps>
+<Step title="Start a Claude Code session">
+
+Open your terminal (or the VS Code integrated terminal) and launch Claude Code:
+
+```bash
+claude
+```
+
+</Step>
+<Step title="Enter Voice Mode">
+
+Inside your Claude Code session, type the slash command:
+
+```
+/voice
+```
+
+You will see a confirmation that Voice Mode is active and ready for input.
+
+</Step>
+<Step title="Speak your prompt">
+
+**Hold the spacebar** to speak. Release it when you are done. Claude Code transcribes your speech and processes it as a normal prompt.
+
+```
+[Hold spacebar] "Refactor the auth middleware to use JWT tokens" [Release]
+```
+
+Your words appear as text in the conversation, just as if you had typed them.
+
+</Step>
+</Steps>
+
+### How Push-to-Talk Works
+
+Voice Mode uses a deliberate push-to-talk model rather than always-on listening:
+
+- **Hold spacebar** to begin recording
+- **Speak naturally** -- Claude handles pauses, filler words, and corrections
+- **Release spacebar** to stop recording and send the transcription
+- The transcribed text appears in your conversation before Claude responds
+
+<Callout type="tip" title="Mix Voice and Typing">
+You do not have to choose one or the other. While Voice Mode is active, you can still type prompts normally. This is useful when you want to speak a high-level instruction and then type a specific code snippet or file path.
+</Callout>
+
+### Supported Languages
+
+Voice Mode supports over 20 languages. You can speak in any of them and Claude will transcribe and respond accordingly:
+
+| Language Group | Languages |
+|---|---|
+| **Western European** | English, Spanish, French, German, Portuguese, Italian, Dutch, Danish, Swedish, Norwegian |
+| **Eastern European** | Polish, Ukrainian, Czech, Greek, Russian, Turkish |
+| **Asian** | Japanese, Korean, Chinese, Hindi |
+
+You can switch languages mid-session. There is no configuration required -- Claude detects the language automatically.
+
+### When Voice Mode Shines
+
+Voice is not always the right choice. Here is when it works best:
+
+- **Brainstorming** -- talk through ideas faster than you can type them
+- **Explaining bugs** -- describe what you expected versus what happened, while looking at the code
+- **Code review commentary** -- narrate your observations as you scroll through a diff
+- **Hands-free operation** -- keep your hands on the keyboard for coding while giving Claude verbal instructions
+- **Accessibility** -- a natural alternative for anyone who finds extended typing difficult
+
+### Rebinding the Push-to-Talk Key
+
+If spacebar conflicts with your workflow (for example, if you switch between Voice Mode and typing frequently), you can change the keybinding.
+
+Open your Claude Code keybindings file and set a new key:
+
+```json
+{
+  "voice:pushToTalk": "ctrl+shift+v"
+}
+```
+
+<Callout type="note">
+The keybindings file location depends on your platform. On macOS, check `~/Library/Application Support/claude-code/keybindings.json`. On Windows, check `%APPDATA%\claude-code\keybindings.json`. On Linux, check `~/.config/claude-code/keybindings.json`.
+</Callout>
+
+---
+
+## Remote Control
+
+Remote Control lets you connect to a running Claude Code session from another device -- your phone, a tablet, or another computer. The session stays on your machine. You send instructions and read responses through a secure relay.
+
+### Why This Matters
+
+Normally, Claude Code only works in the terminal where you started it. Remote Control breaks that limitation:
+
+- Start a long task on your laptop at your desk
+- Walk away -- check progress from your phone
+- Send follow-up instructions from the couch, a coffee shop, or the bus
+- Come back to your laptop with the work done
+
+Your files and code never leave your computer. Only the chat messages (your instructions and Claude's text responses) travel through the encrypted relay.
+
+<Diagram title="Remote Control Architecture" type="flowchart" caption="Your code stays local -- only chat messages are relayed">
+{`flowchart LR
+    A[Your Computer] -->|Encrypted relay| B[Anthropic API]
+    B -->|Chat messages| C[claude.ai/code]
+    B -->|Chat messages| D[Claude Mobile App]
+    A -->|Files stay local| A
+`}
+</Diagram>
+
+### Setting Up Remote Control
+
+<Steps>
+<Step title="Start the local bridge">
+
+In your terminal, run:
+
+```bash
+claude remote-control
+```
+
+This starts a local bridge process that creates an encrypted HTTPS relay between your machine and the Anthropic API. You will see output like:
+
+```
+Remote control bridge started.
+Session ID: abc-123-def
+Connect at: https://claude.ai/code?session=abc-123-def
+Or open the Claude mobile app and enter session ID: abc-123-def
+```
+
+</Step>
+<Step title="Connect from another device">
+
+You have two options:
+
+**From a web browser:**
+Open [claude.ai/code](https://claude.ai/code) and enter your session ID, or use the direct link printed in your terminal.
+
+**From your phone:**
+Open the Claude iOS or Android app. Navigate to the Code section and enter your session ID.
+
+</Step>
+<Step title="Start working remotely">
+
+Once connected, you see the same conversation as your local terminal. You can:
+
+- Read Claude's output and file changes
+- Send new prompts and instructions
+- Monitor long-running tasks
+- Approve or reject tool-use requests
+
+Everything you do remotely is reflected in your local terminal session.
+
+</Step>
+</Steps>
+
+### Remote Control with VS Code
+
+If you use the Claude Code VS Code extension, you can also bridge your editor session:
+
+```bash
+claude remote-control --vscode
+```
+
+This connects your VS Code extension session to the relay, so you can interact with the same context (open files, workspace settings, extension state) from the web or mobile.
+
+<Callout type="warning" title="Keep Your Session Running">
+Remote Control requires the local `claude remote-control` process to stay running. If you close your terminal or your computer goes to sleep, the remote connection drops. On macOS, you can prevent sleep with `caffeinate -i` in another terminal tab while running long tasks.
+</Callout>
+
+### What Stays Local
+
+This is the most important thing to understand about Remote Control:
+
+| Data | Where It Lives |
+|---|---|
+| Your source code and files | Your computer only |
+| File reads and writes | Your computer only |
+| Terminal command execution | Your computer only |
+| Chat messages (your prompts) | Encrypted relay to your device |
+| Chat messages (Claude responses) | Encrypted relay to your device |
+| Session metadata | Anthropic API (encrypted) |
+
+No file contents are transmitted through the relay. When Claude reads or edits a file, that happens locally on your machine. You only see the conversation -- what Claude said it did, and what you asked it to do.
+
+---
+
+## Real-World Workflows
+
+These features are most powerful when combined. Here are patterns that work well in practice.
+
+### The "Deploy and Walk Away" Pattern
+
+<Steps>
+<Step title="Start the task at your desk">
+
+```bash
+claude remote-control
+```
+
+Then in your Claude Code session:
+
+```
+Run the full test suite, fix any failures, then deploy to staging.
+Give me a summary when done.
+```
+
+</Step>
+<Step title="Monitor from your phone">
+
+Open the Claude mobile app and connect to your session. Watch the test results come in while you grab lunch.
+
+</Step>
+<Step title="Handle any issues remotely">
+
+If Claude encounters a problem or needs a decision:
+
+```
+Skip the flaky e2e test for now and continue with the deploy.
+I'll fix that test when I'm back.
+```
+
+</Step>
+<Step title="Return to completed work">
+
+Back at your desk, the terminal shows the full history. Staging is deployed and you have a summary of everything that happened.
+
+</Step>
+</Steps>
+
+### The "Voice-First Code Review" Pattern
+
+Use Voice Mode to do code reviews faster:
+
+```bash
+claude
+```
+
+```
+/voice
+```
+
+Then hold spacebar and speak:
+
+> "Pull up the diff for the last three commits. Walk me through each change
+> and flag anything that looks like a potential bug or a departure from our
+> coding standards."
+
+As Claude walks through the diff, respond verbally:
+
+> "That naming convention looks wrong. Rename all the handler functions to
+> use camelCase and update the imports."
+
+### The "Background Research" Pattern
+
+Start a research task and check in later:
+
+```bash
+claude remote-control
+```
+
+```
+I need to upgrade our authentication from session-based to JWT.
+Research the best practices for Next.js JWT auth with refresh tokens.
+Create a migration plan as a markdown file in docs/auth-migration.md.
+Take your time and be thorough.
+```
+
+Check your phone an hour later to read the completed migration plan and ask follow-up questions.
+
+---
+
+## Requirements Summary
+
+<Callout type="info" title="What You Need">
+
+**For Voice Mode:**
+- Pro or Max plan (gradually rolling out to Team and Enterprise)
+- A working microphone
+- Claude Code running in terminal or VS Code
+
+**For Remote Control:**
+- Any paid plan (Pro, Max, Team, or Enterprise)
+- Claude Code running locally with `claude remote-control`
+- A web browser (claude.ai/code) or Claude mobile app (iOS/Android)
+
+**For both:**
+- Claude Code installed and authenticated ([macOS setup](/start-here/mac-setup) | [Windows setup](/start-here/windows-setup))
+
+</Callout>
+
+---
+
+## Troubleshooting
+
+### Voice Mode is not available
+
+Voice Mode is rolling out gradually. If you do not see the `/voice` command:
+- Verify your plan is Pro or Max
+- Update Claude Code to the latest version: `claude update`
+- Check the [Claude Code changelog](https://docs.anthropic.com/en/docs/claude-code/changelog) for availability updates
+
+### Voice transcription is inaccurate
+
+- Speak at a natural pace -- rushing degrades accuracy
+- Use an external microphone if your built-in mic picks up too much background noise
+- Shorter utterances (one instruction at a time) tend to transcribe better than long monologues
+
+### Remote Control connection drops
+
+- Make sure your local `claude remote-control` process is still running
+- Check that your computer has not gone to sleep (use `caffeinate -i` on macOS)
+- Verify your internet connection on both devices
+- Restart the bridge: stop the process with Ctrl+C and run `claude remote-control` again
+
+### Remote session feels laggy
+
+- This is normal for the relay architecture -- there is a small delay compared to local use
+- For time-sensitive work, use the local terminal directly
+- Remote Control is best for monitoring and sending occasional instructions, not rapid back-and-forth
+
+---
+
+## Next Steps
+
+Now that you can talk to Claude Code and control it from anywhere, explore these related guides:
+
+- [macOS Setup Guide](/start-here/mac-setup) -- make sure your local environment is fully configured
+- [Windows Setup Guide](/start-here/windows-setup) -- Windows-specific setup instructions
+- [Claude Code vs Claude Web](/start-here/claude-code-vs-web) -- understand when to use each interface
+- [Collaboration Workflows](/start-here/collaboration-workflows) -- use Remote Control as part of team workflows

@@ -1,0 +1,548 @@
+---
+title: 'Power Features — Auto-Memory, /loop, Fast Mode, and More'
+description: 'Master the productivity features that make experienced Claude Code users dramatically more efficient'
+order: 2
+track: advanced-topics
+duration: '30 minutes'
+lastUpdated: "2026-03-28"
+---
+
+# Power Features
+
+Claude Code ships with a set of productivity features that most users never discover. Each one is small on its own, but stacked together they transform how you work. This guide covers eight features that separate casual users from power users.
+
+<InfoTable
+  columns={[
+    { key: 'feature', header: 'Feature' },
+    { key: 'what', header: 'What It Does' },
+    { key: 'command', header: 'Command' },
+  ]}
+  rows={[
+    { feature: <strong>Auto-Memory</strong>, what: 'Persists context across sessions', command: <code>/memory</code> },
+    { feature: <strong>/loop</strong>, what: 'Scheduled background tasks', command: <code>/loop 5m task</code> },
+    { feature: <strong>Fast Mode</strong>, what: 'Faster output streaming', command: <code>/fast</code> },
+    { feature: <strong>/effort</strong>, what: 'Controls reasoning depth', command: <code>/effort low|med|high</code> },
+    { feature: <strong>Session Management</strong>, what: 'Named, resumable conversations', command: <code>claude -n "name"</code> },
+    { feature: <strong>/context</strong>, what: 'Optimizes context window usage', command: <code>/context</code> },
+    { feature: <strong>Background Agents</strong>, what: 'Parallel research tasks', command: <code>run_in_background</code> },
+    { feature: <strong>Worktree Isolation</strong>, what: 'Isolated file environments', command: <code>claude -w</code> },
+  ]}
+/>
+
+---
+
+## 1. Auto-Memory
+
+Claude remembers things between sessions without you having to repeat yourself. When you correct Claude, share a preference, or establish a project pattern, it can automatically save that context for future sessions.
+
+### How It Works
+
+Claude monitors your interactions for reusable context: coding conventions you enforce, tool preferences you state, corrections you make. When it detects something worth remembering, it writes a memory entry to disk.
+
+Memories are stored in your `.claude-personal/` directory with a `MEMORY.md` index file. Each entry includes a timestamp showing when it was last modified, so you can tell at a glance which memories are current.
+
+```
+.claude-personal/
+├── MEMORY.md              # Index of all memories
+├── preferences/
+│   ├── code-style.md      # "Always use single quotes in TypeScript"
+│   └── testing.md         # "Prefer integration tests over unit tests"
+└── project-patterns/
+    └── api-conventions.md # "API routes return { data, error } shape"
+```
+
+### Managing Memories
+
+Use the `/memory` command to view, edit, or delete stored memories:
+
+```
+/memory           # List all memories
+/memory search    # Find specific memories
+/memory delete    # Remove a memory
+```
+
+<Callout type="tip" title="Customize Storage Location">
+Set the `autoMemoryDirectory` setting to change where memories are stored. Useful if you want memories in a synced folder or a project-specific location.
+</Callout>
+
+### What Gets Saved
+
+<InfoTable
+  columns={[
+    { key: 'category', header: 'Category' },
+    { key: 'example', header: 'Example' },
+  ]}
+  rows={[
+    { category: 'User preferences', example: '"I prefer functional components over class components"' },
+    { category: 'Project patterns', example: '"This project uses Zod for all API validation"' },
+    { category: 'Feedback corrections', example: '"Don\'t use default exports in this codebase"' },
+    { category: 'Workflow habits', example: '"Always run tests before committing"' },
+  ]}
+/>
+
+The key difference from CLAUDE.md: memories are *inferred* from your behavior rather than explicitly written. CLAUDE.md is your deliberate configuration; auto-memory captures the patterns you demonstrate through use. Both load at session start, and both shape how Claude works with you.
+
+---
+
+## 2. /loop -- Scheduled Tasks
+
+`/loop` turns Claude into a background worker. Give it a task and a schedule, and it executes on repeat -- like cron, but conversational.
+
+### Syntax
+
+```bash
+/loop 5m /check-deploy       # Run /check-deploy every 5 minutes
+/loop 10m review PRs          # Review open PRs every 10 minutes
+/loop 1h check test status    # Check CI status every hour
+/loop 30m scan error logs     # Monitor logs every 30 minutes
+```
+
+The first argument is the interval (minutes `m` or hours `h`), and the rest is the task Claude should perform each cycle.
+
+### Use Cases
+
+<Tabs defaultTab="monitoring">
+<TabList>
+  <Tab value="monitoring">Deploy Monitoring</Tab>
+  <Tab value="review">PR Review</Tab>
+  <Tab value="health">Health Checks</Tab>
+  <Tab value="logs">Log Monitoring</Tab>
+</TabList>
+
+<TabPanel value="monitoring">
+
+```bash
+/loop 5m check if the Vercel deploy finished and report status
+```
+
+Claude checks the deployment status every 5 minutes and notifies you when it completes or fails. Useful during long deploys where you want to keep working on other things.
+
+</TabPanel>
+
+<TabPanel value="review">
+
+```bash
+/loop 10m review any new PRs in this repo and summarize changes
+```
+
+Claude periodically checks for new pull requests, reads the diffs, and gives you a summary. Pairs well with the GitHub MCP server for richer context.
+
+</TabPanel>
+
+<TabPanel value="health">
+
+```bash
+/loop 1h run npm test and report any new failures
+```
+
+Continuous integration in your terminal. Claude runs the test suite hourly and only alerts you when something breaks.
+
+</TabPanel>
+
+<TabPanel value="logs">
+
+```bash
+/loop 30m scan the last 30 minutes of logs for errors or warnings
+```
+
+Claude tails your application logs on a schedule, filtering for problems so you don't have to watch them yourself.
+
+</TabPanel>
+</Tabs>
+
+### Programmatic Control
+
+Under the hood, `/loop` uses the `CronCreate`, `CronDelete`, and `CronList` tools. You can reference these directly in skills or agent definitions for more precise scheduling control.
+
+<Callout type="warning" title="Stopping Scheduled Jobs">
+Set the `CLAUDE_CODE_DISABLE_CRON` environment variable to stop all scheduled jobs. Useful if a loop is running away or you need to reclaim resources.
+</Callout>
+
+`/loop` is available on all paid plans. Each loop runs in the context of your current session, so it has access to the same tools, files, and MCP servers.
+
+---
+
+## 3. Fast Mode
+
+Fast Mode optimizes for speed over deliberation. Same model (Opus 4.6), faster output streaming.
+
+### Toggle It
+
+```
+/fast       # Toggle fast mode on/off
+```
+
+When fast mode is active, you'll see an indicator in your prompt. Claude responds noticeably faster, especially for short interactions.
+
+### When to Use It
+
+<InfoTable
+  columns={[
+    { key: 'situation', header: 'Situation' },
+    { key: 'mode', header: 'Recommended Mode' },
+    { key: 'why', header: 'Why' },
+  ]}
+  rows={[
+    { situation: 'Quick file edits', mode: <strong>Fast</strong>, why: 'Simple changes don\'t need deep reasoning' },
+    { situation: 'Straightforward questions', mode: <strong>Fast</strong>, why: 'Factual answers benefit from speed' },
+    { situation: 'Running known commands', mode: <strong>Fast</strong>, why: 'No ambiguity to resolve' },
+    { situation: 'Boilerplate generation', mode: <strong>Fast</strong>, why: 'Pattern-based output is predictable' },
+    { situation: 'Multi-file refactors', mode: <strong>Normal</strong>, why: 'Needs to reason about dependencies' },
+    { situation: 'Architectural decisions', mode: <strong>Normal</strong>, why: 'Trade-offs require careful analysis' },
+    { situation: 'Complex debugging', mode: <strong>Normal</strong>, why: 'Root cause analysis needs depth' },
+    { situation: 'Security-sensitive code', mode: <strong>Normal</strong>, why: 'Can\'t afford to miss edge cases' },
+  ]}
+/>
+
+<Callout type="info" title="No Quality Penalty">
+Fast Mode does not switch to a smaller model. It's the same Opus 4.6 with speed optimizations for output streaming. The trade-off is reduced deliberation time, not reduced capability -- so it works best when the task is unambiguous.
+</Callout>
+
+---
+
+## 4. /effort -- Model Effort Control
+
+`/effort` gives you direct control over how much reasoning Claude applies to each response. Think of it as a quality-speed dial.
+
+### Effort Levels
+
+```
+/effort low      # Fastest responses, minimal reasoning
+/effort medium   # Balanced (default on Max/Team plans)
+/effort high     # Maximum reasoning, slowest responses
+```
+
+<InfoTable
+  columns={[
+    { key: 'level', header: 'Level' },
+    { key: 'best', header: 'Best For' },
+    { key: 'tradeoff', header: 'Trade-off' },
+  ]}
+  rows={[
+    { level: <strong>Low</strong>, best: 'Simple lookups, file reads, quick edits', tradeoff: 'Faster and cheaper, may miss nuance' },
+    { level: <strong>Medium</strong>, best: 'Most everyday coding tasks', tradeoff: 'Good balance of speed and thoroughness' },
+    { level: <strong>High</strong>, best: 'Complex refactors, architecture, debugging', tradeoff: 'Slower but significantly more careful' },
+  ]}
+/>
+
+### The "ultrathink" Keyword
+
+If you're on medium or low effort but hit a task that needs deep reasoning, type `ultrathink` anywhere in your message. Claude will use high effort for that single turn, then return to your default.
+
+```
+ultrathink -- review this authentication flow for security vulnerabilities
+```
+
+This is faster than toggling `/effort high` and back again. Use it for one-off complex questions in the middle of a fast workflow.
+
+<Callout type="tip" title="Effort and Cost">
+Lower effort means fewer reasoning tokens, which translates to lower cost on usage-based plans. If you're doing a batch of simple tasks, `/effort low` can meaningfully reduce your token spend.
+</Callout>
+
+---
+
+## 5. Session Management
+
+Sessions in Claude Code are more than just conversation history. You can name them, resume them, fork them, and organize your work across multiple parallel tracks.
+
+### Named Sessions
+
+Start a session with a name to make it easy to find later:
+
+```bash
+claude -n "feature-auth"       # Start a named session
+claude -n "bug-memory-leak"    # Another named session
+```
+
+Inside a session, rename it with:
+
+```
+/rename refactor-database
+```
+
+If you don't provide a name, Claude generates one automatically from your first message.
+
+### Resuming Sessions
+
+```bash
+claude --resume                 # Resume the most recent session
+claude --resume "feature-auth"  # Resume a specific named session
+```
+
+This restores the full conversation context -- Claude remembers what files it was working on, what decisions were made, and where things left off. Invaluable for multi-day features.
+
+### Session Forking
+
+Sometimes you want to explore an alternative approach without losing your current progress. Fork the session:
+
+```
+/fork
+```
+
+This creates a branch of the conversation. You can try a different implementation strategy, and if it doesn't work out, your original session is untouched.
+
+### Copying Output
+
+The `/copy` command copies code blocks or responses to your clipboard:
+
+```
+/copy            # Copy the last response
+/copy code       # Copy just the code blocks
+```
+
+Useful for pulling Claude's output into other tools, documentation, or chat messages.
+
+<Callout type="tip" title="Parallel Workflows">
+Named sessions pair well with [background agents](#7-background-agents). Start a named session for your main feature work, then kick off background agents for research tasks. Each runs independently with its own context.
+</Callout>
+
+---
+
+## 6. /context Command
+
+Long sessions accumulate context. Past file reads, old code blocks, earlier conversation turns -- they all consume your context window. The `/context` command helps you manage this.
+
+```
+/context
+```
+
+Running `/context` analyzes your current session and provides actionable suggestions:
+
+- Which parts of the context are no longer relevant
+- How much of your context window is consumed
+- Specific items you could trim to free up space
+
+### Why It Matters
+
+Claude's context window is large but finite. When you approach the limit, responses degrade -- Claude may forget earlier instructions, miss details from files it read earlier in the session, or produce less coherent output.
+
+<Callout type="warning" title="Watch for Context Pressure">
+If Claude starts "forgetting" things you told it earlier in the session, or gives answers that contradict previous decisions, run `/context` to check. You may be approaching the limit. Consider starting a fresh session with a summary of key decisions -- or use `/compact` to let Claude compress the conversation automatically.
+</Callout>
+
+For very long sessions (multi-hour refactors, extended debugging), proactive context management is the difference between smooth sailing and frustrating repetition. Check `/context` periodically, especially before starting a new sub-task within the same session.
+
+---
+
+## 7. Background Agents
+
+Background agents let you kick off research, analysis, or implementation tasks that run in parallel while you continue working in the foreground.
+
+### How It Works
+
+When Claude spawns a background agent, it:
+
+1. Creates a separate execution context
+2. Gives the agent its own git worktree (an isolated copy of your repo)
+3. Runs the task independently
+4. Notifies you when results are ready
+
+You keep working in your main session. No blocking, no waiting.
+
+```
+Research how authentication is implemented across the codebase.
+Use a background agent -- I'll keep working on the UI.
+```
+
+### Worktree Isolation
+
+Each background agent operates in its own git worktree. This means it can read files, make edits, and even run commands without interfering with your working directory. When the agent finishes, you review its findings or changes before merging them into your work.
+
+This isolation is what makes background agents safe for parallel work -- two agents can edit different files simultaneously without conflicts.
+
+### Programmatic Usage
+
+In skill definitions and agent configurations, you can set `run_in_background: true` on the Agent tool to create background agents programmatically:
+
+```yaml
+# In a skill or agent definition
+tools:
+  - Agent:
+      task: "Analyze test coverage gaps"
+      run_in_background: true
+```
+
+### Stopping Background Agents
+
+Press `Ctrl+F` to list and kill background agents. It uses a two-press confirmation to prevent accidental termination:
+
+<Steps>
+<Step title="First press">
+
+`Ctrl+F` shows a list of running background agents with their current status.
+
+</Step>
+<Step title="Second press">
+
+`Ctrl+F` again confirms the kill. The selected agent stops and its worktree is cleaned up.
+
+</Step>
+</Steps>
+
+<Callout type="tip" title="Background Agents and /loop">
+Background agents and `/loop` serve different purposes. Use `/loop` for recurring scheduled tasks (check deploy every 5 minutes). Use background agents for one-off parallel work (research this codebase while I keep coding). They complement each other well -- see [multi-agent architectures](/agents/multi-agent-architectures) for patterns that combine both.
+</Callout>
+
+---
+
+## 8. Worktree Isolation
+
+Worktrees give Claude an isolated copy of your repository to work in. Changes in a worktree don't affect your working directory until you explicitly merge them. This is the foundation that makes background agents safe, and you can use it directly too.
+
+### Starting an Isolated Session
+
+```bash
+claude --worktree          # Start Claude in a new worktree
+claude -w                  # Short form
+```
+
+Claude creates a git worktree, switches to it, and operates there for the entire session. Your main working directory stays untouched.
+
+### Why Isolation Matters
+
+Without isolation, two Claude instances (or a Claude instance and your manual edits) can step on each other's files. Worktrees solve this by giving each instance its own filesystem view of the repository.
+
+<InfoTable
+  columns={[
+    { key: 'scenario', header: 'Scenario' },
+    { key: 'without', header: 'Without Worktree' },
+    { key: 'with', header: 'With Worktree' },
+  ]}
+  rows={[
+    { scenario: 'Two agents editing files', without: 'Race conditions, conflicts', with: 'Each has its own copy' },
+    { scenario: 'Agent running tests', without: 'Dirty state affects results', with: 'Clean environment' },
+    { scenario: 'Exploring risky changes', without: 'Must stash/revert manually', with: 'Discard worktree if it fails' },
+    { scenario: 'Long-running background task', without: 'Blocks your workflow', with: 'Runs independently' },
+  ]}
+/>
+
+### Sparse Checkouts for Monorepos
+
+For large monorepos, checking out the entire repository into a worktree is expensive. Use `worktree.sparsePaths` to only check out the directories you need:
+
+```json
+{
+  "worktree": {
+    "sparsePaths": [
+      "packages/frontend/",
+      "packages/shared/",
+      "configs/"
+    ]
+  }
+}
+```
+
+This dramatically reduces the time and disk space required to create worktrees, making isolation practical even in repositories with thousands of packages.
+
+### Subagent Isolation
+
+When defining subagents (in skills or agent configurations), you can specify worktree isolation:
+
+```yaml
+agents:
+  - name: test-runner
+    isolation: "worktree"
+    task: "Run the full test suite and report failures"
+```
+
+The `EnterWorktree` and `ExitWorktree` tools provide programmatic control for more complex workflows where an agent needs to move between isolated and shared contexts.
+
+<Callout type="info" title="Worktrees and Git">
+Git worktrees are a native Git feature -- Claude Code builds on top of them. Each worktree shares the same `.git` directory (so branches, history, and remotes are shared), but has its own working directory and index. This means worktrees are lightweight and fast to create.
+</Callout>
+
+---
+
+## Putting It All Together
+
+These features are most powerful in combination. Here's a real-world workflow that uses several of them together:
+
+<Steps>
+<Step title="Set your defaults">
+
+Start a session with a name, set effort to medium, and turn on fast mode for the initial exploration phase:
+
+```bash
+claude -n "feature-payment-flow"
+/effort medium
+/fast
+```
+
+</Step>
+<Step title="Explore and plan at speed">
+
+In fast mode, quickly read through relevant files, ask clarifying questions, and build a plan. Fast mode keeps the exploration phase snappy.
+
+</Step>
+<Step title="Switch gears for implementation">
+
+When you're ready to implement, turn off fast mode and bump effort:
+
+```
+/fast
+/effort high
+```
+
+Now Claude applies maximum reasoning to the architectural decisions and implementation details.
+
+</Step>
+<Step title="Kick off parallel work">
+
+While implementing the main feature, spawn a background agent to handle related tasks:
+
+```
+In the background, write integration tests for the payment
+webhook handler. Use a worktree so it doesn't interfere with
+my current changes.
+```
+
+</Step>
+<Step title="Monitor with /loop">
+
+Set up a loop to watch your CI pipeline:
+
+```
+/loop 5m check if the CI pipeline passed for the latest push
+```
+
+</Step>
+<Step title="Manage context as you go">
+
+After a couple of hours, run `/context` to check your window usage. If it's getting full, start a fresh session and let auto-memory carry forward the important context.
+
+</Step>
+</Steps>
+
+---
+
+## Quick Reference
+
+<InfoTable
+  columns={[
+    { key: 'command', header: 'Command' },
+    { key: 'what', header: 'What It Does' },
+    { key: 'when', header: 'When to Use' },
+  ]}
+  rows={[
+    { command: <code>/memory</code>, what: 'View/edit auto-saved memories', when: 'Review what Claude remembers about you' },
+    { command: <code>/loop 5m task</code>, what: 'Schedule recurring task', when: 'Monitoring, periodic checks' },
+    { command: <code>/fast</code>, what: 'Toggle fast output mode', when: 'Simple tasks, exploration' },
+    { command: <code>/effort low|med|high</code>, what: 'Set reasoning depth', when: 'Match effort to task complexity' },
+    { command: <code>ultrathink</code>, what: 'One-turn high effort', when: 'Complex question in a fast session' },
+    { command: <code>claude -n "name"</code>, what: 'Named session', when: 'Organizing parallel workstreams' },
+    { command: <code>claude --resume</code>, what: 'Resume previous session', when: 'Continuing multi-day work' },
+    { command: <code>/fork</code>, what: 'Branch the conversation', when: 'Exploring alternative approaches' },
+    { command: <code>/context</code>, what: 'Analyze context usage', when: 'Long sessions, degraded responses' },
+    { command: <code>/compact</code>, what: 'Compress conversation', when: 'Approaching context limits' },
+    { command: <code>claude -w</code>, what: 'Start in worktree', when: 'Isolated experimentation' },
+    { command: <code>Ctrl+F</code>, what: 'List/kill background agents', when: 'Managing parallel tasks' },
+  ]}
+/>
+
+---
+
+## Next Steps
+
+- [Voice and Remote Execution](/start-here/voice-and-remote) -- Hands-free coding with voice control and remote Claude sessions
+- [Plugins and Hooks](/advanced-topics/plugins-and-hooks) -- Extend Claude Code with event-driven automation
+- [Multi-Agent Architectures](/agents/multi-agent-architectures) -- Combine these features into coordinated agent workflows

@@ -1,0 +1,901 @@
+---
+title: 'Plugins and Hooks — Extend and Customize Claude Code'
+description: 'Find, install, and create plugins for Claude Code, and use hooks to control agent behavior'
+order: 4
+duration: '35 minutes'
+lastUpdated: "2026-03-28"
+---
+
+# Plugins and Hooks
+
+Skills are single markdown files. Plugins are full packages — bundling skills, agents, hooks, and MCP servers into one installable unit. If skills are functions, plugins are libraries.
+
+Hooks sit at the other end of the spectrum: low-level interception points that let you run code before or after Claude takes any action. Together, plugins and hooks give you complete control over what Claude can do and how it behaves.
+
+<Callout type="info" title="Prerequisites">
+This article assumes familiarity with [skills](/advanced-topics/skills) and [MCP servers](/mcp/essential-servers). If you haven't worked with those yet, start there.
+</Callout>
+
+---
+
+## What Are Plugins?
+
+A plugin packages multiple Claude Code extensions into a single installable unit. Where a skill is a single `SKILL.md` file, a plugin can contain:
+
+- **Skills** — reusable workflows and background knowledge
+- **Agents** — subagent definitions for specialized tasks
+- **Hooks** — lifecycle interceptors that run before/after Claude actions
+- **MCP servers** — tool servers that give Claude new capabilities
+- **Default settings** — preconfigured permissions and preferences
+
+Plugins launched in public beta in October 2025 and reached stable status in early 2026. The ecosystem now includes over 400 plugins spanning development tools, testing frameworks, documentation generators, deployment pipelines, and productivity utilities.
+
+<Callout type="tip">
+Think of a plugin as a "feature pack" for Claude Code. Installing a Terraform plugin, for example, might give you skills for writing HCL, hooks that lint plans before apply, an MCP server connected to your cloud provider, and agent definitions for infrastructure review.
+</Callout>
+
+---
+
+## Finding Plugins
+
+### Official and Community Sources
+
+<InfoTable
+  columns={[
+    { key: 'source', header: 'Source' },
+    { key: 'url', header: 'URL' },
+    { key: 'description', header: 'Description' },
+  ]}
+  rows={[
+    { source: <strong>Anthropic Official</strong>, url: <code>github.com/anthropics/claude-plugins-official</code>, description: 'Curated, reviewed plugins maintained by Anthropic' },
+    { source: <strong>Community Marketplace</strong>, url: <code>claudemarketplaces.com</code>, description: 'Community-submitted plugins with ratings and reviews' },
+    { source: <strong>npm Registry</strong>, url: <code>npmjs.com</code>, description: 'Plugins published as npm packages (search for claude-plugin-*)' },
+    { source: <strong>GitHub Topics</strong>, url: <code>github.com/topics/claude-code-plugin</code>, description: 'Open-source plugins tagged on GitHub' },
+  ]}
+/>
+
+### Evaluating a Plugin
+
+Before installing a third-party plugin, check these signals:
+
+- **Maintenance status** — When was the last commit? Are issues being triaged?
+- **Download count** — Higher adoption usually means more eyes on the code and fewer bugs
+- **Reviews and ratings** — Read the negative reviews first; they reveal real limitations
+- **Permissions requested** — Does the plugin need `Bash(*)` (full shell access) or just `Read, Grep`? Prefer the narrowest scope
+- **Source code** — Skim the hooks and skills. A plugin's `plugin.json` manifest tells you exactly what it installs
+
+<Callout type="warning">
+Plugins can include hooks that run shell commands automatically. Only install plugins from sources you trust. Review the `hooks/` directory before enabling any plugin that requests broad tool permissions.
+</Callout>
+
+### Plugin Categories
+
+The ecosystem organizes around these common categories:
+
+<InfoTable
+  columns={[
+    { key: 'category', header: 'Category' },
+    { key: 'examples', header: 'Examples' },
+  ]}
+  rows={[
+    { category: <strong>Development Tools</strong>, examples: 'Linters, formatters, language-specific helpers, framework scaffolders' },
+    { category: <strong>Testing</strong>, examples: 'Test runners, coverage reporters, snapshot managers, mutation testing' },
+    { category: <strong>Documentation</strong>, examples: 'API doc generators, changelog builders, README scaffolders' },
+    { category: <strong>Deployment</strong>, examples: 'CI/CD integrations, infrastructure-as-code, container management' },
+    { category: <strong>Productivity</strong>, examples: 'Time tracking, session logging, notification integrations, project templates' },
+    { category: <strong>Security</strong>, examples: 'Secret scanners, dependency auditors, permission guardrails' },
+  ]}
+/>
+
+---
+
+## Installing Plugins
+
+### Basic Installation
+
+Add the plugin name to `enabledPlugins` in your settings file. Plugins can be enabled at the project, user, or enterprise level.
+
+<Tabs defaultTab="project">
+<TabList>
+  <Tab value="project">Project</Tab>
+  <Tab value="user">User</Tab>
+  <Tab value="enterprise">Enterprise</Tab>
+</TabList>
+
+<TabPanel value="project">
+
+Edit `.claude/settings.json` in your project root:
+
+```json
+{
+  "enabledPlugins": [
+    "claude-plugin-terraform",
+    "claude-plugin-docker",
+    "@myorg/claude-plugin-internal"
+  ]
+}
+```
+
+</TabPanel>
+
+<TabPanel value="user">
+
+Edit `~/.claude/settings.json` for all your projects:
+
+```json
+{
+  "enabledPlugins": [
+    "claude-plugin-git-guardian",
+    "claude-plugin-session-logger"
+  ]
+}
+```
+
+</TabPanel>
+
+<TabPanel value="enterprise">
+
+Enterprise admins configure `allowedChannelPlugins` to control which plugins are available organization-wide:
+
+```json
+{
+  "allowedChannelPlugins": [
+    "claude-plugin-terraform",
+    "claude-plugin-docker",
+    "@myorg/claude-plugin-internal"
+  ],
+  "enabledPlugins": [
+    "claude-plugin-terraform"
+  ]
+}
+```
+
+When `allowedChannelPlugins` is set, users can only enable plugins from that list.
+
+</TabPanel>
+</Tabs>
+
+### Version Pinning
+
+Pin plugin versions to avoid breaking changes:
+
+```json
+{
+  "enabledPlugins": [
+    "claude-plugin-terraform@2.1.0",
+    "claude-plugin-docker@^1.4.0",
+    "@myorg/claude-plugin-internal@latest"
+  ]
+}
+```
+
+- **Exact** (`@2.1.0`) — locks to a specific version
+- **Caret** (`@^1.4.0`) — allows patch and minor updates within the major version
+- **Latest** (`@latest`) — always uses the newest version (use with caution)
+
+### Custom Registries
+
+For private or internal plugins, point to a custom npm registry:
+
+```json
+{
+  "pluginRegistries": [
+    "https://npm.internal.mycompany.com"
+  ],
+  "enabledPlugins": [
+    "@myorg/claude-plugin-internal"
+  ]
+}
+```
+
+### Activating Changes
+
+After editing your settings, reload plugins without restarting Claude Code:
+
+```
+/reload-plugins
+```
+
+Claude confirms which plugins were loaded, skipped, or failed.
+
+---
+
+## Plugin Structure
+
+Every plugin is a directory with a `plugin.json` manifest at the root. Here is the standard layout:
+
+<FileTree>
+  <FolderNode name="my-plugin" defaultOpen>
+    <FileNode name="plugin.json" highlight />
+    <FileNode name="settings.json" />
+    <FolderNode name="skills" defaultOpen>
+      <FolderNode name="lint-check" defaultOpen>
+        <FileNode name="SKILL.md" />
+      </FolderNode>
+      <FolderNode name="test-runner" defaultOpen>
+        <FileNode name="SKILL.md" />
+        <FolderNode name="scripts">
+          <FileNode name="run-tests.sh" />
+        </FolderNode>
+      </FolderNode>
+    </FolderNode>
+    <FolderNode name="agents">
+      <FileNode name="code-reviewer.md" />
+    </FolderNode>
+    <FolderNode name="hooks" defaultOpen>
+      <FileNode name="pre-commit-check.sh" />
+      <FileNode name="post-edit-format.sh" />
+    </FolderNode>
+    <FileNode name=".mcp.json" />
+  </FolderNode>
+</FileTree>
+
+### The plugin.json Manifest
+
+The manifest declares the plugin's identity and components:
+
+```json
+{
+  "name": "my-plugin",
+  "description": "Linting, testing, and code review automation",
+  "version": "1.2.0",
+  "author": "Your Name",
+  "license": "MIT",
+  "components": {
+    "skills": ["skills/lint-check", "skills/test-runner"],
+    "agents": ["agents/code-reviewer.md"],
+    "hooks": {
+      "PreToolUse": [
+        {
+          "command": "${CLAUDE_PLUGIN_ROOT}/hooks/pre-commit-check.sh",
+          "if": "Tool(Bash) && args.command matches 'git commit'"
+        }
+      ],
+      "PostToolUse": [
+        {
+          "command": "${CLAUDE_PLUGIN_ROOT}/hooks/post-edit-format.sh",
+          "if": "Tool(Edit)"
+        }
+      ]
+    },
+    "mcpServers": ".mcp.json"
+  }
+}
+```
+
+### Key Manifest Fields
+
+<InfoTable
+  columns={[
+    { key: 'field', header: 'Field' },
+    { key: 'description', header: 'Description' },
+  ]}
+  rows={[
+    { field: <code>name</code>, description: 'Unique identifier. Must match the directory name and the enabledPlugins entry.' },
+    { field: <code>description</code>, description: 'Short summary shown in plugin listings and when Claude loads the plugin.' },
+    { field: <code>version</code>, description: 'Semver version string. Used for version pinning and update detection.' },
+    { field: <code>components.skills</code>, description: 'Array of paths to skill directories relative to the plugin root.' },
+    { field: <code>components.agents</code>, description: 'Array of paths to agent definition files.' },
+    { field: <code>components.hooks</code>, description: 'Hook definitions keyed by lifecycle event. Same format as settings.json hooks.' },
+    { field: <code>components.mcpServers</code>, description: 'Path to an .mcp.json file defining MCP server configurations.' },
+  ]}
+/>
+
+### Path Variables
+
+Two built-in variables resolve paths inside plugin code:
+
+<InfoTable
+  columns={[
+    { key: 'variable', header: 'Variable' },
+    { key: 'description', header: 'Resolves To' },
+    { key: 'use', header: 'Use Case' },
+  ]}
+  rows={[
+    { variable: <code>{"${CLAUDE_PLUGIN_ROOT}"}</code>, description: 'The plugin installation directory', use: 'Reference scripts, templates, and skill files' },
+    { variable: <code>{"${CLAUDE_PLUGIN_DATA}"}</code>, description: 'A persistent data directory that survives plugin updates', use: 'Store caches, logs, or state files' },
+  ]}
+/>
+
+Use `${CLAUDE_PLUGIN_ROOT}` in hook commands and skill paths so they work regardless of where the plugin is installed. Use `${CLAUDE_PLUGIN_DATA}` for anything that should persist across version upgrades.
+
+### Plugin Default Settings
+
+A plugin can ship a `settings.json` file that provides default permissions and preferences:
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx eslint *)",
+      "Bash(npx prettier *)",
+      "Read",
+      "Grep"
+    ]
+  }
+}
+```
+
+Users can override these defaults in their own settings.
+
+---
+
+## Hooks Deep Dive
+
+Hooks are the lowest-level extension mechanism in Claude Code. They intercept specific points in Claude's lifecycle and run your code — a shell command or an HTTP request — before or after the action proceeds.
+
+Unlike skills (which Claude reads and follows) and MCP servers (which expose tools), hooks run *your* code outside Claude's reasoning. The hook script receives structured JSON, does its work, and returns a JSON response telling Claude what to do.
+
+### Hook Types
+
+<InfoTable
+  columns={[
+    { key: 'hook', header: 'Hook' },
+    { key: 'when', header: 'When It Fires' },
+    { key: 'use', header: 'Common Use' },
+  ]}
+  variant="striped"
+  rows={[
+    { hook: <code>PreToolUse</code>, when: 'Before Claude executes a tool', use: 'Block dangerous commands, validate inputs' },
+    { hook: <code>PostToolUse</code>, when: 'After a tool completes', use: 'Auto-format code, log tool usage' },
+    { hook: <code>Stop</code>, when: 'When Claude finishes its response', use: 'Send notifications, trigger CI' },
+    { hook: <code>SubagentStop</code>, when: 'When a subagent finishes', use: 'Validate subagent output' },
+    { hook: <code>SessionStart</code>, when: 'When a new session begins', use: 'Load environment, check prerequisites' },
+    { hook: <code>SessionEnd</code>, when: 'When a session closes', use: 'Clean up temp files, save logs' },
+    { hook: <code>UserPromptSubmit</code>, when: 'After user submits a prompt', use: 'Enrich prompts with context, redirect' },
+    { hook: <code>PreCompact</code>, when: 'Before context compaction', use: 'Save important state before context shrinks' },
+    { hook: <code>PostCompact</code>, when: 'After context compaction', use: 'Inject critical info back into context' },
+    { hook: <code>Notification</code>, when: 'When Claude generates a notification', use: 'Route notifications to Slack, email' },
+    { hook: <code>StopFailure</code>, when: 'When Claude hits a stop-condition failure', use: 'Retry logic, escalation alerts' },
+    { hook: <code>CwdChanged</code>, when: 'When the working directory changes', use: 'Reload environment, update prompts' },
+    { hook: <code>FileChanged</code>, when: 'When a watched file changes', use: 'Trigger rebuilds, run tests' },
+    { hook: <code>InstructionsLoaded</code>, when: 'After CLAUDE.md and skills are loaded', use: 'Inject dynamic instructions' },
+    { hook: <code>TaskCreated</code>, when: 'When a new task is created', use: 'Log tasks, assign tracking IDs' },
+  ]}
+/>
+
+### Shell Command Hooks
+
+The most common hook type. Claude runs your command, pipes JSON to stdin, and reads JSON from stdout.
+
+Configure hooks in `settings.json` or in a plugin's `plugin.json`:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "command": "/path/to/my-hook.sh"
+      }
+    ]
+  }
+}
+```
+
+The hook script receives a JSON payload on stdin with context about the event. It must return a JSON response on stdout.
+
+**Input format** (piped to stdin):
+
+```json
+{
+  "hook": "PreToolUse",
+  "tool": "Bash",
+  "args": {
+    "command": "git push --force origin main"
+  },
+  "session_id": "abc123",
+  "cwd": "/Users/you/project"
+}
+```
+
+**Output format** (printed to stdout):
+
+```json
+{
+  "action": "block",
+  "message": "Force-pushing to main is not allowed. Use a feature branch."
+}
+```
+
+The `action` field controls what happens next:
+
+<InfoTable
+  columns={[
+    { key: 'action', header: 'Action' },
+    { key: 'effect', header: 'Effect' },
+  ]}
+  rows={[
+    { action: <code>proceed</code>, effect: 'Allow the action to continue (default if no output)' },
+    { action: <code>block</code>, effect: 'Prevent the action. Claude sees the message and adjusts.' },
+    { action: <code>modify</code>, effect: 'Replace the original args with new values (PreToolUse only).' },
+    { action: <code>inject</code>, effect: 'Add content to Claude\'s context (PostToolUse, SessionStart, InstructionsLoaded).' },
+  ]}
+/>
+
+### HTTP Hooks
+
+Instead of running a local command, send a POST request to a URL endpoint. This is useful for cloud functions, logging services, or centralized team servers.
+
+```json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "url": "https://hooks.myteam.com/claude-session-complete",
+        "headers": {
+          "Authorization": "Bearer ${HOOKS_API_KEY}"
+        }
+      }
+    ]
+  }
+}
+```
+
+The POST body is the same JSON payload a shell hook receives on stdin. The response body follows the same action format.
+
+### Conditional Hooks
+
+Use the `if` field to restrict when a hook fires. The syntax mirrors Claude Code's permission rule format:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "command": "./hooks/block-force-push.sh",
+        "if": "Tool(Bash) && args.command matches 'git push.*--force'"
+      },
+      {
+        "command": "./hooks/lint-on-edit.sh",
+        "if": "Tool(Edit) && args.file_path matches '\\.(ts|tsx|js|jsx)$'"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "command": "./hooks/format-python.sh",
+        "if": "Tool(Edit) && args.file_path matches '\\.py$'"
+      }
+    ]
+  }
+}
+```
+
+Without an `if` field, the hook fires on every occurrence of that event. The conditional syntax supports:
+
+- `Tool(ToolName)` — match a specific tool
+- `args.field matches 'regex'` — match against tool arguments
+- `&&` / `||` — combine conditions
+- `!` — negate a condition
+
+---
+
+## Practical Hook Examples
+
+### Block Dangerous Git Commands
+
+Prevent force-pushes and hard resets on protected branches:
+
+```bash
+#!/bin/bash
+# hooks/block-dangerous-git.sh
+
+# Read JSON from stdin
+INPUT=$(cat)
+
+COMMAND=$(echo "$INPUT" | jq -r '.args.command // ""')
+
+# Check for dangerous patterns
+if echo "$COMMAND" | grep -qE 'git (push.*--force|reset --hard|clean -fd)'; then
+  BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
+
+  if [[ "$BRANCH" == "main" || "$BRANCH" == "master" ]]; then
+    echo '{"action": "block", "message": "Blocked: destructive git operation on protected branch '"$BRANCH"'. Switch to a feature branch first."}'
+    exit 0
+  fi
+fi
+
+# Allow everything else
+echo '{"action": "proceed"}'
+```
+
+**Settings configuration:**
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "command": "./.claude/hooks/block-dangerous-git.sh",
+        "if": "Tool(Bash) && args.command matches '^git '"
+      }
+    ]
+  }
+}
+```
+
+### Auto-Format Code After Edits
+
+Run Prettier on any TypeScript or JavaScript file Claude edits:
+
+```bash
+#!/bin/bash
+# hooks/auto-format.sh
+
+INPUT=$(cat)
+
+FILE_PATH=$(echo "$INPUT" | jq -r '.args.file_path // ""')
+
+if [[ -n "$FILE_PATH" && -f "$FILE_PATH" ]]; then
+  npx prettier --write "$FILE_PATH" 2>/dev/null
+fi
+
+echo '{"action": "proceed"}'
+```
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "command": "./.claude/hooks/auto-format.sh",
+        "if": "Tool(Edit) && args.file_path matches '\\.(ts|tsx|js|jsx|css)$'"
+      }
+    ]
+  }
+}
+```
+
+### Notify Slack When a Session Completes
+
+Send a summary to a Slack channel when Claude finishes working:
+
+```bash
+#!/bin/bash
+# hooks/notify-slack.sh
+
+INPUT=$(cat)
+
+SESSION_ID=$(echo "$INPUT" | jq -r '.session_id // "unknown"')
+CWD=$(echo "$INPUT" | jq -r '.cwd // "unknown"')
+PROJECT=$(basename "$CWD")
+
+curl -s -X POST "$SLACK_WEBHOOK_URL" \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"text\": \"Claude Code session complete in *${PROJECT}* (session: ${SESSION_ID})\"
+  }" > /dev/null 2>&1
+
+echo '{"action": "proceed"}'
+```
+
+```json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "command": "./.claude/hooks/notify-slack.sh"
+      }
+    ]
+  }
+}
+```
+
+### Inject Context on Session Start
+
+Automatically load project-specific context when a session begins:
+
+```bash
+#!/bin/bash
+# hooks/load-context.sh
+
+INPUT=$(cat)
+CWD=$(echo "$INPUT" | jq -r '.cwd // "."')
+
+CONTEXT=""
+
+# Add recent git activity
+if [ -d "$CWD/.git" ]; then
+  RECENT=$(cd "$CWD" && git log --oneline -5 2>/dev/null)
+  CONTEXT="Recent commits:\n$RECENT\n\n"
+fi
+
+# Add open issues count
+if command -v gh &> /dev/null; then
+  ISSUES=$(cd "$CWD" && gh issue list --limit 5 --json title,number 2>/dev/null)
+  if [ -n "$ISSUES" ]; then
+    CONTEXT="${CONTEXT}Open issues:\n$ISSUES"
+  fi
+fi
+
+if [ -n "$CONTEXT" ]; then
+  echo "{\"action\": \"inject\", \"message\": \"$CONTEXT\"}"
+else
+  echo '{"action": "proceed"}'
+fi
+```
+
+---
+
+## Creating a Simple Plugin
+
+Walk through building a plugin from scratch that validates commit messages and enforces conventional commit format.
+
+<Steps>
+<Step title="Create the plugin directory">
+
+```bash
+mkdir -p my-commit-plugin/{skills/commit-helper,hooks}
+```
+
+After this step your directory looks like:
+
+```
+my-commit-plugin/
+├── skills/
+│   └── commit-helper/
+└── hooks/
+```
+
+</Step>
+<Step title="Write the plugin manifest">
+
+Create `my-commit-plugin/plugin.json`:
+
+```json
+{
+  "name": "my-commit-plugin",
+  "description": "Enforce conventional commits and provide commit message assistance",
+  "version": "0.1.0",
+  "author": "Your Name",
+  "components": {
+    "skills": ["skills/commit-helper"],
+    "hooks": {
+      "PreToolUse": [
+        {
+          "command": "${CLAUDE_PLUGIN_ROOT}/hooks/validate-commit.sh",
+          "if": "Tool(Bash) && args.command matches 'git commit'"
+        }
+      ]
+    }
+  }
+}
+```
+
+</Step>
+<Step title="Add a skill">
+
+Create `my-commit-plugin/skills/commit-helper/SKILL.md`:
+
+```yaml
+---
+name: commit-helper
+description: "Write a conventional commit message for staged changes. Use when committing code."
+---
+
+Write a commit message for the current staged changes:
+
+1. Run `git diff --cached` to see staged changes
+2. Categorize the change: feat, fix, refactor, docs, test, chore, style, perf
+3. Identify the scope (affected module or component)
+4. Write a subject line: imperative mood, lowercase, no period, under 72 chars
+5. If the change is non-trivial, add a body explaining *why*
+
+Format: `type(scope): subject`
+
+IMPORTANT: Always use conventional commit format.
+NEVER: Write vague messages like "update code" or "fix stuff".
+```
+
+</Step>
+<Step title="Add a hook">
+
+Create `my-commit-plugin/hooks/validate-commit.sh`:
+
+```bash
+#!/bin/bash
+# Validate that git commit commands use conventional commit format
+
+INPUT=$(cat)
+COMMAND=$(echo "$INPUT" | jq -r '.args.command // ""')
+
+# Extract the commit message from the command
+MSG=$(echo "$COMMAND" | grep -oP '(?<=-m\s["\x27])[^"\x27]+')
+
+if [ -z "$MSG" ]; then
+  # No -m flag found — could be opening an editor, allow it
+  echo '{"action": "proceed"}'
+  exit 0
+fi
+
+# Check conventional commit format: type(scope): description
+if echo "$MSG" | grep -qP '^(feat|fix|refactor|docs|test|chore|style|perf|ci|build)(\(.+\))?: .+'; then
+  echo '{"action": "proceed"}'
+else
+  echo '{"action": "block", "message": "Commit message must follow conventional commit format: type(scope): description. Valid types: feat, fix, refactor, docs, test, chore, style, perf, ci, build."}'
+fi
+```
+
+Make the hook executable:
+
+```bash
+chmod +x my-commit-plugin/hooks/validate-commit.sh
+```
+
+</Step>
+<Step title="Test locally">
+
+Enable the plugin by pointing to its local path in your project settings:
+
+```json
+{
+  "enabledPlugins": [
+    "./my-commit-plugin"
+  ]
+}
+```
+
+Reload and test:
+
+```
+/reload-plugins
+```
+
+Try a non-conventional commit to verify the hook blocks it:
+
+```bash
+git add .
+git commit -m "updated stuff"
+# Hook should block this with a message about conventional commit format
+```
+
+Then try a valid one:
+
+```bash
+git commit -m "feat(auth): add OAuth2 refresh token handling"
+# Hook allows this through
+```
+
+</Step>
+<Step title="Share with your team">
+
+Commit the plugin to your repository or publish it:
+
+```bash
+# Option A: commit to the project repo
+cp -r my-commit-plugin .claude/plugins/
+git add .claude/plugins/my-commit-plugin
+git commit -m "feat: add conventional commit plugin"
+
+# Option B: publish to npm
+cd my-commit-plugin
+npm init -y
+npm publish --access public
+```
+
+Team members enable it by adding the plugin name to their `enabledPlugins`.
+
+</Step>
+</Steps>
+
+---
+
+## Popular Plugins to Try
+
+These well-established plugins cover common workflows. Install any of them by adding the name to `enabledPlugins` in your settings:
+
+<InfoTable
+  columns={[
+    { key: 'plugin', header: 'Plugin' },
+    { key: 'description', header: 'What It Does' },
+  ]}
+  rows={[
+    { plugin: <code>claude-plugin-git-guardian</code>, description: 'Hooks that block force-pushes, secret commits, and large binary files. Configurable branch protection rules.' },
+    { plugin: <code>claude-plugin-test-runner</code>, description: 'Skills for running and analyzing tests across Jest, Vitest, pytest, and Go. Auto-runs relevant tests after code changes.' },
+    { plugin: <code>claude-plugin-docker-dev</code>, description: 'Skills and MCP server for managing Docker containers, composing services, and debugging container issues.' },
+    { plugin: <code>claude-plugin-changelog</code>, description: 'Generates changelogs from conventional commits. Hooks into the Stop event to suggest changelog updates after feature work.' },
+    { plugin: <code>claude-plugin-session-logger</code>, description: 'Logs every session to a local SQLite database. Skills to query past sessions, find patterns, and generate usage reports.' },
+    { plugin: <code>claude-plugin-pr-reviewer</code>, description: 'Agent definitions for multi-pass code review. Checks security, performance, testing coverage, and style in parallel.' },
+    { plugin: <code>claude-plugin-db-migrate</code>, description: 'Skills for generating and reviewing database migrations. Supports Prisma, Drizzle, Knex, and raw SQL.' },
+    { plugin: <code>claude-plugin-i18n</code>, description: 'Detects hardcoded strings during edits and suggests internationalization. Hooks auto-extract strings to locale files.' },
+  ]}
+/>
+
+Install example:
+
+```json
+{
+  "enabledPlugins": [
+    "claude-plugin-git-guardian",
+    "claude-plugin-test-runner@^2.0.0"
+  ]
+}
+```
+
+---
+
+## Hooks vs. Skills vs. MCP Servers
+
+These three extension mechanisms serve different purposes. Choosing the right one matters:
+
+<InfoTable
+  columns={[
+    { key: 'mechanism', header: 'Mechanism' },
+    { key: 'how', header: 'How It Works' },
+    { key: 'when', header: 'Best For' },
+  ]}
+  rows={[
+    { mechanism: <strong>Skills</strong>, how: 'Claude reads instructions and follows them', when: 'Workflows, conventions, background knowledge' },
+    { mechanism: <strong>Hooks</strong>, how: 'Your code runs before/after Claude actions', when: 'Guardrails, formatting, logging, notifications' },
+    { mechanism: <strong>MCP Servers</strong>, how: 'External tools Claude can call', when: 'Database access, API integrations, external services' },
+  ]}
+/>
+
+**Use a skill** when you want Claude to *understand and follow* a process. Skills guide behavior through instructions.
+
+**Use a hook** when you need *deterministic enforcement* — blocking bad commands, running formatters, sending notifications. Hooks don't rely on Claude choosing to follow advice; they run unconditionally.
+
+**Use an MCP server** when Claude needs to *interact with an external system* — query a database, call an API, search the web. MCP servers give Claude new tools.
+
+A well-designed plugin often combines all three: a skill teaches Claude how to work with a framework, hooks enforce safety constraints, and an MCP server connects to the framework's CLI or API.
+
+---
+
+## Troubleshooting
+
+### Plugin Not Loading
+
+1. Verify the plugin name in `enabledPlugins` matches the `name` field in `plugin.json`
+2. Run `/reload-plugins` and check the output for errors
+3. Ensure `plugin.json` is valid JSON (use `jq . plugin.json` to check)
+4. For local plugins, confirm the path is correct and accessible
+
+### Hook Not Firing
+
+1. Check that the `if` condition matches the actual tool and arguments. Test with a simple hook that always logs to a file first
+2. Verify the hook script is executable (`chmod +x`)
+3. Make sure the script outputs valid JSON to stdout. Any non-JSON output (warnings, debug prints to stdout) breaks parsing
+4. Test the script manually: `echo '{"hook":"PreToolUse","tool":"Bash","args":{"command":"git commit"}}' | ./hooks/my-hook.sh`
+
+### Hook Blocks Everything
+
+If a hook returns invalid JSON or exits with a non-zero code, Claude may treat the action as blocked. Add error handling to your scripts:
+
+```bash
+#!/bin/bash
+INPUT=$(cat)
+
+# Wrap logic in a function for clean error handling
+run_hook() {
+  # ... your logic here ...
+  echo '{"action": "proceed"}'
+}
+
+# Default to proceed if anything fails
+run_hook || echo '{"action": "proceed"}'
+```
+
+### Skills From Plugin Not Appearing
+
+Plugin skills use namespaced names: `plugin-name:skill-name`. Try invoking with the full name:
+
+```
+/my-commit-plugin:commit-helper
+```
+
+---
+
+## Next Steps
+
+1. **Start with hooks** — add a single `PreToolUse` hook to enforce a team convention
+2. **Browse the official directory** — find a plugin that matches a workflow you do manually
+3. **Bundle your skills into a plugin** — if you have multiple related skills, packaging them makes sharing easier
+
+**Related Topics:**
+- [Claude Code Skills](/advanced-topics/skills) — The foundation plugins build on
+- [Essential MCP Servers](/mcp/essential-servers) — Extend Claude with external tool servers
+- [Building Agents](/agents/building-agents) — Create specialized agent definitions to include in plugins
+- [Best Practices](/advanced-topics/best-practices) — Workflows that pair well with plugins and hooks
+
+<Callout type="success">
+Plugins and hooks shift Claude Code from "helpful assistant" to "enforceable workflow." Skills suggest behavior; hooks guarantee it. Start with one guardrail hook, see it catch a mistake, and you'll never run without hooks again.
+</Callout>

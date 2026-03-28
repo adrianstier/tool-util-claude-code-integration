@@ -1,0 +1,375 @@
+---
+title: 'Computer Use and Dispatch'
+description: 'Let Claude control your screen and assign tasks from your phone with Dispatch'
+order: 2
+track: 'app-builder'
+duration: '25 minutes'
+lastUpdated: "2026-03-28"
+---
+
+# Computer Use and Dispatch
+
+Claude can see your screen, move your mouse, click buttons, type text, and navigate between applications. It is called Computer Use, and it works out of the box on macOS with the Claude Desktop App. Pair it with Dispatch, and you can assign tasks from your phone while Claude works on your Mac in the background.
+
+This guide covers what Computer Use is, how Claude decides which tools to reach for, practical workflows you can try today, and how to stay in control the whole time.
+
+<Callout type="tip" title="No Setup Required">
+If you already have the Claude Desktop App installed on your Mac with a Pro or Max plan, Computer Use is ready to go. There is nothing extra to configure.
+</Callout>
+
+---
+
+## What Is Computer Use?
+
+Computer Use is part of **Claude Cowork**, which launched as a research preview in January 2026. It gives Claude the ability to interact with your computer the same way you do: looking at the screen, moving the cursor, clicking, scrolling, and typing.
+
+This means Claude is not limited to reading and writing files in a terminal. It can operate any application that has a graphical interface, from web browsers to spreadsheets to design tools.
+
+### Key facts
+
+<InfoTable
+  columns={[
+    { key: 'detail', header: 'Detail' },
+    { key: 'value', header: 'Value' },
+  ]}
+  rows={[
+    { detail: <strong>Availability</strong>, value: 'Pro and Max plans' },
+    { detail: <strong>Platform</strong>, value: 'macOS (via Claude Desktop App)' },
+    { detail: <strong>Setup</strong>, value: 'None — works out of the box' },
+    { detail: <strong>Part of</strong>, value: 'Claude Cowork (research preview, January 2026)' },
+    { detail: <strong>Requires</strong>, value: 'Active internet connection + Claude Desktop App' },
+  ]}
+/>
+
+---
+
+## How Claude Decides What to Use
+
+Claude does not jump straight to screen control. It follows a priority chain, always reaching for the most precise tool first and falling back to less precise options only when necessary.
+
+<Diagram title="Tool Priority Chain" type="flowchart" caption="Claude reaches for the most precise tool available, top to bottom">
+{`flowchart TB
+    A[Task Received] --> B{Connector available?}
+    B -->|Yes| C[Use Connector]
+    B -->|No| D{MCP server available?}
+    D -->|Yes| E[Use MCP Server]
+    D -->|No| F[Use Computer Use]
+
+    C --> G[Direct API access]
+    E --> H[Structured tool interface]
+    F --> I[Screen control]
+`}
+</Diagram>
+
+### Why this order matters
+
+<InfoTable
+  columns={[
+    { key: 'tool', header: 'Tool Type' },
+    { key: 'precision', header: 'Precision' },
+    { key: 'speed', header: 'Speed' },
+    { key: 'example', header: 'Example' },
+  ]}
+  rows={[
+    { tool: <strong>Connectors</strong>, precision: 'Highest — direct API', speed: 'Fast', example: 'Send a Slack message, create a Google Calendar event' },
+    { tool: <strong>MCP Servers</strong>, precision: 'High — structured tools', speed: 'Fast', example: 'Query a database, read a GitHub issue' },
+    { tool: <strong>Computer Use</strong>, precision: 'Lower — visual + click', speed: 'Slower', example: 'Fill out a web form, navigate a UI with no API' },
+  ]}
+/>
+
+Connectors talk directly to services like Slack, Google Calendar, and Jira through their APIs. No screen interaction needed — the data flows through a structured channel. [MCP servers](/mcp/essential-servers) provide a similar structured interface for tools that Claude can call programmatically.
+
+Computer Use is the fallback. When there is no connector and no MCP server for what you need, Claude can still get it done by looking at your screen and clicking through the interface like a human would. It is slower and less precise, but it works with anything that has a visible UI.
+
+<Callout type="note" title="Claude Picks Automatically">
+You do not need to tell Claude which tool to use. It evaluates what is available and picks the best option on its own. If you have a Slack connector installed, Claude will never open Slack in the browser to send a message — it will use the direct API.
+</Callout>
+
+---
+
+## What Claude Can Do on Your Screen
+
+Once Computer Use is active, Claude can perform any action you could do with a mouse and keyboard.
+
+### Applications and files
+
+- Open any application installed on your Mac
+- Navigate Finder to locate, move, copy, or rename files
+- Open documents in their default applications
+- Switch between open windows
+
+### Browser
+
+- Navigate to URLs, click links, fill out forms
+- Read page content and extract information
+- Interact with web apps (dashboards, admin panels, SaaS tools)
+- Handle multi-step browser workflows (search, click result, read content, go back)
+- Download files and manage browser tabs
+
+### Development tools
+
+- Open VS Code or another editor and navigate to specific files
+- Run terminal commands and read output
+- Interact with IDE features (run tests, open panels, use menus)
+- Navigate project file trees and open specific modules
+
+### Multi-app workflows
+
+- Copy content from one application and paste it into another
+- Take information from a browser tab and enter it into a spreadsheet
+- Read an email and create a calendar event based on its contents
+- Collect data from multiple sources and compile it into a single document
+
+### Keyboard and system
+
+- Use keyboard shortcuts (Cmd+C, Cmd+V, Cmd+Tab, and others)
+- Type into any text field in any application
+- Scroll through long pages and documents
+- Interact with system dialogs (file pickers, confirmation prompts, permission dialogs)
+
+<Callout type="tip" title="Combine with Other Tools">
+Computer Use is most powerful when combined with Claude's other capabilities. Claude might use an MCP server to pull data from a database, then use Computer Use to paste that data into a Google Sheet in the browser. The tools work together.
+</Callout>
+
+---
+
+## Dispatch — Assign Tasks from Your Phone
+
+Dispatch takes Computer Use a step further. Instead of sitting at your Mac and watching Claude work, you can assign a task from your phone and walk away. Claude works on your Mac while you are gone, and you come back to finished work.
+
+### How Dispatch works
+
+<Steps>
+<Step title="Start a conversation on your phone">
+
+Open the Claude app on iOS or Android. Describe the task you want Claude to handle on your Mac. For example: "Sort the files in my Downloads folder — move images to Photos, PDFs to Documents, and delete any duplicates."
+
+</Step>
+<Step title="Claude works on your Mac">
+
+The Claude Desktop App on your Mac picks up the task. Claude opens Finder, examines the files, and starts organizing them. It uses Computer Use to navigate, drag files, and manage folders — the same way you would.
+
+</Step>
+<Step title="Check in anytime">
+
+Dispatch creates a persistent conversation thread that stays connected across your phone and Mac. You can check the conversation at any time to see progress, add new instructions, or redirect Claude mid-task.
+
+</Step>
+<Step title="Come back to finished work">
+
+When Claude finishes, you will see the results in the conversation thread. Review what was done, and pick up where Claude left off if anything needs adjustment.
+
+</Step>
+</Steps>
+
+### Requirements
+
+- **Claude Desktop App** installed and running on your Mac
+- **Claude mobile app** installed on your iPhone or Android phone
+- **Same Anthropic account** signed in on both devices
+- **Pro or Max plan**
+
+<Callout type="warning" title="Your Mac Must Stay Awake">
+Dispatch requires the Claude Desktop App to be running on your Mac. If your computer goes to sleep or the app is closed, Claude cannot execute the task. Adjust your Mac's energy settings to prevent sleep during long tasks.
+</Callout>
+
+### One continuous thread
+
+Dispatch is not a "fire and forget" system. The conversation between your phone and your Mac is a single, continuous thread. This means:
+
+- You can **check progress** at any time from your phone
+- You can **add instructions** mid-task ("Also rename the files to include the date")
+- You can **redirect** if Claude goes down the wrong path ("Skip the spreadsheet step, just create a text summary instead")
+- You can **review the full history** of what Claude did, including every action it took on your screen
+
+---
+
+## Practical Examples
+
+Here are concrete workflows where Computer Use and Dispatch shine.
+
+### Research workflow
+
+> "Search for the top 5 competitors in the meal-kit delivery space. Open each website, take notes on their pricing, features, and target audience. Compile everything into a summary document on my Desktop."
+
+Claude opens the browser, searches, visits each competitor's site, reads the pages, and creates a structured document with a table comparing features, pricing tiers, and target audiences. You can Dispatch this from your phone and come back to a finished competitive analysis.
+
+**Why this works well with Dispatch**: Research tasks take 15-30 minutes of browsing. Send the request from your phone and check back later.
+
+### File organization
+
+> "Sort the files in ~/Downloads. Move images to Photos, PDFs to Documents, code files to Projects, and delete anything older than 90 days that is not in those categories."
+
+Claude opens Finder, examines file types and dates, and moves everything into the right place. A mundane task that takes you 20 minutes becomes a single sentence.
+
+**Why this works well with Dispatch**: File cleanup is tedious but low-risk. Let Claude handle it while you focus on something else.
+
+### Dev workflow
+
+> "Open VS Code with the meal-planning project. Run the test suite. If any tests fail, read the errors, fix the code, and commit the fix with a descriptive message."
+
+Claude opens your editor, runs tests in the terminal, reads the output, edits the failing code, and makes a commit. This is a great Dispatch task for when you step away for lunch.
+
+**Why this works well with Dispatch**: Test-fix-commit cycles are well-defined. Claude can handle the loop while you are away, and you review the commit when you return.
+
+### Browser automation
+
+> "Log into Jira, find all P1 bugs assigned to me, and export them to a spreadsheet on my Desktop."
+
+Claude opens the browser, navigates Jira, applies filters, selects the right tickets, and exports them. For apps with no API or MCP server, Computer Use fills the gap.
+
+**Why this works well with Computer Use**: Many enterprise tools have limited or no API access. Computer Use lets Claude interact with them through the same web UI you use.
+
+### Data entry and form filling
+
+> "Open the conference registration form at this URL. Fill it in with my name, email, and affiliation. Select the 'In-Person' attendance option and the Wednesday workshop. Stop before submitting so I can review."
+
+Claude navigates to the form, fills in each field, makes selections, and pauses before the final submit button. You review and click Submit yourself.
+
+**Why this works well with Computer Use**: Forms require visual navigation and field-by-field input. Claude reads the labels on screen and fills them in order.
+
+<Callout type="tip" title="Start Simple">
+Your first Computer Use task should be something low-stakes and reversible. "Open Safari and search for the weather in Santa Barbara" is a good first test. Graduate to more complex workflows once you see how Claude navigates your screen.
+</Callout>
+
+---
+
+## Safety and Permissions
+
+Letting an AI control your screen is a reasonable thing to be cautious about. Here is how safety works.
+
+### Confirmation before destructive actions
+
+Claude asks for your confirmation before taking actions that cannot be easily undone — deleting files, sending emails, submitting forms, making purchases. You approve or deny each one.
+
+### Boundaries you can set
+
+You can tell Claude what it should and should not access. For example: "Do not open any banking or financial websites" or "Only work within the Downloads and Documents folders." Claude respects these boundaries throughout the session.
+
+### Local-only screen access
+
+Claude sees your screen to understand what is on it, but your screen contents are not transmitted externally or stored beyond the active session. The processing happens through Claude's standard infrastructure with the same privacy protections as any other Claude conversation.
+
+### Interrupt at any time
+
+You are always in control. Click anywhere, press a key, or close the Desktop App to stop Claude immediately. There is no runaway process — when you interrupt, Claude stops.
+
+### Full conversation history
+
+Every action Claude takes is logged in the conversation thread. You can scroll back and see exactly what it clicked, what it typed, and what decisions it made. This makes it easy to review and verify the work.
+
+<Callout type="warning" title="Avoid Sensitive Screens">
+Do not ask Claude to interact with password managers, banking websites, or screens displaying sensitive credentials. While Claude does not store what it sees beyond the session, it is good practice to keep sensitive information out of any AI workflow.
+</Callout>
+
+---
+
+## How Computer Use Works Under the Hood
+
+You do not need to understand the internals to use Computer Use effectively, but knowing the basics helps set expectations.
+
+1. **Screenshot**: Claude takes a screenshot of your current screen
+2. **Analysis**: It processes the image to understand what is visible — windows, buttons, text fields, menus
+3. **Decision**: Based on your instructions, it decides what action to take next (click a button, type text, scroll down)
+4. **Action**: It executes the action using macOS accessibility APIs (the same system VoiceOver and other assistive technologies use)
+5. **Repeat**: It takes another screenshot to see the result, then decides the next step
+
+This loop of look-decide-act-look continues until the task is complete. Each cycle takes a moment, which is why Computer Use is inherently slower than direct API calls. A connector can send a Slack message in under a second. Computer Use needs to open Slack, find the right channel, click the message box, type the text, and press Enter — several cycles of the loop.
+
+<Callout type="note" title="Accessibility Permissions">
+The first time you use Computer Use, macOS will ask you to grant accessibility permissions to the Claude Desktop App. This is the standard system dialog that appears for any app that needs to control the mouse and keyboard. You can review and revoke these permissions at any time in **System Settings > Privacy & Security > Accessibility**.
+</Callout>
+
+---
+
+## Limitations
+
+Computer Use is powerful, but it has real constraints you should know about.
+
+<InfoTable
+  columns={[
+    { key: 'limitation', header: 'Limitation' },
+    { key: 'detail', header: 'Details' },
+  ]}
+  rows={[
+    { limitation: <strong>macOS only</strong>, detail: 'Windows support has been announced but has no public timeline. Linux is not supported.' },
+    { limitation: <strong>Requires Desktop App</strong>, detail: 'Computer Use does not work from the terminal CLI, web app, or IDE extensions. You need the Claude Desktop App.' },
+    { limitation: <strong>Internet required</strong>, detail: 'An active internet connection is needed for Claude to process what it sees on screen.' },
+    { limitation: <strong>Slower than API tools</strong>, detail: 'Screen control involves looking, clicking, waiting, and looking again. Connectors and MCP servers are significantly faster for the same task.' },
+    { limitation: <strong>Complex UI can be tricky</strong>, detail: 'Drag-and-drop, custom canvas elements, and highly dynamic interfaces may need guidance or multiple attempts.' },
+    { limitation: <strong>Not for sensitive screens</strong>, detail: 'Avoid having Claude interact with banking, password managers, or screens showing credentials.' },
+  ]}
+/>
+
+### When to use something else
+
+Computer Use is the right choice when there is no better tool available. But if a connector or MCP server exists for the task, prefer that. For example:
+
+- **Sending a Slack message**: Use the Slack connector, not Computer Use
+- **Creating a GitHub issue**: Use the GitHub MCP server, not Computer Use
+- **Reading a local file**: Use Claude Code's file tools, not Computer Use opening the file in an editor
+
+Computer Use is best for tasks that **require a graphical interface** and have **no structured API alternative**. Learn more about available structured tools in the [MCP Essential Servers guide](/mcp/essential-servers).
+
+---
+
+## Getting Started
+
+Ready to try it? Follow these steps to go from zero to your first Dispatch task.
+
+<Steps>
+<Step title="Install the Claude Desktop App">
+
+Download the app from [claude.com/download](https://claude.com/download) and install it on your Mac. Sign in with your Anthropic account. You need a Pro or Max plan.
+
+If you have not set up Claude on your Mac yet, the [macOS Setup Guide](/start-here/mac-setup) walks through the full process.
+
+</Step>
+<Step title="Enable Computer Use">
+
+Open the Claude Desktop App and go to **Settings**. Find the **Computer Use** toggle and make sure it is turned on. The app may ask for accessibility permissions — grant them so Claude can control the mouse and keyboard.
+
+</Step>
+<Step title="Try a simple screen task">
+
+Start with something basic to see how it works:
+
+```
+Open Safari and search for "best hiking trails near Santa Barbara."
+Summarize the top 3 results for me.
+```
+
+Watch as Claude opens the browser, types the search, reads the results, and writes a summary. This gives you a feel for the speed and accuracy of screen control.
+
+</Step>
+<Step title="Install the mobile app">
+
+Download the Claude app on your iPhone or Android phone. Sign in with the same Anthropic account you use on your Mac.
+
+</Step>
+<Step title="Send your first Dispatch task">
+
+Make sure the Claude Desktop App is open on your Mac. Then, from your phone:
+
+```
+Create a new folder on my Desktop called "Project Notes."
+Open TextEdit, write a short meeting agenda with three placeholder items,
+and save it in that folder as "agenda.txt."
+```
+
+Walk away. Come back a minute later and check your Desktop. The folder and file should be there, created by Claude while you were away.
+
+</Step>
+</Steps>
+
+<Callout type="success" title="You Are Up and Running">
+Once you have completed these steps, you have the full Computer Use and Dispatch workflow available. Start experimenting with more complex tasks — file organization, research, browser workflows — and build up to multi-step Dispatch tasks you run from your phone.
+</Callout>
+
+---
+
+## Next Steps
+
+- **Learn about all the places Claude Code runs**: [Where to Use Claude Code](/start-here/platforms) covers terminal, desktop, web, IDE extensions, and mobile
+- **Try voice-driven workflows**: [Voice and Remote](/start-here/voice-and-remote) shows how to combine dictation with Dispatch for hands-free productivity
+- **Set up structured tools**: [Essential MCP Servers](/mcp/essential-servers) teaches you how to install connectors and MCP servers so Claude reaches for them before Computer Use

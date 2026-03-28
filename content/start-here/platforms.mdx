@@ -1,0 +1,366 @@
+---
+title: 'Where to Use Claude Code'
+description: 'A guide to every surface where Claude Code runs — terminal, desktop app, web, VS Code, JetBrains, and mobile'
+order: 3
+track: 'start-here'
+duration: '15 minutes'
+lastUpdated: "2026-03-28"
+---
+
+# Where to Use Claude Code — Desktop, Web, Terminal, and IDE
+
+Claude Code is not a single app. It runs across half a dozen surfaces — from the terminal on your laptop to your phone screen. Each one connects to the same underlying AI, but the experience and trade-offs differ. This guide walks through every option so you can pick the right one for how you work.
+
+<Callout type="tip" title="You Don't Have to Choose Just One">
+Most people settle into two or three surfaces depending on context. A developer might use the VS Code extension during focused coding, switch to the terminal for scripting, and check in from their phone while away from the desk.
+</Callout>
+
+<Diagram title="Claude Code Surfaces" type="flowchart" caption="One AI, many entry points">
+{`flowchart TB
+    CC[Claude Code Engine] --> CLI[Terminal CLI]
+    CC --> DA[Desktop App]
+    CC --> WA[Web App]
+    CC --> VS[VS Code Extension]
+    CC --> JB[JetBrains Plugin]
+    CC --> MB[Mobile via Remote Control]
+`}
+</Diagram>
+
+---
+
+## 1. The Terminal (CLI)
+
+The terminal is where Claude Code started. If you are comfortable typing commands, this is the most direct and powerful way to use it.
+
+### Installing
+
+<Tabs defaultTab="mac">
+<TabList>
+<Tab value="mac">Mac</Tab>
+<Tab value="windows">Windows</Tab>
+</TabList>
+
+<TabPanel value="mac">
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+Then start a session by typing:
+
+```bash
+claude
+```
+
+Need the full walkthrough? See the [macOS Setup Guide](/start-here/mac-setup).
+
+</TabPanel>
+
+<TabPanel value="windows">
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+Then start a session by typing:
+
+```bash
+claude
+```
+
+Need the full walkthrough? See the [Windows Setup Guide](/start-here/windows-setup).
+
+</TabPanel>
+</Tabs>
+
+### When to Use the Terminal
+
+- **Scripting and automation** — pipe output, chain commands, integrate Claude into shell scripts
+- **Headless environments** — SSH sessions, CI/CD pipelines, remote servers
+- **Maximum control** — pass flags, set models, configure context explicitly
+
+```bash
+# One-shot mode: ask a question without entering interactive mode
+claude -p "Explain the error in server.log"
+
+# Pipe data directly into Claude
+cat data.csv | claude -p "Summarize this dataset"
+
+# Start with a specific model
+claude --model opus
+```
+
+<Callout type="note">
+The terminal CLI is the foundation. Every other surface — the desktop app, VS Code extension, and more — is built on top of this same engine.
+</Callout>
+
+---
+
+## 2. Desktop App
+
+The desktop app gives you a standalone window for Claude Code without needing to open a terminal or editor. It is available for Mac and Windows.
+
+### Getting Started
+
+<Steps>
+<Step title="Download the app">
+
+Go to [claude.com/download](https://claude.com/download) and grab the installer for your operating system.
+
+</Step>
+<Step title="Sign in">
+
+Open the app and sign in with your Anthropic account (the same one you use for claude.ai).
+
+</Step>
+<Step title="Open a project folder">
+
+Point the app at any folder on your machine. Claude can read and edit files in that directory, just like the terminal CLI.
+
+</Step>
+</Steps>
+
+### When to Use the Desktop App
+
+- **You prefer a visual interface** — file browser, clickable history, drag-and-drop
+- **You are not a developer** — no terminal knowledge required
+- **Quick project work** — open a folder, ask questions, get changes without setting up an editor
+
+<Callout type="tip">
+The desktop app is the best starting point if you have never used a terminal before. It provides the same capabilities as the CLI but with a graphical interface that feels more approachable.
+</Callout>
+
+---
+
+## 3. Web App (claude.ai/code)
+
+The web app runs entirely in your browser. No downloads, no installs — just open [claude.ai/code](https://claude.ai/code) and start working.
+
+### What It Can Do
+
+- Write, refactor, and explain code in a conversation
+- Generate files you can download
+- Run in any browser on any machine (Chromebook, library computer, a friend's laptop)
+
+### What It Cannot Do (Without Help)
+
+The web app does not have direct access to your local file system. It cannot read your project files, run terminal commands, or execute tests on its own.
+
+There is a workaround: **Remote Control**. When you pair the web app with a desktop instance of Claude Code, the web interface can send instructions that execute on your local machine. More on this in the [Mobile section below](#6-mobile-ios-android).
+
+<Callout type="warning" title="Local Files Require Remote Control">
+If you need Claude to read or modify files on your computer, use the terminal CLI, the desktop app, or an IDE extension. The web app alone only sees what you paste into the conversation.
+</Callout>
+
+### When to Use the Web App
+
+- **Away from your dev machine** — quick tasks from any browser
+- **Exploring ideas** — brainstorming, pseudocode, architecture discussions
+- **Sharing sessions** — easy to share a conversation link with a collaborator
+
+---
+
+## 4. VS Code Extension
+
+If you write code in VS Code, the Claude Code extension puts the AI right inside your editor. No context switching, no copy-pasting between windows.
+
+### Installing
+
+<Steps>
+<Step title="Open the Extensions panel">
+
+In VS Code, press <Kbd>Cmd</Kbd> + <Kbd>Shift</Kbd> + <Kbd>X</Kbd> on Mac or <Kbd>Ctrl</Kbd> + <Kbd>Shift</Kbd> + <Kbd>X</Kbd> on Windows. Search for **Claude Code** and click **Install**.
+
+</Step>
+<Step title="Sign in">
+
+After installing, you will be prompted to sign in with your Anthropic account.
+
+</Step>
+<Step title="Open the panel">
+
+<Tabs defaultTab="mac">
+<TabList>
+<Tab value="mac">Mac</Tab>
+<Tab value="windows">Windows</Tab>
+</TabList>
+
+<TabPanel value="mac">
+
+Press <Kbd>Cmd</Kbd> + <Kbd>Esc</Kbd> to open the Claude Code panel.
+
+</TabPanel>
+
+<TabPanel value="windows">
+
+Press <Kbd>Ctrl</Kbd> + <Kbd>Esc</Kbd> to open the Claude Code panel.
+
+</TabPanel>
+</Tabs>
+
+</Step>
+</Steps>
+
+### Key Features in VS Code
+
+- **Inline diffs** — Claude's proposed changes appear as a diff right in the editor. Accept or reject each change individually.
+- **Selection context** — highlight a block of code, then ask Claude about it. The selection is automatically included as context.
+- **Terminal integration** — Claude can run commands in VS Code's built-in terminal.
+- **Workspace awareness** — the extension reads your project files, `CLAUDE.md`, and `.gitignore` to understand the project structure.
+
+```
+# Example: select a function, then type in the Claude panel
+"Add error handling and unit tests for this function"
+```
+
+<Callout type="tip">
+The VS Code extension is the best choice for web development, JavaScript/TypeScript, and any project where you already live inside VS Code. You get all of Claude Code's power without leaving your editor.
+</Callout>
+
+---
+
+## 5. JetBrains Plugin
+
+If you use IntelliJ IDEA, PyCharm, WebStorm, GoLand, or any other JetBrains IDE, Claude Code works there too.
+
+### Installing
+
+<Steps>
+<Step title="Open the plugin marketplace">
+
+Go to **Settings** (or **Preferences** on Mac) then **Plugins** then **Marketplace**. Search for **Claude Code**.
+
+</Step>
+<Step title="Install and restart">
+
+Click **Install**, then restart your IDE when prompted.
+
+</Step>
+<Step title="Open the panel">
+
+<Tabs defaultTab="mac">
+<TabList>
+<Tab value="mac">Mac</Tab>
+<Tab value="windows">Windows</Tab>
+</TabList>
+
+<TabPanel value="mac">
+
+Press <Kbd>Cmd</Kbd> + <Kbd>Esc</Kbd> to open the Claude Code panel.
+
+</TabPanel>
+
+<TabPanel value="windows">
+
+Press <Kbd>Ctrl</Kbd> + <Kbd>Esc</Kbd> to open the Claude Code panel.
+
+</TabPanel>
+</Tabs>
+
+</Step>
+</Steps>
+
+### Key Features in JetBrains
+
+- **Diff viewer integration** — proposed changes show up in the familiar JetBrains diff tool
+- **Project-wide context** — Claude reads your project structure, dependencies, and run configurations
+- **Same keyboard shortcuts** — <Kbd>Cmd</Kbd>/<Kbd>Ctrl</Kbd> + <Kbd>Esc</Kbd> works across all JetBrains IDEs
+
+<Callout type="note">
+The JetBrains plugin provides the same core capabilities as the VS Code extension. Your choice between them comes down to which editor you already prefer — not which gives you more Claude features.
+</Callout>
+
+---
+
+## 6. Mobile (iOS / Android)
+
+You can interact with Claude Code from your phone using the **Remote Control** feature. You are not running Claude locally on your phone — instead, you send instructions from the Claude mobile app, and Claude executes them on your desktop machine.
+
+### How It Works
+
+<Steps>
+<Step title="Start Claude Code on your computer">
+
+Open a Claude Code session on your desktop — via the terminal, desktop app, or an IDE extension. This machine does the actual work.
+
+</Step>
+<Step title="Connect from your phone">
+
+Open the Claude app on iOS or Android. Use the Remote Control feature to pair with your active desktop session.
+
+</Step>
+<Step title="Send instructions">
+
+Type (or dictate with voice) what you want Claude to do. The instructions are sent to your desktop instance, which reads files, runs commands, and makes changes on your behalf.
+
+</Step>
+</Steps>
+
+### When to Use Mobile
+
+- **Monitoring a long-running task** — check on a build or migration from the couch
+- **Quick fixes on the go** — "Fix the typo in the homepage hero text and deploy"
+- **Voice-driven development** — dictate instructions while walking or commuting
+
+<Callout type="warning" title="Your Computer Must Be Running">
+Remote Control requires an active Claude Code session on your desktop. If your computer is asleep or Claude Code is closed, the mobile connection will not work.
+</Callout>
+
+For a deep dive on Remote Control setup and Voice Mode, see [Voice Mode and Remote Control](/start-here/voice-and-remote).
+
+---
+
+## Choosing the Right Surface
+
+Here is a quick comparison to help you decide where to start.
+
+<InfoTable
+  columns={[
+    { key: 'surface', header: 'Surface' },
+    { key: 'bestFor', header: 'Best For' },
+    { key: 'install', header: 'Install Required?' },
+    { key: 'fileAccess', header: 'Local File Access' },
+  ]}
+  rows={[
+    { surface: <strong>Terminal (CLI)</strong>, bestFor: 'Power users, scripting, automation', install: 'Yes (npm)', fileAccess: 'Full' },
+    { surface: <strong>Desktop App</strong>, bestFor: 'Visual preference, non-developers', install: 'Yes (download)', fileAccess: 'Full' },
+    { surface: <strong>Web App</strong>, bestFor: 'Quick tasks, no install needed', install: 'No', fileAccess: 'None (unless paired with Remote Control)' },
+    { surface: <strong>VS Code</strong>, bestFor: 'Web dev, JS/TS, editor integration', install: 'Yes (extension)', fileAccess: 'Full' },
+    { surface: <strong>JetBrains</strong>, bestFor: 'Java, Python, Kotlin, Go devs', install: 'Yes (plugin)', fileAccess: 'Full' },
+    { surface: <strong>Mobile</strong>, bestFor: 'Monitoring, quick fixes, voice', install: 'App + desktop session', fileAccess: 'Via Remote Control' },
+  ]}
+/>
+
+### Not Sure Where to Start?
+
+Follow this decision tree:
+
+- **Never used a terminal before?** Start with the **Desktop App**. It gives you full Claude Code power with a friendly interface.
+- **Already use VS Code?** Install the **VS Code extension**. You will barely notice the transition.
+- **Already use a JetBrains IDE?** Install the **JetBrains plugin**. Same idea.
+- **Comfortable with the command line?** The **Terminal CLI** gives you the most flexibility.
+- **Just want to try it right now?** Open the **Web App** — zero setup, instant access.
+
+---
+
+## What They All Share
+
+Regardless of which surface you pick, the core experience is the same:
+
+- **Same AI model** — Claude Opus, Sonnet, or Haiku, depending on your plan and preference
+- **Same context system** — `CLAUDE.md` files, `.gitignore` awareness, project memory
+- **Same tool access** — MCP servers, file editing, terminal commands (where the surface supports it)
+- **Same conversation model** — ask follow-ups, refine instructions, iterate on results
+
+The surface you choose is about *ergonomics*, not capability. Pick the one that fits your existing workflow, and switch when the situation calls for it.
+
+<Callout type="tip" title="Try More Than One">
+Spend a few minutes with two or three surfaces before settling in. Many people are surprised to find that a surface they did not expect to like — such as the terminal or mobile — becomes part of their regular workflow.
+</Callout>
+
+---
+
+## Next Steps
+
+- **Ready to install?** Follow the [macOS Setup Guide](/start-here/mac-setup) or [Windows Setup Guide](/start-here/windows-setup) for a complete walkthrough.
+- **Already set up?** Learn the difference between [Claude Code and the web chat interface](/start-here/claude-code-vs-web).

@@ -1,0 +1,723 @@
+---
+title: 'Claude Agent SDK — Build Production AI Agents'
+description: 'Use the Python and TypeScript SDKs to build, deploy, and monitor autonomous AI agents'
+order: 5
+track: agents
+duration: '40 minutes'
+lastUpdated: "2026-03-28"
+---
+
+# Claude Agent SDK
+
+The Agent SDK lets you embed autonomous Claude-powered agents directly into your own applications, services, and CI/CD pipelines. Unlike Claude Code (the interactive CLI), the SDK is a library you import into your code and ship as part of your product.
+
+<Callout type="info">
+Formerly called the "Claude Code SDK," the package was renamed in late 2025 to **Agent SDK** to reflect its general-purpose agent runtime capabilities. If you see older docs referencing `claude-code-sdk`, they refer to the same project.
+</Callout>
+
+<Diagram title="Where the Agent SDK Fits" type="flowchart" caption="Claude Code is for developers at a terminal. The Agent SDK is for agents running in your software.">
+{`flowchart LR
+    subgraph human["Human-in-the-Loop"]
+        A[Developer] --> B[Claude Code CLI]
+    end
+
+    subgraph automated["Autonomous Agents"]
+        C[Your App / Service] --> D[Agent SDK]
+        D --> E[Claude API]
+        E --> F[Tool Execution]
+        F --> D
+    end
+`}
+</Diagram>
+
+---
+
+## What Is the Agent SDK?
+
+The Agent SDK is available in two languages:
+
+<InfoTable
+  columns={[
+    { key: 'language', header: 'Language' },
+    { key: 'package', header: 'Package' },
+    { key: 'version', header: 'Latest Version' },
+    { key: 'install', header: 'Install Command' },
+  ]}
+  rows={[
+    { language: 'Python', package: <code>claude-agent-sdk</code>, version: 'v0.1.48', install: <code>pip install claude-agent-sdk</code> },
+    { language: 'TypeScript', package: <code>@anthropic-ai/claude-agent-sdk</code>, version: 'v0.2.71', install: <code>npm install @anthropic-ai/claude-agent-sdk</code> },
+  ]}
+/>
+
+Both packages provide the same core capabilities:
+
+- **Agent loop** — Reason, decide, execute tools, observe results, repeat
+- **Built-in tools** — Read, Edit, Bash, Grep, Glob, Write (the same tools Claude Code uses)
+- **Hooks** — Intercept and control agent behavior at every step
+- **Context management** — Handle long conversations with compaction strategies
+- **Observability** — OpenTelemetry attributes for monitoring
+
+---
+
+## When to Use the SDK vs. Claude Code
+
+This is the most common question. The answer depends on who (or what) is driving the agent.
+
+<InfoTable
+  columns={[
+    { key: 'scenario', header: 'Scenario' },
+    { key: 'tool', header: 'Use' },
+    { key: 'why', header: 'Why' },
+  ]}
+  rows={[
+    { scenario: 'Interactive coding at a terminal', tool: <strong>Claude Code</strong>, why: 'Built for human developers — approval flows, undo, conversation' },
+    { scenario: 'Automated CI/CD pipeline', tool: <strong>Agent SDK</strong>, why: 'No human present — needs programmatic control and error handling' },
+    { scenario: 'Code review bot on PRs', tool: <strong>Agent SDK</strong>, why: 'Triggered by webhook, runs unattended, posts results to GitHub' },
+    { scenario: 'Production SaaS feature', tool: <strong>Agent SDK</strong>, why: 'Embedded in your app, serves many users, needs rate limit management' },
+    { scenario: 'Exploring a new codebase', tool: <strong>Claude Code</strong>, why: 'Conversational, iterative — you steer the exploration' },
+    { scenario: 'Batch processing 100 repos', tool: <strong>Agent SDK</strong>, why: 'Parallelism, retries, structured output — all programmatic' },
+  ]}
+/>
+
+<Callout type="tip">
+**Rule of thumb:** if a human is watching and guiding, use Claude Code. If code is orchestrating the agent, use the SDK.
+</Callout>
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+You need an Anthropic API key. Set it as an environment variable:
+
+```bash
+export ANTHROPIC_API_KEY=your-key-here
+```
+
+### Installation
+
+<Tabs defaultTab="python">
+<TabList>
+  <Tab value="python">Python</Tab>
+  <Tab value="typescript">TypeScript</Tab>
+</TabList>
+
+<TabPanel value="python">
+
+```bash
+pip install claude-agent-sdk
+```
+
+Requires Python 3.10 or later.
+
+</TabPanel>
+
+<TabPanel value="typescript">
+
+```bash
+npm install @anthropic-ai/claude-agent-sdk
+```
+
+Requires Node.js 18 or later.
+
+</TabPanel>
+</Tabs>
+
+### Hello World
+
+The simplest possible agent: send a task, get a result.
+
+<Tabs defaultTab="python">
+<TabList>
+  <Tab value="python">Python</Tab>
+  <Tab value="typescript">TypeScript</Tab>
+</TabList>
+
+<TabPanel value="python">
+
+```python
+from claude_agent_sdk import Agent
+
+agent = Agent()
+
+result = agent.run("What files are in the current directory? List them.")
+print(result.output)
+```
+
+That is the entire program. The SDK handles the agent loop internally — reasoning, tool selection, execution, and observation all happen behind `agent.run()`.
+
+</TabPanel>
+
+<TabPanel value="typescript">
+
+```typescript
+import { Agent } from "@anthropic-ai/claude-agent-sdk";
+
+const agent = new Agent();
+
+const result = await agent.run(
+  "What files are in the current directory? List them."
+);
+console.log(result.output);
+```
+
+The async `run()` method resolves once the agent has finished its full reasoning and tool-execution loop.
+
+</TabPanel>
+</Tabs>
+
+---
+
+## Core Concepts
+
+### The Agent Loop
+
+Every SDK agent follows the same cycle. Understanding it is essential.
+
+<Diagram title="The Agent Loop" type="flowchart" caption="The agent repeats this cycle until it has a final answer or hits a limit.">
+{`flowchart TD
+    A[Receive Task] --> B[Reason About Next Step]
+    B --> C{Need a Tool?}
+    C -->|Yes| D[Select Tool + Arguments]
+    D --> E[Execute Tool]
+    E --> F[Observe Result]
+    F --> B
+    C -->|No| G[Return Final Answer]
+`}
+</Diagram>
+
+<Steps>
+<Step title="Receive Task">
+
+Your code calls `agent.run()` with a natural-language task.
+
+</Step>
+<Step title="Reason and Select Tool">
+
+Claude analyzes the task and accumulated context. If it needs more information or must take an action, it selects a tool and generates arguments.
+
+</Step>
+<Step title="Execute and Observe">
+
+The SDK executes the tool locally (file reads, shell commands, searches) and feeds the result back into context. The cycle repeats from Step 2.
+
+</Step>
+<Step title="Return Final Output">
+
+When the agent has enough information, it produces a text response. `agent.run()` returns this to your code.
+
+</Step>
+</Steps>
+
+### Built-in Tools
+
+SDK agents have access to the same tools Claude Code uses:
+
+<InfoTable
+  columns={[
+    { key: 'tool', header: 'Tool' },
+    { key: 'purpose', header: 'Purpose' },
+    { key: 'example', header: 'Example Use' },
+  ]}
+  rows={[
+    { tool: <strong>Read</strong>, purpose: 'Read file contents', example: 'Inspect source code, config files, logs' },
+    { tool: <strong>Write</strong>, purpose: 'Create or overwrite files', example: 'Generate new files, rewrite configs' },
+    { tool: <strong>Edit</strong>, purpose: 'Make targeted edits to files', example: 'Fix a bug, update a function' },
+    { tool: <strong>Bash</strong>, purpose: 'Run shell commands', example: 'Install packages, run tests, git operations' },
+    { tool: <strong>Grep</strong>, purpose: 'Search file contents with regex', example: 'Find all usages of a function' },
+    { tool: <strong>Glob</strong>, purpose: 'Find files by name pattern', example: 'Locate all TypeScript test files' },
+  ]}
+/>
+
+You can also restrict which tools an agent has access to:
+
+<Tabs defaultTab="python">
+<TabList>
+  <Tab value="python">Python</Tab>
+  <Tab value="typescript">TypeScript</Tab>
+</TabList>
+
+<TabPanel value="python">
+
+```python
+# Read-only agent — cannot modify files or run commands
+agent = Agent(allowed_tools=["Read", "Grep", "Glob"])
+```
+
+</TabPanel>
+
+<TabPanel value="typescript">
+
+```typescript
+// Read-only agent — cannot modify files or run commands
+const agent = new Agent({ allowedTools: ["Read", "Grep", "Glob"] });
+```
+
+</TabPanel>
+</Tabs>
+
+### Context Management
+
+Every reasoning step, tool call, and result accumulates in the message history. The SDK tracks token usage automatically and supports **compaction** — summarizing older messages when context nears the limit.
+
+<Tabs defaultTab="python">
+<TabList>
+  <Tab value="python">Python</Tab>
+  <Tab value="typescript">TypeScript</Tab>
+</TabList>
+
+<TabPanel value="python">
+
+```python
+agent = Agent(
+    system_prompt="You are a security auditor. Review code for vulnerabilities.",
+    max_turns=50,              # Stop after 50 tool-use cycles
+    max_tokens=128_000,        # Context budget
+    compaction_strategy="summarize",  # Summarize old context when near limit
+)
+```
+
+</TabPanel>
+
+<TabPanel value="typescript">
+
+```typescript
+const agent = new Agent({
+  systemPrompt:
+    "You are a security auditor. Review code for vulnerabilities.",
+  maxTurns: 50,
+  maxTokens: 128_000,
+  compactionStrategy: "summarize",
+});
+```
+
+</TabPanel>
+</Tabs>
+
+<Callout type="warning">
+**Watch your token usage.** Each tool call and result adds to the context. A Bash command that dumps a 10,000-line log file will consume a large chunk of your budget. Design your agents to read only what they need.
+</Callout>
+
+---
+
+## Hooks
+
+Hooks are the SDK's control mechanism. They let you intercept, validate, and modify agent behavior at every step — without changing the agent's core logic.
+
+### Hook Types
+
+<InfoTable
+  columns={[
+    { key: 'hook', header: 'Hook' },
+    { key: 'when', header: 'When It Fires' },
+    { key: 'use_case', header: 'Common Use Cases' },
+  ]}
+  rows={[
+    { hook: <strong>PreToolUse</strong>, use_case: 'Block dangerous commands, validate inputs, add logging', when: 'Before a tool executes' },
+    { hook: <strong>PostToolUse</strong>, use_case: 'Inspect results, trigger side effects, redact sensitive data', when: 'After a tool returns' },
+    { hook: <strong>PreMessage</strong>, use_case: 'Inject context, modify prompts, enforce guardrails', when: 'Before each LLM call' },
+    { hook: <strong>PostMessage</strong>, use_case: 'Log responses, check for hallucinations, accumulate metrics', when: 'After each LLM response' },
+  ]}
+/>
+
+### Hook Evaluation Modes
+
+Hooks can run in four modes, depending on how sophisticated your validation needs to be:
+
+1. **Inline function** — A synchronous function that returns allow/block. Fast, no extra API calls.
+2. **Prompt hook** — A single-turn LLM evaluation. The hook sends the pending action to Claude with a validation prompt and gets back a pass/fail judgment.
+3. **Agent hook** — A multi-turn verification with full tool access. The hook spins up a mini-agent that can read files, run commands, and reason before deciding.
+4. **HTTP hook** — POSTs the pending action to an external URL. Your server responds with allow/block. Useful for centralized policy enforcement.
+
+### Practical Example: Safety Guard
+
+This hook blocks any Bash command that contains destructive patterns:
+
+<Tabs defaultTab="python">
+<TabList>
+  <Tab value="python">Python</Tab>
+  <Tab value="typescript">TypeScript</Tab>
+</TabList>
+
+<TabPanel value="python">
+
+```python
+from claude_agent_sdk import Agent, Hook, HookAction
+
+BLOCKED_PATTERNS = [
+    "rm -rf /",
+    "rm -rf ~",
+    "mkfs.",
+    ":(){:|:&};:",
+    "> /dev/sda",
+    "dd if=/dev/zero",
+]
+
+def safety_guard(tool_name: str, tool_input: dict) -> HookAction:
+    """Block dangerous shell commands before they execute."""
+    if tool_name != "Bash":
+        return HookAction.ALLOW
+
+    command = tool_input.get("command", "")
+    for pattern in BLOCKED_PATTERNS:
+        if pattern in command:
+            return HookAction.BLOCK(
+                reason=f"Blocked dangerous command containing '{pattern}'"
+            )
+
+    return HookAction.ALLOW
+
+agent = Agent(
+    hooks=[
+        Hook(event="PreToolUse", handler=safety_guard),
+    ]
+)
+
+result = agent.run("Delete everything on the system")
+# The agent will attempt rm -rf /, the hook will block it,
+# and the agent will see the block reason in its context.
+```
+
+</TabPanel>
+
+<TabPanel value="typescript">
+
+```typescript
+import { Agent, Hook, HookAction } from "@anthropic-ai/claude-agent-sdk";
+
+const BLOCKED_PATTERNS = [
+  "rm -rf /",
+  "rm -rf ~",
+  "mkfs.",
+  ":(){:|:&};:",
+  "> /dev/sda",
+  "dd if=/dev/zero",
+];
+
+function safetyGuard(toolName: string, toolInput: Record<string, string>): HookAction {
+  if (toolName !== "Bash") {
+    return HookAction.ALLOW;
+  }
+
+  const command = toolInput.command ?? "";
+  for (const pattern of BLOCKED_PATTERNS) {
+    if (command.includes(pattern)) {
+      return HookAction.block(
+        `Blocked dangerous command containing '${pattern}'`
+      );
+    }
+  }
+
+  return HookAction.ALLOW;
+}
+
+const agent = new Agent({
+  hooks: [
+    new Hook({ event: "PreToolUse", handler: safetyGuard }),
+  ],
+});
+
+const result = await agent.run("Delete everything on the system");
+```
+
+</TabPanel>
+</Tabs>
+
+<Callout type="tip">
+Hooks compose. You can attach multiple hooks to the same event — they run in order, and the first `BLOCK` wins. Layer a fast pattern-match hook first, then a slower LLM-based check only if the fast one passes. For HTTP hooks, the SDK can POST pending actions to an external URL for centralized policy enforcement.
+</Callout>
+
+For more on how hooks work inside Claude Code itself, see [Claude Code Best Practices](/advanced-topics/best-practices).
+
+---
+
+## Custom Tools
+
+The built-in tools cover file and shell operations. For anything else — database queries, API calls, message sending — you define custom tools:
+
+```python
+from claude_agent_sdk import Agent, Tool
+
+def query_database(sql: str) -> str:
+    """Execute a read-only SQL query and return results as CSV."""
+    import sqlite3
+    conn = sqlite3.connect("app.db")
+    cursor = conn.execute(sql)
+    rows = cursor.fetchall()
+    headers = [desc[0] for desc in cursor.description]
+    conn.close()
+    lines = [",".join(headers)]
+    for row in rows:
+        lines.append(",".join(str(v) for v in row))
+    return "\n".join(lines)
+
+db_tool = Tool(
+    name="query_database",
+    description="Run a read-only SQL query against the application database",
+    input_schema={
+        "type": "object",
+        "properties": {
+            "sql": {"type": "string", "description": "SQL SELECT query to execute"}
+        },
+        "required": ["sql"]
+    },
+    handler=query_database,
+)
+
+agent = Agent(custom_tools=[db_tool])
+result = agent.run("How many users signed up in the last 7 days?")
+```
+
+Custom tools follow the same schema format as the Anthropic API's tool definitions. The `handler` function receives the parsed input and returns a string result.
+
+---
+
+## Example: Build a Code Review Agent
+
+Let's build something real. This agent reads a git diff, analyzes code quality, and produces a structured review.
+
+### Project Setup
+
+<FileTree>
+  <FolderNode name="code-review-agent" defaultOpen>
+    <FileNode name="reviewer.py" />
+    <FileNode name="requirements.txt" />
+    <FileNode name=".env" />
+  </FolderNode>
+</FileTree>
+
+```bash
+pip install claude-agent-sdk python-dotenv
+```
+
+### The Complete Agent
+
+```python
+import os
+import json
+from dataclasses import dataclass
+from claude_agent_sdk import Agent, Hook, HookAction
+
+@dataclass
+class ReviewComment:
+    file: str
+    line: int
+    severity: str  # "critical", "warning", "suggestion"
+    message: str
+
+class CodeReviewAgent:
+    """An agent that reviews git diffs and produces structured feedback."""
+
+    SYSTEM_PROMPT = """You are a senior code reviewer. You will be given a git diff
+to review. Your job:
+
+1. Use Bash to run `git diff` and get the changes
+2. Use Read and Grep to understand the context around each change
+3. Identify issues in these categories:
+   - Bugs or logic errors (critical)
+   - Performance problems (warning)
+   - Style and readability (suggestion)
+   - Missing error handling (warning)
+   - Security concerns (critical)
+
+4. Produce your review as a JSON array of objects with these fields:
+   - file: the file path
+   - line: the approximate line number
+   - severity: "critical", "warning", or "suggestion"
+   - message: a clear explanation of the issue and how to fix it
+
+Return ONLY the JSON array, no other text."""
+
+    def __init__(self):
+        self.agent = Agent(
+            system_prompt=self.SYSTEM_PROMPT,
+            allowed_tools=["Read", "Grep", "Glob", "Bash"],
+            max_turns=30,
+            hooks=[
+                Hook(event="PreToolUse", handler=self._restrict_bash),
+            ],
+        )
+
+    def _restrict_bash(self, tool_name: str, tool_input: dict) -> HookAction:
+        """Only allow read-only bash commands."""
+        if tool_name != "Bash":
+            return HookAction.ALLOW
+
+        command = tool_input.get("command", "")
+        allowed_prefixes = ["git diff", "git log", "git show", "git status", "cat ", "wc "]
+
+        if any(command.strip().startswith(p) for p in allowed_prefixes):
+            return HookAction.ALLOW
+
+        return HookAction.BLOCK(
+            reason=f"Only git and read-only commands are allowed. Got: {command}"
+        )
+
+    def review(self, diff_target: str = "HEAD~1") -> list[ReviewComment]:
+        """Review changes in the given diff range."""
+        result = self.agent.run(
+            f"Review the code changes in `git diff {diff_target}`. "
+            f"Focus on bugs, security issues, and maintainability."
+        )
+
+        # Parse structured output
+        try:
+            comments_data = json.loads(result.output)
+            return [ReviewComment(**c) for c in comments_data]
+        except (json.JSONDecodeError, TypeError) as e:
+            print(f"Warning: Could not parse structured output: {e}")
+            print(f"Raw output:\n{result.output}")
+            return []
+
+    def format_review(self, comments: list[ReviewComment]) -> str:
+        """Format review comments grouped by severity."""
+        if not comments:
+            return "No issues found."
+        lines = [f"## Code Review — {len(comments)} issue(s)\n"]
+        for sev in ["critical", "warning", "suggestion"]:
+            group = [c for c in comments if c.severity == sev]
+            if group:
+                lines.append(f"\n### [{sev.upper()}] ({len(group)})\n")
+                for c in group:
+                    lines.append(f"**{c.file}:{c.line}** — {c.message}\n")
+        return "\n".join(lines)
+
+if __name__ == "__main__":
+    reviewer = CodeReviewAgent()
+    comments = reviewer.review("HEAD~1")
+    print(reviewer.format_review(comments))
+```
+
+### Sample Output
+
+```
+## Code Review — 3 issue(s) found
+
+### [CRITICAL] (1)
+
+**src/auth.py:42**
+  SQL query built with string concatenation is vulnerable to injection.
+  Use parameterized queries: `cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))`
+
+### [WARNING] (1)
+
+**src/api/routes.py:118**
+  The `except Exception` clause silently swallows all errors.
+  At minimum, log the exception. Consider catching specific exception types.
+
+### [SUGGESTION] (1)
+
+**src/utils/helpers.py:7**
+  Function `do_stuff` is 85 lines long with 6 levels of nesting.
+  Extract the inner logic into well-named helper functions.
+```
+
+<Callout type="success">
+This agent is production-viable. Add it to a GitHub Actions workflow, trigger it on pull requests, and post the review as PR comments. The hook system ensures it can only run read-only commands.
+</Callout>
+
+---
+
+## Deploying Agents
+
+### Running as a Service
+
+Wrap your agent in an HTTP server for production use:
+
+```python
+from fastapi import FastAPI, BackgroundTasks
+from claude_agent_sdk import Agent
+
+app = FastAPI()
+
+@app.post("/review")
+async def review_endpoint(repo_url: str, diff_ref: str, background_tasks: BackgroundTasks):
+    """Trigger a code review. Returns immediately; posts results when done."""
+    background_tasks.add_task(run_review, repo_url, diff_ref)
+    return {"status": "queued"}
+
+async def run_review(repo_url: str, diff_ref: str):
+    agent = Agent(system_prompt="You are a code reviewer...", max_turns=30)
+    result = agent.run(f"Clone {repo_url} and review changes in {diff_ref}")
+    post_results(result.output)  # Post to GitHub, Slack, etc.
+```
+
+### Error Handling and Retries
+
+```python
+from claude_agent_sdk import Agent, AgentError, RateLimitError, ContextOverflowError
+import time
+
+def run_with_resilience(task: str, max_retries: int = 3) -> str:
+    for attempt in range(max_retries):
+        try:
+            agent = Agent(max_turns=50)
+            return agent.run(task).output
+        except RateLimitError:
+            wait = min(2 ** attempt * 10, 120)
+            print(f"Rate limited. Waiting {wait}s... (attempt {attempt + 1})")
+            time.sleep(wait)
+        except ContextOverflowError:
+            return Agent(max_turns=50, compaction_strategy="summarize").run(task).output
+        except AgentError as e:
+            if attempt == max_retries - 1:
+                raise
+    raise RuntimeError("Max retries exceeded")
+```
+
+### Rate Limits
+
+The Anthropic API enforces rate limits at two windows. Each `agent.run()` may make many API requests internally (one per loop iteration), so a 30-turn agent run could consume 30+ API calls.
+
+<InfoTable
+  columns={[
+    { key: 'window', header: 'Window' },
+    { key: 'limit', header: 'Limit Type' },
+    { key: 'strategy', header: 'Strategy' },
+  ]}
+  rows={[
+    { window: '5-hour rolling', limit: 'Requests and tokens', strategy: 'Exponential backoff with jitter. Spread batch jobs over time.' },
+    { window: '7-day rolling', limit: 'Total spend / usage', strategy: 'Monitor cumulative usage. Alert at 80% threshold. Queue non-urgent work.' },
+  ]}
+/>
+
+### Monitoring with OpenTelemetry
+
+The SDK emits OTel spans automatically. Set up your preferred exporter and every agent run produces structured traces:
+
+```python
+# Spans emitted by the SDK:
+#   agent.run       — total duration, final status
+#   agent.turn      — each reasoning + tool cycle
+#   agent.tool_call — tool name, input/output size, duration
+#   agent.llm_call  — model, tokens in/out, latency
+```
+
+This gives you dashboards showing agent duration, tool usage patterns, token consumption, and failure rates.
+
+---
+
+## Putting It All Together
+
+A checklist for your next agent project:
+
+1. **Define the task** as a single sentence. If you cannot, split across multiple agents ([Multi-Agent Architectures](/agents/multi-agent-architectures)).
+2. **Start with minimal tools.** Fewer tools means fewer decisions for the agent and more predictable behavior.
+3. **Add safety hooks** before deploying. Non-negotiable for any agent that runs Bash or writes files.
+4. **Handle failures** — retry logic, rate limit backoff, context overflow recovery.
+5. **Monitor with OTel.** Watch tool usage, token consumption, and failure rates. Refine based on real data.
+
+---
+
+## Next Steps
+
+Now that you understand the Agent SDK:
+
+- **[Building Agents](/agents/building-agents)** — Learn the fundamentals of agent design with the raw Claude API before reaching for the SDK
+- **[Multi-Agent Architectures](/agents/multi-agent-architectures)** — Orchestrate multiple SDK agents as subagents and swarms
+- **[Claude Code Best Practices](/advanced-topics/best-practices)** — Hooks, safety patterns, and workflow techniques that apply to both Claude Code and SDK agents
+
+<Callout type="success">
+**Start small.** Build a single-purpose agent that solves one problem in your workflow — a test runner, a log analyzer, a doc generator. Get it working end-to-end, then add hooks, monitoring, and error handling. The SDK makes it straightforward to grow from prototype to production.
+</Callout>
