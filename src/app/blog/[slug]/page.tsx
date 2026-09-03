@@ -78,7 +78,7 @@ const components = {
   code: ({ children, className }: { children?: React.ReactNode; className?: string }) => {
     if (!className) {
       return (
-        <code className="rounded-md bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 text-sm font-mono text-claude-700 dark:text-claude-300 border border-gray-200 dark:border-gray-700">
+        <code className="rounded-md bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 text-sm font-mono text-primary-700 dark:text-primary-300 border border-gray-200 dark:border-gray-700">
           {children}
         </code>
       )
@@ -88,7 +88,7 @@ const components = {
   a: ({ href, children }: { href?: string; children?: React.ReactNode }) => (
     <Link
       href={href || '#'}
-      className="text-claude-600 dark:text-claude-400 hover:underline"
+      className="text-primary-600 dark:text-primary-400 hover:underline"
     >
       {children}
     </Link>
@@ -138,7 +138,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         {/* Back Link */}
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-claude-600 dark:hover:text-claude-400 mb-8 transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 mb-8 transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Blog
@@ -195,7 +195,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="mt-10 pt-8 border-t border-gray-200 dark:border-gray-700">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-claude-600 dark:text-claude-400 hover:text-claude-500 dark:hover:text-claude-300 font-medium transition-colors"
+            className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300 font-medium transition-colors"
           >
             <ArrowLeft className="h-5 w-5" />
             Back to all posts

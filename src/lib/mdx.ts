@@ -13,6 +13,8 @@ export interface Frontmatter {
   prerequisites?: string[]
   platform?: 'mac' | 'windows' | 'both'
   lastUpdated?: string
+  /** True when a track's index.mdx is itself the lesson, with no sub-articles. */
+  selfContained?: boolean
 }
 
 export interface ContentFile {

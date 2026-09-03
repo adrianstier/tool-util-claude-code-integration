@@ -290,6 +290,18 @@ export default async function TrackPage({ params }: TrackPageProps) {
           </span>
         </nav>
 
+      {/* Track Header — the page's single h1 (MDX bodies must not repeat it) */}
+      <header className="mb-8">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-ink-900 dark:text-paper-50 text-balance">
+          {metadata.frontmatter.title || trackDisplayName}
+        </h1>
+        {metadata.frontmatter.description && (
+          <p className="mt-4 text-lg sm:text-xl text-ink-600 dark:text-ink-300 leading-relaxed">
+            {metadata.frontmatter.description}
+          </p>
+        )}
+      </header>
+
       {/* Track Overview from index.mdx */}
       <div className="mb-12 rounded-2xl bg-white dark:bg-gray-800 p-8 shadow-sm border border-gray-100 dark:border-gray-700">
         <div className="prose prose-lg dark:prose-invert max-w-none">

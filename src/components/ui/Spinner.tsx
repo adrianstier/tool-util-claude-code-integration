@@ -19,7 +19,7 @@ export default function Spinner({
   }
 
   const variants = {
-    primary: 'text-claude-600',
+    primary: 'text-primary-600',
     secondary: 'text-gray-600',
     white: 'text-white',
   }

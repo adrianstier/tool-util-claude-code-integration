@@ -402,7 +402,7 @@ export default function SnippetsPage() {
         <div className="mb-8">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-claude-600 dark:hover:text-claude-400 mb-4"
+            className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 mb-4"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
@@ -425,7 +425,7 @@ export default function SnippetsPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search snippets..."
               aria-label="Search code snippets"
-              className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 py-3 pl-10 pr-4 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:border-claude-500 focus:outline-none focus:ring-1 focus:ring-claude-500"
+              className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 py-3 pl-10 pr-4 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
             />
           </div>
         </div>
@@ -440,7 +440,7 @@ export default function SnippetsPage() {
                 onClick={() => setSelectedCategory(category.name)}
                 className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                   selectedCategory === category.name
-                    ? 'bg-claude-600 text-white'
+                    ? 'bg-primary-600 text-white'
                     : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
                 }`}
               >

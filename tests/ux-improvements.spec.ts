@@ -1,17 +1,18 @@
 import { test, expect } from '@playwright/test'
+import { openSearch } from './helpers'
 
 const baseURL = 'http://localhost:3001'
 
 test.describe('UX Improvements - Phase 1', () => {
   // ─────────────────────────────────────────────────────────────────
-  // Homepage Grid (7 tracks)
+  // Homepage Grid (8 tracks)
   // ─────────────────────────────────────────────────────────────────
-  test.describe('Homepage Grid (7 tracks)', () => {
+  test.describe('Homepage Grid (8 tracks)', () => {
     test.beforeEach(async ({ page }) => {
       await page.goto(baseURL)
     })
 
-    test('homepage shows all 7 track cards', async ({ page }) => {
+    test('homepage shows all 8 track cards', async ({ page }) => {
       const trackNames = [
         'Start Here',
         'Data Analysis',
@@ -20,6 +21,7 @@ test.describe('UX Improvements - Phase 1', () => {
         'Automation',
         'AI Agents',
         'MCP Integration',
+        'Advanced Topics',
       ]
 
       for (const name of trackNames) {
@@ -28,32 +30,37 @@ test.describe('UX Improvements - Phase 1', () => {
       }
     })
 
-    test('"App Builder" and "Automation" cards show "Coming Soon" tag', async ({ page }) => {
-      // App Builder card should contain a "Coming Soon" tag
-      const appBuilderCard = page.locator('a[href="/app-builder"]')
-      await expect(appBuilderCard).toBeVisible()
-      await expect(appBuilderCard.locator('text=Coming Soon')).toBeVisible()
-
-      // Automation card should contain a "Coming Soon" tag
-      const automationCard = page.locator('a[href="/automation"]')
-      await expect(automationCard).toBeVisible()
-      await expect(automationCard.locator('text=Coming Soon')).toBeVisible()
+    // No track is a stub: App Builder, Automation and Git & GitHub carry their
+    // tutorial on the landing page itself (index.mdx `selfContained: true`), so
+    // none of the cards may advertise "Coming Soon".
+    test('no track card claims "Coming Soon"', async ({ page }) => {
+      const grid = page.locator('#tracks')
+      await expect(grid.locator('text=Coming Soon')).toHaveCount(0)
     })
 
     test('"Git & GitHub" card shows "Essential" tag', async ({ page }) => {
-      const gitCard = page.locator('a[href="/git-github"]')
+      const gitCard = page.locator('#tracks a[href="/git-github"]')
       await expect(gitCard).toBeVisible()
       await expect(gitCard.locator('text=Essential')).toBeVisible()
     })
 
     test('"MCP Integration" card shows tag', async ({ page }) => {
-      const mcpCard = page.locator('a[href="/mcp"]')
+      const mcpCard = page.locator('#tracks a[href="/mcp"]')
       await expect(mcpCard).toBeVisible()
       // MCP card should have either "New" or "Advanced" tag
       const tag = mcpCard.locator('span.rounded-full')
       await expect(tag).toBeVisible()
       const tagText = await tag.textContent()
       expect(tagText === 'New' || tagText === 'Advanced').toBeTruthy()
+    })
+
+    test('every track card shows a real duration from its content', async ({ page }) => {
+      const cards = page.locator('#tracks a[href^="/"]')
+      const count = await cards.count()
+      expect(count).toBe(8)
+      for (let i = 0; i < count; i++) {
+        await expect(cards.nth(i)).toContainText(/\d+\s*(min|hours?)/)
+      }
     })
 
     test('all track cards have working links', async ({ page }) => {
@@ -86,7 +93,7 @@ test.describe('UX Improvements - Phase 1', () => {
     })
 
     test('search "MCP" shows MCP results', async ({ page }) => {
-      await page.keyboard.press('Control+k')
+      await openSearch(page)
       const searchInput = page.locator('input[placeholder="Search documentation..."]')
       await expect(searchInput).toBeVisible()
 
@@ -98,7 +105,7 @@ test.describe('UX Improvements - Phase 1', () => {
     })
 
     test('search "multi-agent" shows Multi-Agent Architectures result', async ({ page }) => {
-      await page.keyboard.press('Control+k')
+      await openSearch(page)
       const searchInput = page.locator('input[placeholder="Search documentation..."]')
       await expect(searchInput).toBeVisible()
 
@@ -109,7 +116,7 @@ test.describe('UX Improvements - Phase 1', () => {
     })
 
     test('search "skills" shows Skills result', async ({ page }) => {
-      await page.keyboard.press('Control+k')
+      await openSearch(page)
       const searchInput = page.locator('input[placeholder="Search documentation..."]')
       await expect(searchInput).toBeVisible()
 
@@ -120,7 +127,7 @@ test.describe('UX Improvements - Phase 1', () => {
     })
 
     test('clicking MCP result navigates to /mcp', async ({ page }) => {
-      await page.keyboard.press('Control+k')
+      await openSearch(page)
       const searchInput = page.locator('input[placeholder="Search documentation..."]')
       await expect(searchInput).toBeVisible()
 
@@ -146,35 +153,48 @@ test.describe('UX Improvements - Phase 1', () => {
     })
 
     test('/mcp/mcp-fundamentals loads with content', async ({ page }) => {
-      await page.goto(`${baseURL}/mcp/mcp-fundamentals`)
+      // Assert on the HTTP status, not on the words "not found" — several MCP
+      // articles legitimately quote a "Module not found" error in a code sample.
+      const response = await page.goto(`${baseURL}/mcp/mcp-fundamentals`)
+      expect(response?.status()).toBe(200)
+      await expect(page.locator('h1')).toHaveCount(1)
       await expect(page.locator('h1')).toBeVisible()
-      // Page should not be a 404
-      await expect(page.locator('text=not found')).not.toBeVisible()
     })
 
     test('/mcp/essential-servers loads with content', async ({ page }) => {
-      await page.goto(`${baseURL}/mcp/essential-servers`)
+      // Assert on the HTTP status, not on the words "not found" — several MCP
+      // articles legitimately quote a "Module not found" error in a code sample.
+      const response = await page.goto(`${baseURL}/mcp/essential-servers`)
+      expect(response?.status()).toBe(200)
+      await expect(page.locator('h1')).toHaveCount(1)
       await expect(page.locator('h1')).toBeVisible()
-      await expect(page.locator('text=not found')).not.toBeVisible()
     })
 
     test('/mcp/building-custom-mcps loads with content', async ({ page }) => {
-      await page.goto(`${baseURL}/mcp/building-custom-mcps`)
+      // Assert on the HTTP status, not on the words "not found" — several MCP
+      // articles legitimately quote a "Module not found" error in a code sample.
+      const response = await page.goto(`${baseURL}/mcp/building-custom-mcps`)
+      expect(response?.status()).toBe(200)
+      await expect(page.locator('h1')).toHaveCount(1)
       await expect(page.locator('h1')).toBeVisible()
-      await expect(page.locator('text=not found')).not.toBeVisible()
     })
 
     test('/mcp/workflows-and-troubleshooting loads with content', async ({ page }) => {
-      await page.goto(`${baseURL}/mcp/workflows-and-troubleshooting`)
+      // Assert on the HTTP status, not on the words "not found" — several MCP
+      // articles legitimately quote a "Module not found" error in a code sample.
+      const response = await page.goto(`${baseURL}/mcp/workflows-and-troubleshooting`)
+      expect(response?.status()).toBe(200)
+      await expect(page.locator('h1')).toHaveCount(1)
       await expect(page.locator('h1')).toBeVisible()
-      await expect(page.locator('text=not found')).not.toBeVisible()
     })
 
     test('MCP track page has module cards linking to subpages', async ({ page }) => {
       await page.goto(`${baseURL}/mcp`)
 
-      // The track page should have a "Modules" section with cards
-      const modulesHeading = page.locator('h2:has-text("Modules")')
+      // The shell renders exactly one "Modules" card list. MDX bodies must not
+      // add a second heading with that name (mcp/index.mdx used to).
+      const modulesHeading = page.getByRole('heading', { name: 'Modules', exact: true })
+      await expect(modulesHeading).toHaveCount(1)
       await expect(modulesHeading).toBeVisible()
 
       // Check for links to each MCP module subpage
@@ -312,16 +332,15 @@ test.describe('UX Improvements - Phase 1', () => {
         await page.goto(`${baseURL}${pagePath}`)
         await page.waitForLoadState('domcontentloaded')
 
-        // Check that no elements have claude-500 or claude-600 in their class attribute
-        // These should all have been migrated to primary-* tokens
+        // The legacy `claude-*` scale was removed from tailwind.config.ts; every
+        // usage is now a `primary-*` token. Any `claude-<shade>` class left in the
+        // markup would therefore render no colour at all, so this is a hard fail.
         const deprecatedElements = await page.evaluate(() => {
-          const allElements = document.querySelectorAll('[class*="claude-500"], [class*="claude-600"]')
-          return allElements.length
+          const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
+          const selector = shades.map((s) => `[class*="claude-${s}"]`).join(', ')
+          return document.querySelectorAll(selector).length
         })
 
-        // Note: Some legacy classes may still exist in specific tool pages.
-        // The main content and layout pages should be clean.
-        // We log a warning rather than hard-fail if legacy classes are found in rendered markup.
         expect(deprecatedElements).toBe(0)
       })
     }

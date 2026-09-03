@@ -40,8 +40,8 @@ export default function AuthorsPage() {
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
       {/* Page Header */}
       <header className="mb-12 text-center">
-        <div className="mb-4 inline-flex items-center justify-center rounded-full bg-claude-100 dark:bg-claude-900/50 p-3">
-          <Users className="h-8 w-8 text-claude-600 dark:text-claude-400" />
+        <div className="mb-4 inline-flex items-center justify-center rounded-full bg-primary-100 dark:bg-primary-900/50 p-3">
+          <Users className="h-8 w-8 text-primary-600 dark:text-primary-400" />
         </div>
         <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
           Authors & Contributors
@@ -62,7 +62,7 @@ export default function AuthorsPage() {
             <div className="flex flex-col sm:flex-row gap-6">
               {/* Avatar */}
               <div className="flex-shrink-0">
-                <div className="h-24 w-24 rounded-full bg-gradient-to-br from-claude-500 to-claude-600 flex items-center justify-center">
+                <div className="h-24 w-24 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
                   <Users className="h-12 w-12 text-white" />
                 </div>
               </div>
@@ -72,7 +72,7 @@ export default function AuthorsPage() {
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">
                   {author.name}
                 </h2>
-                <p className="text-sm text-claude-600 dark:text-claude-400 font-medium">
+                <p className="text-sm text-primary-600 dark:text-primary-400 font-medium">
                   {author.role}
                 </p>
                 <p className="mt-2 text-gray-600 dark:text-gray-300">{author.bio}</p>
@@ -112,7 +112,7 @@ export default function AuthorsPage() {
       </div>
 
       {/* Call to Action */}
-      <div className="mt-12 rounded-2xl bg-gradient-to-br from-claude-50 to-blue-50 dark:from-claude-950/50 dark:to-blue-950/50 border border-claude-200 dark:border-claude-800 p-8 text-center">
+      <div className="mt-12 rounded-2xl bg-gradient-to-br from-primary-50 to-blue-50 dark:from-primary-950/50 dark:to-blue-950/50 border border-primary-200 dark:border-primary-800 p-8 text-center">
         <h3 className="text-xl font-bold text-gray-900 dark:text-white">
           Want to Contribute?
         </h3>
@@ -124,7 +124,7 @@ export default function AuthorsPage() {
           href="https://github.com/anthropics/claude-code"
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 inline-flex items-center gap-2 rounded-lg bg-claude-600 px-4 py-2 text-sm font-medium text-white hover:bg-claude-700 transition-colors"
+          className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 transition-colors"
         >
           <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
             <path

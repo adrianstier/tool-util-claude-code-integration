@@ -80,3 +80,11 @@ ENV/
 tmp/
 temp/
 *.tmp
+# Test output (regenerated on every run — not source)
+test-results/
+playwright-report/
+screenshots/
+
+# Local, machine-specific tool state
+.claude/settings.local.json
+.serena/

@@ -39,7 +39,7 @@ export default function NotFound() {
       <div className="max-w-2xl mx-auto text-center">
         {/* 404 Visual */}
         <div className="mb-8">
-          <h1 className="text-9xl font-bold bg-gradient-to-r from-claude-600 to-orange-500 bg-clip-text text-transparent">
+          <h1 className="text-9xl font-bold bg-gradient-to-r from-primary-600 to-orange-500 bg-clip-text text-transparent">
             404
           </h1>
         </div>
@@ -57,14 +57,14 @@ export default function NotFound() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
           <Link
             href="/"
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-claude-600 to-orange-500 px-6 py-3 text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:scale-105"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-primary-600 to-orange-500 px-6 py-3 text-base font-semibold text-white shadow-md transition-all hover:shadow-lg hover:scale-105"
           >
             <Home className="h-5 w-5" />
             Go to Homepage
           </Link>
           <Link
             href="/start-here"
-            className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-claude-600 px-6 py-3 text-base font-semibold text-claude-600 dark:text-claude-400 transition-all hover:bg-claude-50 dark:hover:bg-claude-900/30"
+            className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-primary-600 px-6 py-3 text-base font-semibold text-primary-600 dark:text-primary-400 transition-all hover:bg-primary-50 dark:hover:bg-primary-900/30"
           >
             Start Learning
             <ArrowRight className="h-5 w-5" />
@@ -83,13 +83,13 @@ export default function NotFound() {
                 <Link
                   key={page.href}
                   href={page.href}
-                  className="group p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-claude-500 dark:hover:border-claude-500 hover:shadow-md transition-all"
+                  className="group p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 hover:shadow-md transition-all"
                 >
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-claude-100 dark:bg-claude-900/50 text-claude-600 dark:text-claude-400 group-hover:bg-claude-600 group-hover:text-white transition-colors">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400 group-hover:bg-primary-600 group-hover:text-white transition-colors">
                       <Icon className="h-5 w-5" />
                     </div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white group-hover:text-claude-600 dark:group-hover:text-claude-400 transition-colors">
+                    <h4 className="font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                       {page.title}
                     </h4>
                   </div>
@@ -109,14 +109,14 @@ export default function NotFound() {
             href={`https://github.com/anthropics/claude-code/issues`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-claude-600 dark:text-claude-400 hover:underline"
+            className="text-primary-600 dark:text-primary-400 hover:underline"
           >
             Report an issue
           </a>{' '}
           or{' '}
           <Link
             href="/resources"
-            className="text-claude-600 dark:text-claude-400 hover:underline"
+            className="text-primary-600 dark:text-primary-400 hover:underline"
           >
             browse resources
           </Link>

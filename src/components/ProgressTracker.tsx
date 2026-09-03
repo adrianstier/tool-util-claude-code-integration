@@ -247,7 +247,7 @@ export function ProgressBar({
       </div>
       <div className="h-2 w-full rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-claude-500 to-orange-500 transition-all duration-300"
+          className="h-full rounded-full bg-gradient-to-r from-primary-500 to-orange-500 transition-all duration-300"
           style={{ width: `${percentage}%` }}
         />
       </div>
@@ -271,7 +271,7 @@ export function ProgressStats({ className = '' }: { className?: string }) {
   return (
     <div className={`grid grid-cols-3 gap-4 ${className}`}>
       <div className="text-center">
-        <div className="text-2xl font-bold text-claude-600 dark:text-claude-400">
+        <div className="text-2xl font-bold text-primary-600 dark:text-primary-400">
           {progress.completedModules.length}
         </div>
         <div className="text-xs text-gray-500 dark:text-gray-400">

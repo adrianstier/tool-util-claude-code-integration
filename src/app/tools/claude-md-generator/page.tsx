@@ -163,7 +163,7 @@ ${config.specialInstructions || 'No special instructions.'}
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       {/* Breadcrumbs */}
       <nav className="mb-8 flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
-        <Link href="/" className="hover:text-claude-600 dark:hover:text-claude-400">
+        <Link href="/" className="hover:text-primary-600 dark:hover:text-primary-400">
           Home
         </Link>
         <span>/</span>
@@ -196,7 +196,7 @@ ${config.specialInstructions || 'No special instructions.'}
                 value={config.projectName}
                 onChange={(e) => setConfig({ ...config, projectName: e.target.value })}
                 placeholder="my-awesome-project"
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 text-gray-900 dark:text-white placeholder-gray-400 focus:border-claude-500 focus:outline-none focus:ring-2 focus:ring-claude-200 dark:focus:ring-claude-800"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 text-gray-900 dark:text-white placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:focus:ring-primary-800"
               />
             </div>
 
@@ -208,7 +208,7 @@ ${config.specialInstructions || 'No special instructions.'}
               <select
                 value={config.projectType}
                 onChange={(e) => setConfig({ ...config, projectType: e.target.value })}
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 text-gray-900 dark:text-white focus:border-claude-500 focus:outline-none focus:ring-2 focus:ring-claude-200 dark:focus:ring-claude-800"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 text-gray-900 dark:text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:focus:ring-primary-800"
               >
                 {projectTypes.map((type) => (
                   <option key={type.value} value={type.value}>
@@ -226,7 +226,7 @@ ${config.specialInstructions || 'No special instructions.'}
               <select
                 value={config.language}
                 onChange={(e) => setConfig({ ...config, language: e.target.value, framework: '' })}
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 text-gray-900 dark:text-white focus:border-claude-500 focus:outline-none focus:ring-2 focus:ring-claude-200 dark:focus:ring-claude-800"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 text-gray-900 dark:text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:focus:ring-primary-800"
               >
                 {languages.map((lang) => (
                   <option key={lang.value} value={lang.value}>
@@ -244,7 +244,7 @@ ${config.specialInstructions || 'No special instructions.'}
               <select
                 value={config.framework}
                 onChange={(e) => setConfig({ ...config, framework: e.target.value })}
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 text-gray-900 dark:text-white focus:border-claude-500 focus:outline-none focus:ring-2 focus:ring-claude-200 dark:focus:ring-claude-800"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 text-gray-900 dark:text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:focus:ring-primary-800"
               >
                 <option value="">Select framework...</option>
                 {frameworks[config.language as keyof typeof frameworks]?.map((fw) => (
@@ -265,7 +265,7 @@ ${config.specialInstructions || 'No special instructions.'}
                 onChange={(e) => setConfig({ ...config, description: e.target.value })}
                 placeholder="A brief description of what your project does..."
                 rows={3}
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 text-gray-900 dark:text-white placeholder-gray-400 focus:border-claude-500 focus:outline-none focus:ring-2 focus:ring-claude-200 dark:focus:ring-claude-800"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 text-gray-900 dark:text-white placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:focus:ring-primary-800"
               />
             </div>
 
@@ -279,7 +279,7 @@ ${config.specialInstructions || 'No special instructions.'}
                 onChange={(e) => setConfig({ ...config, keyFiles: e.target.value })}
                 placeholder="- src/: Main application code&#10;- tests/: Test files&#10;- config/: Configuration files"
                 rows={4}
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 font-mono text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-claude-500 focus:outline-none focus:ring-2 focus:ring-claude-200 dark:focus:ring-claude-800"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 font-mono text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:focus:ring-primary-800"
               />
             </div>
 
@@ -293,7 +293,7 @@ ${config.specialInstructions || 'No special instructions.'}
                 onChange={(e) => setConfig({ ...config, avoidFiles: e.target.value })}
                 placeholder="- node_modules/&#10;- .env&#10;- dist/"
                 rows={3}
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 font-mono text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-claude-500 focus:outline-none focus:ring-2 focus:ring-claude-200 dark:focus:ring-claude-800"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 font-mono text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:focus:ring-primary-800"
               />
             </div>
 
@@ -307,7 +307,7 @@ ${config.specialInstructions || 'No special instructions.'}
                 onChange={(e) => setConfig({ ...config, codingStyle: e.target.value })}
                 placeholder="- Use functional components in React&#10;- Prefer const over let&#10;- Always use TypeScript types"
                 rows={4}
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 font-mono text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-claude-500 focus:outline-none focus:ring-2 focus:ring-claude-200 dark:focus:ring-claude-800"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 font-mono text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:focus:ring-primary-800"
               />
             </div>
 
@@ -321,7 +321,7 @@ ${config.specialInstructions || 'No special instructions.'}
                 onChange={(e) => setConfig({ ...config, testingApproach: e.target.value })}
                 placeholder="- Use Jest for unit tests&#10;- Playwright for E2E tests&#10;- TDD when adding new features"
                 rows={3}
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 font-mono text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-claude-500 focus:outline-none focus:ring-2 focus:ring-claude-200 dark:focus:ring-claude-800"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 font-mono text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:focus:ring-primary-800"
               />
             </div>
 
@@ -335,7 +335,7 @@ ${config.specialInstructions || 'No special instructions.'}
                 onChange={(e) => setConfig({ ...config, specialInstructions: e.target.value })}
                 placeholder="Any additional context or instructions for Claude..."
                 rows={3}
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 text-gray-900 dark:text-white placeholder-gray-400 focus:border-claude-500 focus:outline-none focus:ring-2 focus:ring-claude-200 dark:focus:ring-claude-800"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 text-gray-900 dark:text-white placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:focus:ring-primary-800"
               />
             </div>
 
@@ -343,7 +343,7 @@ ${config.specialInstructions || 'No special instructions.'}
             <button
               onClick={generateClaudeMd}
               disabled={!config.projectName}
-              className="w-full rounded-lg bg-gradient-to-r from-claude-600 to-orange-500 px-6 py-3 font-semibold text-white shadow-md transition-all hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full rounded-lg bg-gradient-to-r from-primary-600 to-orange-500 px-6 py-3 font-semibold text-white shadow-md transition-all hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Generate CLAUDE.md
             </button>
@@ -364,7 +364,7 @@ ${config.specialInstructions || 'No special instructions.'}
                 </button>
                 <button
                   onClick={handleDownload}
-                  className="rounded-lg bg-claude-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-claude-700"
+                  className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700"
                 >
                   Download
                 </button>
@@ -389,30 +389,30 @@ ${config.specialInstructions || 'No special instructions.'}
       </div>
 
       {/* Tips */}
-      <div className="mt-12 rounded-2xl bg-claude-50 dark:bg-gray-800 p-8 border border-claude-200 dark:border-gray-700">
+      <div className="mt-12 rounded-2xl bg-primary-50 dark:bg-gray-800 p-8 border border-primary-200 dark:border-gray-700">
         <div className="mb-4 flex items-center gap-2">
-          <Lightbulb className="h-6 w-6 text-claude-600 dark:text-claude-400" />
+          <Lightbulb className="h-6 w-6 text-primary-600 dark:text-primary-400" />
           <h3 className="text-xl font-bold text-gray-900 dark:text-white">Tips for a Great CLAUDE.md</h3>
         </div>
         <ul className="space-y-2 text-gray-700 dark:text-gray-300">
           <li className="flex items-start">
-            <CheckCircle2 className="h-5 w-5 flex-shrink-0 mr-2 text-claude-600 dark:text-claude-400" />
+            <CheckCircle2 className="h-5 w-5 flex-shrink-0 mr-2 text-primary-600 dark:text-primary-400" />
             <span>Be specific about your project structure and key files</span>
           </li>
           <li className="flex items-start">
-            <CheckCircle2 className="h-5 w-5 flex-shrink-0 mr-2 text-claude-600 dark:text-claude-400" />
+            <CheckCircle2 className="h-5 w-5 flex-shrink-0 mr-2 text-primary-600 dark:text-primary-400" />
             <span>Include coding conventions and style preferences</span>
           </li>
           <li className="flex items-start">
-            <CheckCircle2 className="h-5 w-5 flex-shrink-0 mr-2 text-claude-600 dark:text-claude-400" />
+            <CheckCircle2 className="h-5 w-5 flex-shrink-0 mr-2 text-primary-600 dark:text-primary-400" />
             <span>Mention testing approach and requirements</span>
           </li>
           <li className="flex items-start">
-            <CheckCircle2 className="h-5 w-5 flex-shrink-0 mr-2 text-claude-600 dark:text-claude-400" />
+            <CheckCircle2 className="h-5 w-5 flex-shrink-0 mr-2 text-primary-600 dark:text-primary-400" />
             <span>List files and directories to avoid modifying</span>
           </li>
           <li className="flex items-start">
-            <CheckCircle2 className="h-5 w-5 flex-shrink-0 mr-2 text-claude-600 dark:text-claude-400" />
+            <CheckCircle2 className="h-5 w-5 flex-shrink-0 mr-2 text-primary-600 dark:text-primary-400" />
             <span>Update CLAUDE.md as your project evolves</span>
           </li>
         </ul>

@@ -41,7 +41,7 @@ export default async function BlogPage() {
         {posts.map((post) => (
           <article
             key={post.slug}
-            className="group relative rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6 shadow-sm transition-all hover:shadow-lg hover:border-claude-300 dark:hover:border-claude-600"
+            className="group relative rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6 shadow-sm transition-all hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600"
           >
             <div className="flex flex-col gap-4">
               {/* Date & Tags */}
@@ -73,7 +73,7 @@ export default async function BlogPage() {
 
               {/* Title & Description */}
               <div>
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-claude-600 dark:group-hover:text-claude-400 transition-colors">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                   <Link href={`/blog/${post.slug}`} className="hover:underline">
                     {post.title}
                   </Link>
@@ -86,7 +86,7 @@ export default async function BlogPage() {
               </div>
 
               {/* Read More */}
-              <div className="flex items-center gap-1 text-sm font-semibold text-claude-600 dark:text-claude-400">
+              <div className="flex items-center gap-1 text-sm font-semibold text-primary-600 dark:text-primary-400">
                 <span>Read more</span>
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
@@ -112,7 +112,7 @@ export default async function BlogPage() {
       <div className="mt-12 text-center">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-claude-600 dark:text-claude-400 hover:text-claude-500 dark:hover:text-claude-300 font-medium transition-colors"
+          className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300 font-medium transition-colors"
         >
           <svg
             className="h-5 w-5"

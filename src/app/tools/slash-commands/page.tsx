@@ -252,7 +252,7 @@ export default function SlashCommandsLibrary() {
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       {/* Breadcrumbs */}
       <nav className="mb-8 flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
-        <Link href="/" className="hover:text-claude-600 dark:hover:text-claude-400">
+        <Link href="/" className="hover:text-primary-600 dark:hover:text-primary-400">
           Home
         </Link>
         <span>/</span>
@@ -282,7 +282,7 @@ export default function SlashCommandsLibrary() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search by name, description, or tags..."
-              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 text-gray-900 dark:text-white placeholder-gray-400 focus:border-claude-500 focus:outline-none focus:ring-2 focus:ring-claude-200 dark:focus:ring-claude-800"
+              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 text-gray-900 dark:text-white placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:focus:ring-primary-800"
             />
           </div>
 
@@ -294,7 +294,7 @@ export default function SlashCommandsLibrary() {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 text-gray-900 dark:text-white focus:border-claude-500 focus:outline-none focus:ring-2 focus:ring-claude-200 dark:focus:ring-claude-800"
+              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 py-2 text-gray-900 dark:text-white focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:focus:ring-primary-800"
             >
               <option value="All">All Categories</option>
               {categories.map((cat) => (
@@ -323,7 +323,7 @@ export default function SlashCommandsLibrary() {
               <div className="flex items-start justify-between">
                 <div>
                   <h3 className="text-xl font-bold text-gray-900 dark:text-white">{command.name}</h3>
-                  <span className="inline-block mt-1 rounded-full bg-claude-100 dark:bg-claude-900/50 px-3 py-1 text-xs font-medium text-claude-800 dark:text-claude-300">
+                  <span className="inline-block mt-1 rounded-full bg-primary-100 dark:bg-primary-900/50 px-3 py-1 text-xs font-medium text-primary-800 dark:text-primary-300">
                     {command.category}
                   </span>
                 </div>
@@ -370,15 +370,15 @@ export default function SlashCommandsLibrary() {
       </div>
 
       {/* How to Use */}
-      <div className="mt-12 rounded-2xl bg-claude-50 dark:bg-gray-800 p-8 border border-claude-200 dark:border-gray-700">
+      <div className="mt-12 rounded-2xl bg-primary-50 dark:bg-gray-800 p-8 border border-primary-200 dark:border-gray-700">
         <div className="mb-4 flex items-center gap-2">
-          <BookOpen className="h-6 w-6 text-claude-600 dark:text-claude-400" />
+          <BookOpen className="h-6 w-6 text-primary-600 dark:text-primary-400" />
           <h3 className="text-xl font-bold text-gray-900 dark:text-white">How to Use Slash Commands</h3>
         </div>
         <div className="space-y-4 text-gray-700 dark:text-gray-300">
           <div>
             <p className="font-semibold mb-2">1. Create the command file</p>
-            <code className="block rounded bg-white dark:bg-gray-900 px-3 py-2 text-sm font-mono border border-claude-200 dark:border-gray-600 text-gray-800 dark:text-gray-200">
+            <code className="block rounded bg-white dark:bg-gray-900 px-3 py-2 text-sm font-mono border border-primary-200 dark:border-gray-600 text-gray-800 dark:text-gray-200">
               .claude/commands/command-name.md
             </code>
           </div>

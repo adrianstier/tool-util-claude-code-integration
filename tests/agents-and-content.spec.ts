@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test'
+import { openSearch } from './helpers'
 
 const baseURL = 'http://localhost:3001'
 
@@ -400,7 +401,7 @@ test.describe('Navigation and Integration', () => {
     await page.goto(baseURL)
 
     // Open search
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
 
     // Wait for modal
     const searchInput = page.locator('input[placeholder="Search documentation..."]')
@@ -410,7 +411,9 @@ test.describe('Navigation and Integration', () => {
     await page.keyboard.type('agents')
 
     // Check results
-    const agentResult = page.locator('button:has-text("AI Agents")')
+    // Search now derives entries from content/, so "agents" legitimately matches
+    // several results; assert the track landing is among them.
+    const agentResult = page.locator('button:has-text("AI Agents")').first()
     await expect(agentResult).toBeVisible()
   })
 
@@ -418,7 +421,7 @@ test.describe('Navigation and Integration', () => {
     await page.goto(baseURL)
 
     // Open search
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
 
     // Wait for modal
     const searchInput = page.locator('input[placeholder="Search documentation..."]')

@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import SearchModal from './SearchModal'
+import type { SearchIndexItem } from '@/lib/search'
 import ThemeToggle from './ThemeToggle'
 
 const navigationItems: Array<{ name: string; href: string; icon: LucideIcon; description?: string }> = [
@@ -24,7 +25,11 @@ const navigationItems: Array<{ name: string; href: string; icon: LucideIcon; des
   { name: 'Resources', href: '/resources', icon: BookOpen, description: 'Guides & references' },
 ]
 
-export default function Navigation() {
+export default function Navigation({
+  searchItems = [],
+}: {
+  searchItems?: SearchIndexItem[]
+}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
@@ -51,7 +56,7 @@ export default function Navigation() {
           : 'bg-transparent'
       }`}
     >
-      <SearchModal />
+      <SearchModal contentItems={searchItems} />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-18 items-center justify-between">
           {/* Logo */}

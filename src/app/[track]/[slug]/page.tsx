@@ -110,7 +110,7 @@ const components = {
   code: ({ children, className }: { children?: React.ReactNode; className?: string }) => {
     if (!className) {
       return (
-        <code className="rounded-md bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 text-sm font-mono text-claude-700 dark:text-claude-300 border border-gray-200 dark:border-gray-700">
+        <code className="rounded-md bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 text-sm font-mono text-primary-700 dark:text-primary-300 border border-gray-200 dark:border-gray-700">
           {children}
         </code>
       )
@@ -273,14 +273,14 @@ export default async function ContentPage({ params }: PageProps) {
             <nav className="mb-8 flex items-center gap-2 text-sm text-ink-600 dark:text-ink-300">
               <Link
                 href="/"
-                className="hover:text-claude-600 dark:hover:text-claude-400 transition-colors"
+                className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
               >
                 Home
               </Link>
               <ChevronRight className="h-4 w-4" />
               <Link
                 href={`/${track}`}
-                className="hover:text-claude-600 dark:hover:text-claude-400 transition-colors"
+                className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
               >
                 {trackNames[track] || track}
               </Link>
@@ -388,7 +388,7 @@ export default async function ContentPage({ params }: PageProps) {
             <nav className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
               <Link
                 href={`/${track}`}
-                className="inline-flex items-center gap-2 text-claude-600 dark:text-claude-400 hover:text-claude-500 dark:hover:text-claude-300 font-medium transition-colors"
+                className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300 font-medium transition-colors"
               >
                 <svg
                   className="h-5 w-5"
@@ -425,7 +425,7 @@ export default async function ContentPage({ params }: PageProps) {
                   <li>
                     <Link
                       href={`/${track}`}
-                      className="text-gray-600 dark:text-gray-400 hover:text-claude-600 dark:hover:text-claude-400 transition-colors"
+                      className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                     >
                       {trackNames[track]} Overview
                     </Link>
@@ -433,7 +433,7 @@ export default async function ContentPage({ params }: PageProps) {
                   <li>
                     <Link
                       href="/start-here"
-                      className="text-gray-600 dark:text-gray-400 hover:text-claude-600 dark:hover:text-claude-400 transition-colors"
+                      className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                     >
                       Getting Started
                     </Link>
@@ -441,7 +441,7 @@ export default async function ContentPage({ params }: PageProps) {
                   <li>
                     <Link
                       href="/advanced-topics/best-practices"
-                      className="text-gray-600 dark:text-gray-400 hover:text-claude-600 dark:hover:text-claude-400 transition-colors"
+                      className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                     >
                       Best Practices
                     </Link>

@@ -291,7 +291,7 @@ export default function MCPExplorerPage() {
         <div className="mb-8">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-claude-600 dark:hover:text-claude-400 mb-4"
+            className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 mb-4"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
@@ -313,7 +313,7 @@ export default function MCPExplorerPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search MCP servers..."
-              className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 py-3 pl-10 pr-4 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:border-claude-500 focus:outline-none focus:ring-1 focus:ring-claude-500"
+              className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 py-3 pl-10 pr-4 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
             />
           </div>
         </div>
@@ -326,7 +326,7 @@ export default function MCPExplorerPage() {
               onClick={() => setSelectedCategory(category)}
               className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                 selectedCategory === category
-                  ? 'bg-claude-600 text-white'
+                  ? 'bg-primary-600 text-white'
                   : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
               }`}
             >
@@ -356,7 +356,7 @@ export default function MCPExplorerPage() {
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-claude-100 dark:bg-claude-900/30 text-claude-600 dark:text-claude-400">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400">
                         {server.icon}
                       </div>
                       <div>
@@ -425,7 +425,7 @@ export default function MCPExplorerPage() {
                       href={server.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1 rounded-lg bg-claude-600 px-4 py-2 text-sm font-medium text-white hover:bg-claude-700 transition-colors"
+                      className="flex items-center gap-1 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 transition-colors"
                     >
                       <ExternalLink className="h-4 w-4" />
                       Docs
@@ -446,7 +446,7 @@ export default function MCPExplorerPage() {
                             key={idx}
                             className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400"
                           >
-                            <div className="h-1 w-1 rounded-full bg-claude-500" />
+                            <div className="h-1 w-1 rounded-full bg-primary-500" />
                             {feature}
                           </li>
                         ))}
@@ -483,7 +483,7 @@ export default function MCPExplorerPage() {
         {/* Info Box */}
         <div className="mt-12 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
           <div className="flex items-start gap-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-claude-100 dark:bg-claude-900/30 text-claude-600 dark:text-claude-400">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400">
               <FileText className="h-5 w-5" />
             </div>
             <div>
@@ -498,7 +498,7 @@ export default function MCPExplorerPage() {
                 href="https://modelcontextprotocol.io"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-claude-600 dark:text-claude-400 hover:text-claude-700 dark:hover:text-claude-300"
+                className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300"
               >
                 Learn more about MCP
                 <ExternalLink className="h-3 w-3" />

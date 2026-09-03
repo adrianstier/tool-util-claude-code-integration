@@ -47,18 +47,33 @@ Client-side only (no backend auth in V1). Progress tracked in localStorage via `
 
 ```
 content/
-  start-here/         # 10 articles — setup, research workflows, case studies
-  git-github/         # Git & GitHub fundamentals
-  agents/             # 4 articles — using, building, products, multi-agent
-  mcp/                # 5 articles — fundamentals, servers, custom, workflows
-  advanced-topics/    # 3 articles — best practices, skills, MCP+Cursor
-  data-analysis/      # Index + Python intro + R intro (stubs)
-  app-builder/        # Index only (coming soon)
-  automation/         # Index only (coming soon)
+  start-here/         # 11 articles — setup, platforms, voice/remote, research
+  advanced-topics/    # 5 articles — best practices, power features, skills, plugins, cursor
+  agents/             # 5 articles — using, building, products, multi-agent, SDK
+  mcp/                # 4 articles — fundamentals, servers, custom, workflows
+  data-analysis/      # 2 articles — Python intro, R intro
+  app-builder/        # Self-contained landing page + computer use & dispatch
+  git-github/         # Self-contained landing page (the whole tutorial)
+  automation/         # Self-contained landing page (the whole tutorial)
   blog/               # Blog posts
 ```
 
-Each MDX file has frontmatter: `title`, `description`, `order`, `track`, `duration`, `platform`, `prerequisites`, `lastUpdated`.
+**Self-contained tracks.** `git-github`, `automation` and `app-builder` carry their
+tutorial on `index.mdx` itself and declare `selfContained: true`. `getTrackStats()`
+(`src/lib/tracks.ts`) counts that as a lesson, so the homepage reports honest
+durations and never shows a false "Coming Soon".
+
+Each MDX file has frontmatter: `title`, `description`, `order`, `track`, `duration`, `platform`, `prerequisites`, `lastUpdated`, and (on self-contained track indexes) `selfContained`.
+
+Two rules the content pipeline depends on:
+
+1. **Never start an MDX body with `# Heading`.** The page shell renders `title` as the
+   page's only `<h1>` — for articles, blog posts *and* track landings. A body `#` creates
+   a duplicate `<h1>` (an a11y/SEO defect that shipped site-wide until 2026-09-03). Start
+   at `##`.
+2. **`order` is unique within a track**, numbered `1..N`; every `index.mdx` is `order: 0`.
+   Track position on the homepage comes from the `learningTracks` array in
+   `src/app/page.tsx`, *not* from frontmatter.
 
 ## File Ownership
 
@@ -92,9 +107,13 @@ Shared/cross-cutting (changes here affect many things):
 
 ## V1 Status
 
-**Shipped**: Start Here, Git & GitHub, Agents, MCP, Advanced Topics tracks. Interactive tools (CLAUDE.md generator, MCP explorer, slash commands, snippets, cheatsheets, templates). Newsletter API. GA4 analytics. Progress tracking (client-side). Glossary. Blog with RSS.
+**Shipped** (as of 2026-09-03): all 8 tracks have content — Start Here, Advanced Topics,
+Agents, MCP, Data Analysis (2 articles), plus Git & GitHub, Automation and App Builder as
+self-contained landing-page tutorials. Interactive tools (CLAUDE.md generator, MCP explorer, slash commands, snippets, cheatsheets, templates). Newsletter API. GA4 analytics. Progress tracking (client-side). Glossary. Blog with RSS.
 
-**Deferred to V1.5**: Data Analysis track (full Python/R tutorials), App Builder track, Automation track, user authentication, server-side progress persistence.
+**Deferred to V1.5**: deeper Python/R tutorials in Data Analysis, breaking the
+self-contained tracks into multi-article sequences, user authentication, server-side
+progress persistence.
 
 ## Environment
 
@@ -108,8 +127,15 @@ All env vars are optional for local dev. See `.env.example`. Key ones:
 ### Add a new article to an existing track
 
 1. Create `content/<track>/<slug>.mdx` with frontmatter (see existing articles for format)
-2. Set `order` to position it in the track's sequence
-3. The dynamic route `[track]/[slug]` picks it up automatically — no router changes needed
+2. Set `order` to position it in the track's sequence, and renumber siblings so the values
+   stay unique — do not reuse a number
+3. Start the body at `##`, never `#` (the shell owns the `<h1>`)
+4. The dynamic route `[track]/[slug]` picks it up automatically — no router changes needed.
+   Search (`src/lib/search.ts`), the sitemap, and the homepage duration all derive from the
+   file, so nothing else needs editing.
+5. **Adding the first sub-article to `git-github`** also switches off the legacy
+   `/git-github/:slug` → `/git-github` 301 in `next.config.js`; that redirect is generated
+   only while the track has no sub-articles, so it will not swallow the new page.
 
 ### Add a new learning track
 

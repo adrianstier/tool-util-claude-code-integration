@@ -1,3 +1,5 @@
+> **Archived 2026-09-03.** The `screenshots/` directory is regenerated test output and is no longer committed, so the image links below no longer resolve. Run `npx playwright test tests/visual-test.spec.ts` to recreate them locally.
+
 # Visual Test Results
 
 ## Summary

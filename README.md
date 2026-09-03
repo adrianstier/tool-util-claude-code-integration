@@ -4,6 +4,8 @@
 
 A free, guided learning platform for Claude Code, VS Code, Git/GitHub, Python, R, MCP, and AI agents. Step-by-step tutorials designed for beginners through advanced developers.
 
+*Last updated: 2026-09-03*
+
 ## Quick Start
 
 ```bash
@@ -28,16 +30,18 @@ Open [http://localhost:3001](http://localhost:3001).
 
 ## Learning Tracks
 
-| Track | Status | Duration |
-|---|---|---|
-| **Start Here** — Mac/Windows setup for Claude Code, VS Code, Git | ✅ Complete | 60-75 min |
-| **Git & GitHub** — Version control fundamentals | ✅ Complete | 3-4 hours |
-| **AI Agents** — Building autonomous agents, multi-agent architectures | ✅ Complete | 8-10 hours |
-| **MCP Integration** — Model Context Protocol servers & workflows | ✅ Complete | 4-6 hours |
-| **Advanced Topics** — Best practices, skills, Cursor/MCP integration | ✅ Complete | Varies |
-| **Data Analysis** — Python & R for data work | 🚧 Index only | 4-6 hours |
-| **App Builder** — Web app development with Claude | 🚧 Index only | Coming soon |
-| **Automation** — Scripts & workflow automation | 🚧 Index only | Coming soon |
+| Track | Lessons | Duration | Shape |
+|---|---|---|---|
+| **Start Here** — setup, platforms, research workflows, voice & remote | 11 | 5.3 hours | Landing page + articles |
+| **AI Agents** — using, building, the Agent SDK, multi-agent architectures | 5 | 11 hours | Landing page + articles |
+| **App Builder** — web apps, computer use & dispatch | 2 | 7.4 hours | Self-contained landing page + 1 article |
+| **Advanced Topics** — best practices, power features, skills, plugins & hooks | 5 | 4.6 hours | Landing page + articles |
+| **Data Analysis** — Python & R for data work | 2 | 4 hours | Landing page + articles |
+| **Automation** — scripts & workflow automation | 1 | 3.5 hours | Self-contained landing page |
+| **MCP Integration** — Model Context Protocol servers & workflows | 4 | 3 hours | Landing page + articles |
+| **Git & GitHub** — version control fundamentals | 1 | 90 min | Self-contained landing page |
+
+Three tracks (`git-github`, `automation`, `app-builder`) carry their tutorial **on the landing page itself**, declared with `selfContained: true` in `index.mdx` frontmatter. The homepage reads durations and readiness from the content via `getTrackStats()` (`src/lib/tracks.ts`) rather than a hardcoded list, so a card cannot advertise a track that has not been written.
 
 ## Interactive Tools
 
@@ -71,6 +75,8 @@ src/
     ...
   lib/
     mdx.ts                # MDX file loading & frontmatter parsing
+    search.ts             # Builds the search index from content/ at build time
+    tracks.ts             # Derives per-track lesson count & duration from content
     metadata.ts           # SEO metadata & JSON-LD schema generators
     analytics.ts          # GA4 event tracking
     constants.ts          # Track definitions, site config
@@ -79,14 +85,14 @@ src/
   data/
     resources.ts          # Curated resource listings
 content/                  # MDX learning content
-  start-here/             # 10 articles (setup, research workflows, etc.)
-  git-github/             # Git fundamentals
-  agents/                 # 4 articles (using, building, products, multi-agent)
-  mcp/                    # 5 articles (fundamentals, servers, custom, workflows)
-  advanced-topics/        # 3 articles (best practices, skills, MCP+Cursor)
-  data-analysis/          # Index + Python intro + R intro
-  app-builder/            # Index only
-  automation/             # Index only
+  start-here/             # 11 articles (setup, platforms, voice/remote, research)
+  advanced-topics/        # 5 articles (best practices, power features, skills, plugins)
+  agents/                 # 5 articles (using, building, products, multi-agent, SDK)
+  mcp/                    # 4 articles (fundamentals, servers, custom, workflows)
+  data-analysis/          # 2 articles (Python intro, R intro)
+  app-builder/            # Self-contained landing page + computer use & dispatch
+  git-github/             # Self-contained landing page (the whole tutorial)
+  automation/             # Self-contained landing page (the whole tutorial)
   blog/                   # Blog posts
 templates/                # Starter templates for new projects
 public/                   # Static assets, OG image, manifest, robots.txt
@@ -139,14 +145,18 @@ Articles are MDX files in `content/<track>/<slug>.mdx` with frontmatter:
 ---
 title: "Article Title"
 description: "Brief description for SEO"
-order: 1
+order: 1                # unique within the track; index.mdx is always 0
 track: "start-here"
-duration: "15 min"
+duration: "15 min"      # feeds the homepage track duration
 platform: "both"        # mac | windows | both
 prerequisites: ["mac-setup"]
-lastUpdated: "2025-12-15"
+lastUpdated: "2026-03-28"
 ---
 ```
+
+**Do not start the MDX body with an `# H1`.** The page shell renders the `title`
+as the page's only `<h1>`; a heading in the body creates a second one. Start at
+`##`.
 
 Available MDX components: `Callout`, `Tabs`/`Tab`, `Steps`/`Step`, `FileTree`, `InfoTable`, `Diagram`, `KeyboardShortcut`.
 

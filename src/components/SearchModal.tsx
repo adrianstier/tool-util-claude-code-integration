@@ -4,254 +4,112 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { Search, X, FileText, Rocket, BarChart3, Hammer, Zap, BookOpen, ArrowRight, Command, FolderOpen, Code, FileCode, Server, Brain } from 'lucide-react'
 
-interface SearchItem {
-  title: string
-  description: string
-  href: string
-  category: string
-  icon: React.ReactNode
+import type { SearchIndexItem } from '@/lib/search'
+
+type SearchItem = SearchIndexItem
+
+/** Icon keys are used because React elements cannot cross the server boundary. */
+const ICONS: Record<string, React.ReactNode> = {
+  rocket: <Rocket className="h-4 w-4" />,
+  chart: <BarChart3 className="h-4 w-4" />,
+  hammer: <Hammer className="h-4 w-4" />,
+  zap: <Zap className="h-4 w-4" />,
+  brain: <Brain className="h-4 w-4" />,
+  server: <Server className="h-4 w-4" />,
+  code: <Code className="h-4 w-4" />,
+  file: <FileText className="h-4 w-4" />,
+  fileCode: <FileCode className="h-4 w-4" />,
+  folder: <FolderOpen className="h-4 w-4" />,
+  command: <Command className="h-4 w-4" />,
+  book: <BookOpen className="h-4 w-4" />,
 }
 
-const searchItems: SearchItem[] = [
-  {
-    title: 'Start Here',
-    description: 'Get started with Claude Code - installation and setup',
-    href: '/start-here',
-    category: 'Learning Tracks',
-    icon: <Rocket className="h-4 w-4" />,
-  },
-  {
-    title: 'Claude Code vs Web',
-    description: 'Compare Claude Code CLI with the web interface, permissions, and prompt optimization',
-    href: '/start-here/claude-code-vs-web',
-    category: 'Learning Tracks',
-    icon: <Rocket className="h-4 w-4" />,
-  },
-  {
-    title: 'Claude Code for Researchers',
-    description: 'Research workflows with Python, R, and Claude Code for data analysis',
-    href: '/start-here/claude-code-for-researchers',
-    category: 'Learning Tracks',
-    icon: <Rocket className="h-4 w-4" />,
-  },
-  {
-    title: 'Research Case Studies',
-    description: 'Real-world examples from raw data to publication-ready figures',
-    href: '/start-here/research-case-studies',
-    category: 'Learning Tracks',
-    icon: <Rocket className="h-4 w-4" />,
-  },
-  {
-    title: 'Collaboration Workflows',
-    description: 'Working with grad students, co-authors, and research teams',
-    href: '/start-here/collaboration-workflows',
-    category: 'Learning Tracks',
-    icon: <Rocket className="h-4 w-4" />,
-  },
-  {
-    title: 'Research Limitations',
-    description: 'When not to use Claude Code - for skeptical PIs',
-    href: '/start-here/research-limitations',
-    category: 'Learning Tracks',
-    icon: <Rocket className="h-4 w-4" />,
-  },
-  {
-    title: 'Grant & Manuscript Pipeline',
-    description: 'BCO-DMO documentation, supplementary materials, grant proposals',
-    href: '/start-here/academic-pipeline',
-    category: 'Learning Tracks',
-    icon: <Rocket className="h-4 w-4" />,
-  },
-  {
-    title: 'First 30 Minutes Exercise',
-    description: 'Guided hands-on exercise with your own data',
-    href: '/start-here/quick-start-exercise',
-    category: 'Learning Tracks',
-    icon: <Rocket className="h-4 w-4" />,
-  },
-  {
-    title: 'Data Analysis',
-    description: 'Learn data analysis workflows with Python and R',
-    href: '/data-analysis',
-    category: 'Learning Tracks',
-    icon: <BarChart3 className="h-4 w-4" />,
-  },
-  {
-    title: 'Python Track',
-    description: 'Learn pandas, matplotlib, and scikit-learn for data analysis',
-    href: '/data-analysis/python-intro',
-    category: 'Learning Tracks',
-    icon: <BarChart3 className="h-4 w-4" />,
-  },
-  {
-    title: 'R Track',
-    description: 'Learn tidyverse, ggplot2, and statistical analysis with R',
-    href: '/data-analysis/r-intro',
-    category: 'Learning Tracks',
-    icon: <BarChart3 className="h-4 w-4" />,
-  },
-  {
-    title: 'App Builder',
-    description: 'Build full-stack applications with Claude Code',
-    href: '/app-builder',
-    category: 'Learning Tracks',
-    icon: <Hammer className="h-4 w-4" />,
-  },
-  {
-    title: 'Automation',
-    description: 'Automate tasks and workflows with Claude Code',
-    href: '/automation',
-    category: 'Learning Tracks',
-    icon: <Zap className="h-4 w-4" />,
-  },
-  {
-    title: 'Git & GitHub Basics',
-    description: 'Learn version control with Git and collaboration with GitHub',
-    href: '/git-github',
-    category: 'Resources',
-    icon: <BookOpen className="h-4 w-4" />,
-  },
-  {
-    title: 'Best Practices',
-    description: 'Learn best practices for working with Claude Code',
-    href: '/advanced-topics/best-practices',
-    category: 'Advanced',
-    icon: <FileText className="h-4 w-4" />,
-  },
-  {
-    title: 'MCP & Cursor',
-    description: 'Model Context Protocol and Cursor integration',
-    href: '/advanced-topics/mcp-and-cursor',
-    category: 'Advanced',
-    icon: <FileText className="h-4 w-4" />,
-  },
+/**
+ * Entries that do not come from content/*. Learning-track entries are derived
+ * from the MDX files and passed in as `contentItems`, so new articles are
+ * searchable without touching this file.
+ */
+const staticItems: SearchItem[] = [
   {
     title: 'CLAUDE.md Generator',
-    description: 'Generate custom CLAUDE.md files for your projects',
+    description: 'Build a project CLAUDE.md interactively',
     href: '/tools/claude-md-generator',
     category: 'Tools',
-    icon: <FileText className="h-4 w-4" />,
+    iconKey: 'file',
   },
   {
     title: 'Slash Commands Library',
-    description: 'Browse and use pre-built slash commands',
+    description: 'Ready-to-use slash commands for Claude Code',
     href: '/tools/slash-commands',
     category: 'Tools',
-    icon: <Command className="h-4 w-4" />,
+    iconKey: 'command',
   },
   {
     title: 'Project Templates',
-    description: 'Ready-to-use project templates with CLAUDE.md files',
+    description: 'Starter templates for new projects',
     href: '/tools/templates',
     category: 'Tools',
-    icon: <FolderOpen className="h-4 w-4" />,
+    iconKey: 'folder',
   },
   {
     title: 'Code Snippets',
-    description: 'Copy-paste code snippets for common patterns',
+    description: 'Copy-paste patterns for common tasks',
     href: '/tools/snippets',
     category: 'Tools',
-    icon: <Code className="h-4 w-4" />,
+    iconKey: 'code',
   },
   {
     title: 'Cheat Sheets',
-    description: 'Printable quick reference guides',
+    description: 'Quick reference cards for Claude Code, Git, and the terminal',
     href: '/tools/cheatsheets',
     category: 'Tools',
-    icon: <FileCode className="h-4 w-4" />,
+    iconKey: 'fileCode',
   },
   {
     title: 'MCP Server Explorer',
-    description: 'Browse and install MCP servers',
+    description: 'Browse and compare MCP servers',
     href: '/tools/mcp-explorer',
     category: 'Tools',
-    icon: <Server className="h-4 w-4" />,
+    iconKey: 'server',
   },
   {
-    title: 'AI Agents',
-    description: 'Build, use, and deploy autonomous AI agents',
-    href: '/agents',
-    category: 'Learning Tracks',
-    icon: <Brain className="h-4 w-4" />,
+    title: 'Glossary',
+    description: 'Plain-English definitions of Claude Code, Git, and AI terms',
+    href: '/glossary',
+    category: 'Resources',
+    iconKey: 'book',
   },
   {
-    title: 'Building Agents',
-    description: 'Learn to build agents from scratch with Claude Agent SDK',
-    href: '/agents/building-agents',
-    category: 'Learning Tracks',
-    icon: <Brain className="h-4 w-4" />,
+    title: 'Resources',
+    description: 'Curated guides, docs, and references',
+    href: '/resources',
+    category: 'Resources',
+    iconKey: 'book',
   },
   {
-    title: 'Using Agents',
-    description: 'Master prompting, tool selection, and output handling',
-    href: '/agents/using-agents',
-    category: 'Learning Tracks',
-    icon: <Brain className="h-4 w-4" />,
-  },
-  {
-    title: 'Agent Products',
-    description: 'Build and deploy production-ready agent products',
-    href: '/agents/agent-products',
-    category: 'Learning Tracks',
-    icon: <Brain className="h-4 w-4" />,
-  },
-  {
-    title: 'Multi-Agent Architectures',
-    description: 'Design and build systems with multiple collaborating agents',
-    href: '/agents/multi-agent-architectures',
-    category: 'Learning Tracks',
-    icon: <Brain className="h-4 w-4" />,
-  },
-  {
-    title: 'MCP Integration',
-    description: 'Connect Claude to databases, APIs, and external tools with Model Context Protocol',
-    href: '/mcp',
-    category: 'Learning Tracks',
-    icon: <Server className="h-4 w-4" />,
-  },
-  {
-    title: 'MCP Fundamentals',
-    description: 'Core concepts of the Model Context Protocol',
-    href: '/mcp/mcp-fundamentals',
-    category: 'Learning Tracks',
-    icon: <Server className="h-4 w-4" />,
-  },
-  {
-    title: 'Essential MCP Servers',
-    description: 'Must-know MCP servers for common workflows',
-    href: '/mcp/essential-servers',
-    category: 'Learning Tracks',
-    icon: <Server className="h-4 w-4" />,
-  },
-  {
-    title: 'Building Custom MCPs',
-    description: 'Create your own MCP servers for custom integrations',
-    href: '/mcp/building-custom-mcps',
-    category: 'Learning Tracks',
-    icon: <Server className="h-4 w-4" />,
-  },
-  {
-    title: 'MCP Workflows & Troubleshooting',
-    description: 'Real-world MCP workflows and debugging common issues',
-    href: '/mcp/workflows-and-troubleshooting',
-    category: 'Learning Tracks',
-    icon: <Server className="h-4 w-4" />,
-  },
-  {
-    title: 'Skills',
-    description: 'Create and manage custom Claude Code skills and slash commands',
-    href: '/advanced-topics/skills',
-    category: 'Advanced',
-    icon: <FileText className="h-4 w-4" />,
+    title: 'Blog',
+    description: 'Updates and notes from the site',
+    href: '/blog',
+    category: 'Resources',
+    iconKey: 'file',
   },
 ]
 
-export default function SearchModal() {
+export default function SearchModal({
+  contentItems = [],
+}: {
+  contentItems?: SearchIndexItem[]
+}) {
   const [isOpen, setIsOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
+
+  const searchItems = useMemo(
+    () => [...contentItems, ...staticItems],
+    [contentItems]
+  )
 
   const filteredItems = useMemo(() => {
     if (!query) return searchItems
@@ -262,7 +120,7 @@ export default function SearchModal() {
         item.description.toLowerCase().includes(lowerQuery) ||
         item.category.toLowerCase().includes(lowerQuery)
     )
-  }, [query])
+  }, [query, searchItems])
 
   // Group items by category
   const groupedItems = useMemo(() => {
@@ -425,7 +283,7 @@ export default function SearchModal() {
                             : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
                         }`}
                       >
-                        {item.icon}
+                        {ICONS[item.iconKey] ?? ICONS.file}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-medium truncate">{item.title}</div>

@@ -112,19 +112,6 @@ const config: Config = {
           900: '#581c87',
           950: '#3b0764',
         },
-        // Keep claude colors for backwards compatibility
-        claude: {
-          50: '#fdf8f6',
-          100: '#f9ede7',
-          200: '#f4d9cd',
-          300: '#ebbea8',
-          400: '#df9577',
-          500: '#d47352',
-          600: '#c45a3a',
-          700: '#a3472f',
-          800: '#863c2b',
-          900: '#6e3428',
-        },
         // Semantic colors
         success: {
           50: '#f0fdf4',

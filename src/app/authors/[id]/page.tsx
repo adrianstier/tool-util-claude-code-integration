@@ -167,7 +167,7 @@ export default function AuthorPage({ params }: PageProps) {
         {/* Back Link */}
         <Link
           href="/authors"
-          className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-claude-600 dark:hover:text-claude-400 mb-8"
+          className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 mb-8"
         >
           <ArrowLeft className="h-4 w-4" />
           All Authors
@@ -178,7 +178,7 @@ export default function AuthorPage({ params }: PageProps) {
           <div className="flex flex-col sm:flex-row gap-6 items-start">
             {/* Avatar */}
             <div className="flex-shrink-0">
-              <div className="h-32 w-32 rounded-full bg-gradient-to-br from-claude-500 to-claude-600 flex items-center justify-center shadow-lg">
+              <div className="h-32 w-32 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center shadow-lg">
                 <Users className="h-16 w-16 text-white" />
               </div>
             </div>
@@ -188,7 +188,7 @@ export default function AuthorPage({ params }: PageProps) {
               <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
                 {author.name}
               </h1>
-              <p className="mt-1 text-lg text-claude-600 dark:text-claude-400 font-medium">
+              <p className="mt-1 text-lg text-primary-600 dark:text-primary-400 font-medium">
                 {author.role}
               </p>
 
@@ -212,7 +212,7 @@ export default function AuthorPage({ params }: PageProps) {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-300 hover:text-claude-600 dark:hover:text-claude-400 transition-colors"
+                    className="inline-flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                   >
                     <ExternalLink className="h-3.5 w-3.5" />
                     {link.name}
@@ -244,7 +244,7 @@ export default function AuthorPage({ params }: PageProps) {
             {author.expertise.map((topic) => (
               <span
                 key={topic}
-                className="inline-flex items-center rounded-full bg-claude-100 dark:bg-claude-900/50 px-3 py-1 text-sm font-medium text-claude-700 dark:text-claude-300"
+                className="inline-flex items-center rounded-full bg-primary-100 dark:bg-primary-900/50 px-3 py-1 text-sm font-medium text-primary-700 dark:text-primary-300"
               >
                 {topic}
               </span>
@@ -262,9 +262,9 @@ export default function AuthorPage({ params }: PageProps) {
               <Link
                 key={`${article.track}/${article.slug}`}
                 href={`/${article.track}/${article.slug}`}
-                className="block rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-4 hover:shadow-md hover:border-claude-300 dark:hover:border-claude-600 transition-all"
+                className="block rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-4 hover:shadow-md hover:border-primary-300 dark:hover:border-primary-600 transition-all"
               >
-                <span className="text-xs font-medium text-claude-600 dark:text-claude-400">
+                <span className="text-xs font-medium text-primary-600 dark:text-primary-400">
                   {trackNames[article.track] || article.track}
                 </span>
                 <h3 className="mt-1 font-semibold text-gray-900 dark:text-white line-clamp-2">
@@ -283,7 +283,7 @@ export default function AuthorPage({ params }: PageProps) {
             <div className="mt-6 text-center">
               <Link
                 href="/start-here"
-                className="inline-flex items-center gap-2 text-claude-600 dark:text-claude-400 hover:text-claude-700 dark:hover:text-claude-300 font-medium"
+                className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium"
               >
                 View all content
                 <ArrowLeft className="h-4 w-4 rotate-180" />

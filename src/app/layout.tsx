@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Space_Grotesk, JetBrains_Mono } from 'next/font/goog
 import Script from 'next/script'
 import './globals.css'
 import Navigation from '@/components/Navigation'
+import { getContentSearchItems } from '@/lib/search'
 import Footer from '@/components/Footer'
 import { ProgressProvider } from '@/components/ProgressTracker'
 import { ThemeProvider } from '@/components/ThemeProvider'
@@ -160,7 +161,7 @@ export default function RootLayout({
               Skip to main content
             </a>
             <div className="flex min-h-screen flex-col">
-              <Navigation />
+              <Navigation searchItems={getContentSearchItems()} />
               <main id="main-content" className="flex-1">{children}</main>
               <Footer />
             </div>

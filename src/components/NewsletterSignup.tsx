@@ -78,7 +78,7 @@ export default function NewsletterSignup({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 py-2 pl-10 pr-4 text-sm text-gray-900 dark:text-white placeholder-gray-500 focus:border-claude-500 focus:outline-none focus:ring-1 focus:ring-claude-500"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 py-2 pl-10 pr-4 text-sm text-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
                 disabled={status === 'loading'}
                 aria-invalid={status === 'error'}
                 aria-describedby={status === 'error' ? 'newsletter-error-compact' : undefined}
@@ -87,7 +87,7 @@ export default function NewsletterSignup({
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="inline-flex items-center justify-center rounded-lg bg-claude-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-claude-500 disabled:opacity-50"
+              className="inline-flex items-center justify-center rounded-lg bg-primary-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-500 disabled:opacity-50"
             >
               {status === 'loading' ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -107,14 +107,14 @@ export default function NewsletterSignup({
   if (variant === 'hero') {
     return (
       <div
-        className={`relative overflow-hidden rounded-2xl bg-gradient-to-br from-claude-600 via-claude-500 to-orange-500 p-8 md:p-12 ${className}`}
+        className={`relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-600 via-primary-500 to-orange-500 p-8 md:p-12 ${className}`}
       >
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
         <div className="relative">
           <h3 className="text-2xl font-bold text-white md:text-3xl">
             Stay Updated with Claude Code
           </h3>
-          <p className="mt-3 max-w-xl text-claude-100">
+          <p className="mt-3 max-w-xl text-primary-100">
             Get weekly tips, new tutorials, and Claude Code updates delivered to your inbox.
             No spam, unsubscribe anytime.
           </p>
@@ -163,7 +163,7 @@ export default function NewsletterSignup({
             <p id="newsletter-error-hero" role="alert" className="mt-3 text-sm text-red-200">{message}</p>
           )}
 
-          <p className="mt-4 text-sm text-claude-200">
+          <p className="mt-4 text-sm text-primary-200">
             Join developers learning with Claude Code
           </p>
         </div>
@@ -177,8 +177,8 @@ export default function NewsletterSignup({
       className={`rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 ${className}`}
     >
       <div className="flex items-center gap-3 mb-4">
-        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-claude-100 dark:bg-claude-900/50">
-          <Mail className="h-5 w-5 text-claude-600 dark:text-claude-400" />
+        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/50">
+          <Mail className="h-5 w-5 text-primary-600 dark:text-primary-400" />
         </div>
         <div>
           <h4 className="font-semibold text-gray-900 dark:text-white">
@@ -207,7 +207,7 @@ export default function NewsletterSignup({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
-              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 py-2.5 px-4 text-gray-900 dark:text-white placeholder-gray-500 focus:border-claude-500 focus:outline-none focus:ring-1 focus:ring-claude-500"
+              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 py-2.5 px-4 text-gray-900 dark:text-white placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
               disabled={status === 'loading'}
               aria-invalid={status === 'error'}
               aria-describedby={status === 'error' ? 'newsletter-error-default' : undefined}
@@ -216,7 +216,7 @@ export default function NewsletterSignup({
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-claude-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-claude-500 disabled:opacity-50"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-500 disabled:opacity-50"
           >
             {status === 'loading' ? (
               <Loader2 className="h-4 w-4 animate-spin" />

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { getTrackStats } from '@/lib/tracks'
 import {
   Rocket,
   BarChart3,
@@ -110,93 +111,106 @@ const learningTracks = [
   {
     title: 'Start Here',
     description: 'Install and configure Claude Code, VS Code, and Git/GitHub on Mac or Windows',
+    slug: 'start-here',
     href: '/start-here',
     icon: Rocket,
     gradient: 'from-primary-500 to-amber-500',
     bgColor: 'bg-primary-50 dark:bg-primary-950/30',
     borderColor: 'border-primary-200 dark:border-primary-800',
     iconBg: 'bg-primary-100 dark:bg-primary-900/50',
-    duration: '60-75 min',
     tag: 'Essential',
     tagColor: 'bg-sage-100 dark:bg-sage-900/40 text-sage-700 dark:text-sage-300',
   },
   {
     title: 'Data Analysis',
     description: 'Learn Python or R for data cleaning, visualization, and modeling with Claude',
+    slug: 'data-analysis',
     href: '/data-analysis',
     icon: BarChart3,
     gradient: 'from-cobalt-500 to-plum-500',
     bgColor: 'bg-cobalt-50 dark:bg-cobalt-950/30',
     borderColor: 'border-cobalt-200 dark:border-cobalt-800',
     iconBg: 'bg-cobalt-100 dark:bg-cobalt-900/50',
-    duration: '4-6 hours',
     tag: 'Popular',
     tagColor: 'bg-cobalt-100 dark:bg-cobalt-900/40 text-cobalt-700 dark:text-cobalt-300',
   },
   {
     title: 'Git & GitHub',
     description: 'Learn version control with Git and collaboration with GitHub',
+    slug: 'git-github',
     href: '/git-github',
     icon: GitBranch,
     gradient: 'from-cobalt-500 to-sage-500',
     bgColor: 'bg-cobalt-50 dark:bg-cobalt-950/30',
     borderColor: 'border-cobalt-200 dark:border-cobalt-800',
     iconBg: 'bg-cobalt-100 dark:bg-cobalt-900/50',
-    duration: '3-4 hours',
     tag: 'Essential',
     tagColor: 'bg-sage-100 dark:bg-sage-900/40 text-sage-700 dark:text-sage-300',
   },
   {
     title: 'App Builder',
     description: 'Build and deploy small web apps and APIs with Claude as your co-developer',
+    slug: 'app-builder',
     href: '/app-builder',
     icon: Hammer,
     gradient: 'from-plum-500 to-primary-500',
     bgColor: 'bg-plum-50 dark:bg-plum-950/30',
     borderColor: 'border-plum-200 dark:border-plum-800',
     iconBg: 'bg-plum-100 dark:bg-plum-900/50',
-    duration: '6-8 hours',
     tag: 'Hands-On',
     tagColor: 'bg-plum-100 dark:bg-plum-900/40 text-plum-700 dark:text-plum-300',
   },
   {
     title: 'Automation',
     description: 'Create scripts and workflows to automate repetitive tasks with Claude',
+    slug: 'automation',
     href: '/automation',
     icon: Zap,
     gradient: 'from-amber-500 to-primary-500',
     bgColor: 'bg-amber-50 dark:bg-amber-950/30',
     borderColor: 'border-amber-200 dark:border-amber-800',
     iconBg: 'bg-amber-100 dark:bg-amber-900/50',
-    duration: '3-4 hours',
     tag: 'Practical',
     tagColor: 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300',
   },
   {
     title: 'AI Agents',
     description: 'Build autonomous agents that can reason, plan, and take actions',
+    slug: 'agents',
     href: '/agents',
     icon: Brain,
     gradient: 'from-sage-500 to-cobalt-500',
     bgColor: 'bg-sage-50 dark:bg-sage-950/30',
     borderColor: 'border-sage-200 dark:border-sage-800',
     iconBg: 'bg-sage-100 dark:bg-sage-900/50',
-    duration: '8-10 hours',
     tag: 'Advanced',
     tagColor: 'bg-sage-100 dark:bg-sage-900/40 text-sage-700 dark:text-sage-300',
   },
   {
     title: 'MCP Integration',
     description: 'Connect Claude to databases, APIs, and external tools with Model Context Protocol',
+    slug: 'mcp',
     href: '/mcp',
     icon: Server,
     gradient: 'from-plum-500 to-cobalt-500',
     bgColor: 'bg-plum-50 dark:bg-plum-950/30',
     borderColor: 'border-plum-200 dark:border-plum-800',
     iconBg: 'bg-plum-100 dark:bg-plum-900/50',
-    duration: '4-6 hours',
     tag: 'New',
     tagColor: 'bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300',
+  },
+  {
+    title: 'Advanced Topics',
+    description: 'Best practices, skills, plugins and hooks, and power features for daily use',
+    slug: 'advanced-topics',
+    href: '/advanced-topics',
+    icon: Settings,
+    gradient: 'from-ink-500 to-cobalt-500',
+    bgColor: 'bg-ink-50 dark:bg-ink-950/30',
+    borderColor: 'border-ink-200 dark:border-ink-800',
+    iconBg: 'bg-ink-100 dark:bg-ink-800',
+    tag: 'Advanced',
+    tagColor: 'bg-sage-100 dark:bg-sage-900/40 text-sage-700 dark:text-sage-300',
   },
 ]
 
@@ -338,6 +352,13 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {learningTracks.map((track) => {
                 const Icon = track.icon
+                // Duration and readiness come from the MDX content, so a card can
+                // never advertise a track that has not been written yet.
+                const stats = getTrackStats(track.slug)
+                const tag = stats.available ? track.tag : 'Coming Soon'
+                const tagColor = stats.available
+                  ? track.tagColor
+                  : 'bg-ink-100 dark:bg-ink-800 text-ink-600 dark:text-ink-300'
                 return (
                   <Link
                     key={track.title}
@@ -359,9 +380,11 @@ export default function Home() {
 
                     {/* Footer */}
                     <div className="flex items-center justify-between mt-auto pt-4 border-t border-ink-100 dark:border-ink-800">
-                      <span className="text-xs text-ink-500 dark:text-ink-400">{track.duration}</span>
-                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${track.tagColor}`}>
-                        {track.tag}
+                      <span className="text-xs text-ink-500 dark:text-ink-400">
+                        {stats.durationLabel}
+                      </span>
+                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${tagColor}`}>
+                        {tag}
                       </span>
                     </div>
 

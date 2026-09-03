@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test'
+import { openSearch } from './helpers'
 
 const baseURL = 'http://localhost:3001'
 
@@ -100,7 +101,7 @@ test.describe('Search Modal', () => {
 
   test('should open with Cmd+K shortcut', async ({ page }) => {
     // Press Ctrl+K (Meta+K doesn't always work in Playwright)
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
 
     // Check modal is visible
     const searchInput = page.locator('input[placeholder="Search documentation..."]')
@@ -120,7 +121,7 @@ test.describe('Search Modal', () => {
 
   test('should close with Escape key', async ({ page }) => {
     // Open modal
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
 
     // Press Escape
     await page.keyboard.press('Escape')
@@ -132,7 +133,7 @@ test.describe('Search Modal', () => {
 
   test('should close when clicking backdrop', async ({ page }) => {
     // Open modal
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
 
     // Wait for modal to open
     const searchInput = page.locator('input[placeholder="Search documentation..."]')
@@ -147,7 +148,7 @@ test.describe('Search Modal', () => {
 
   test('should filter results based on search query', async ({ page }) => {
     // Open modal
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
 
     // Wait for modal to be ready
     const searchInput = page.locator('input[placeholder="Search documentation..."]')
@@ -163,7 +164,7 @@ test.describe('Search Modal', () => {
 
   test('should navigate results with arrow keys', async ({ page }) => {
     // Open modal
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
 
     // Wait for modal to be visible
     await expect(page.locator('input[placeholder="Search documentation..."]')).toBeVisible()
@@ -180,11 +181,16 @@ test.describe('Search Modal', () => {
     await page.goto('http://localhost:3001')
 
     // Open modal
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
 
     // Wait for modal to open
     const searchInput = page.locator('input[placeholder="Search documentation..."]')
     await expect(searchInput).toBeVisible()
+
+    // Wait for the results list to render before pressing Enter — the list is
+    // built from the content index, so an Enter fired too early hits nothing.
+    const firstResult = page.locator('button:has-text("Start Here")').first()
+    await expect(firstResult).toBeVisible()
 
     // Press Enter (selects first item)
     await page.keyboard.press('Enter')
@@ -197,7 +203,7 @@ test.describe('Search Modal', () => {
     await page.goto('http://localhost:3001')
 
     // Open modal
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
 
     // Wait for modal to open
     const searchInput = page.locator('input[placeholder="Search documentation..."]')
@@ -217,7 +223,7 @@ test.describe('Search Modal', () => {
 
   test('should show "no results" message for invalid search', async ({ page }) => {
     // Open modal
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
 
     // Type invalid search query
     await page.keyboard.type('xyznonexistent')
@@ -229,7 +235,7 @@ test.describe('Search Modal', () => {
 
   test('should clear search on close and reopen', async ({ page }) => {
     // Open modal and search
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
 
     // Wait for modal
     const searchInput = page.locator('input[placeholder="Search documentation..."]')
@@ -239,7 +245,7 @@ test.describe('Search Modal', () => {
 
     // Close and reopen
     await page.keyboard.press('Escape')
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
 
     // Check search is cleared
     await expect(searchInput).toHaveValue('')
@@ -247,7 +253,7 @@ test.describe('Search Modal', () => {
 
   test('should display all tool pages in search', async ({ page }) => {
     // Open modal
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
 
     // Wait for modal
     const searchInput = page.locator('input[placeholder="Search documentation..."]')
@@ -284,7 +290,7 @@ test.describe('Project Templates Gallery', () => {
 
   test('should show "All" category by default', async ({ page }) => {
     const allButton = page.locator('button:has-text("All")')
-    await expect(allButton).toHaveClass(/bg-claude-600/)
+    await expect(allButton).toHaveClass(/bg-primary-600/)
   })
 
   test('should expand template to show files', async ({ page }) => {
@@ -742,7 +748,7 @@ test.describe('Cross-feature Integration', () => {
     await darkButton.click()
 
     // Open search (use Control+k for Playwright compatibility)
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
 
     // Check search modal has dark styles - use the dialog role selector
     const searchModal = page.locator('[role="dialog"][aria-label="Search documentation"]')
@@ -753,7 +759,7 @@ test.describe('Cross-feature Integration', () => {
     await page.goto('http://localhost:3001')
 
     // Open search (use Control+k for Playwright compatibility)
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
 
     // Search for cheat sheets
     await page.keyboard.type('cheat')
@@ -854,7 +860,7 @@ test.describe('Accessibility', () => {
     await page.goto('http://localhost:3001')
 
     // Open search (use Control+k for Playwright compatibility)
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
 
     // Check input is focused
     const searchInput = page.locator('input[placeholder="Search documentation..."]')
@@ -865,7 +871,7 @@ test.describe('Accessibility', () => {
     await page.goto('http://localhost:3001')
 
     // Open search (use Control+k for Playwright compatibility)
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
 
     // Wait for modal to be visible
     const searchInput = page.locator('input[placeholder="Search documentation..."]')
@@ -897,7 +903,7 @@ test.describe('Edge Cases', () => {
 
     // Rapidly open and close search (use Control+k for Playwright compatibility)
     for (let i = 0; i < 5; i++) {
-      await page.keyboard.press('Control+k')
+      await openSearch(page)
       await page.keyboard.press('Escape')
     }
 
@@ -909,7 +915,7 @@ test.describe('Edge Cases', () => {
     await page.goto('http://localhost:3001')
 
     // Open search and press Enter with empty query (use Control+k for Playwright compatibility)
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
     await page.keyboard.press('Enter')
 
     // Should navigate to first item
@@ -920,7 +926,7 @@ test.describe('Edge Cases', () => {
     await page.goto('http://localhost:3001')
 
     // Open search and type special characters (use Control+k for Playwright compatibility)
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
     await page.keyboard.type('!@#$%^&*()')
 
     // Should show no results without crashing
@@ -932,7 +938,7 @@ test.describe('Edge Cases', () => {
     await page.goto('http://localhost:3001')
 
     // Open search and type very long query (use Control+k for Playwright compatibility)
-    await page.keyboard.press('Control+k')
+    await openSearch(page)
     await page.keyboard.type('a'.repeat(100))
 
     // Should show no results without crashing

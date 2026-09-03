@@ -1,6 +1,6 @@
 # UX Improvement Plan — Claude Code Learning Hub
 
-**Date:** February 11, 2026
+**Date:** February 11, 2026 · *Last updated: 2026-09-03*
 **Analysis by:** 4-agent UX swarm (Information Architecture, Visual Design & Accessibility, Learning Experience, Technical Performance)
 
 ---
@@ -21,20 +21,20 @@ The platform has a strong foundation — well-structured MDX content, a cohesive
 ### Homepage & Navigation
 
 - **Add Git & GitHub + MCP tracks to homepage grid** — Currently missing from `learningTracks` array in `src/app/page.tsx` (lines 108-174). Users cannot discover 2 of 8 tracks from the homepage.
-- **Reconcile "Coming Soon" status for App Builder & Automation** — Both show "Coming Soon" tags on homepage but are recommended in `LEARNING_PATHS`. Either hide from homepage cards or deliver at least 1 complete tutorial per track.
-- **Fix MCP order collision** — `content/mcp/index.mdx` and `content/agents/index.mdx` both have `order: 6`. Assign MCP `order: 7`.
-- **Add MCP and Agents tracks to SearchModal** — `src/components/SearchModal.tsx` hardcodes ~50 items; MCP modules and multi-agent-architectures are missing.
+- ~~**Reconcile "Coming Soon" status for App Builder & Automation**~~ — **DONE.** Both landing pages are full tutorials (2,100+ words each), now declared with `selfContained: true` in their frontmatter. Homepage duration and readiness are derived from the content by `getTrackStats()` (`src/lib/tracks.ts`), so a card can no longer advertise a track that is not written.
+- ~~**Fix MCP order collision**~~ — **DONE 2026-09-03.** Track `index.mdx` files never fed track ordering (that comes from the `learningTracks` array in `src/app/page.tsx`), so their `order` was misleading. All index files are now `order: 0` and articles are numbered `1..N`, unique within each track.
+- ~~**Add MCP and Agents tracks to SearchModal**~~ — **DONE 2026-09-03, structurally.** The hardcoded learning-track entries are gone; `getContentSearchItems()` (`src/lib/search.ts`) builds them from the MDX at build time and `layout.tsx` passes them to `SearchModal`, so new articles are searchable with no edit to the component.
 
 ### Technical / Production
 
 - **Create `src/app/error.tsx`** — No global error boundary exists. Unhandled errors show raw Next.js error page.
 - **Fix OpenGraph image references** — `src/lib/metadata.ts` references `/opengraph-image` and `/twitter-image` routes that don't exist. Either create dynamic generation routes or point metadata to the static `public/og-image.png`.
 - **Fix module sort order in `src/lib/mdx.ts`** — `getAllContent()` returns files in filesystem order, not by frontmatter `order` field. Sort by `order` to prevent broken sequencing.
-- **Audit and fix duplicate frontmatter order values** — Start Here has two modules at `order: 4`; Data Analysis has `index.mdx` and `python-intro.mdx` both at `order: 2`.
+- ~~**Audit and fix duplicate frontmatter order values**~~ — **DONE 2026-09-03.** Every track renumbered `1..N` with no ties. The March 2026 article batch had re-introduced three collisions.
 
 ### Accessibility
 
-- **Fix undefined color classes** — `Tabs.tsx`, `FileTree.tsx`, and `CodeBlock.tsx` reference `claude-500`/`claude-600` which don't exist in Tailwind config. Replace with `primary-500`/`primary-600`.
+- ~~**Fix undefined color classes**~~ — **DONE 2026-09-03, and the original diagnosis was wrong.** `claude-500`/`claude-600` *were* defined in `tailwind.config.ts` as a backwards-compatibility alias of the `primary` scale, so nothing rendered colourless. The one genuinely undefined class was `claude-950` (the alias stopped at 900), used in `src/app/authors/page.tsx`. All `claude-*` usages have now been migrated to `primary-*` and the alias scale deleted, so the class family is gone for real.
 - **Fix low-contrast secondary text** — `text-gray-500` on white backgrounds fails WCAG AA (ratio ~2.8:1). Affected: Tabs inactive labels, FileTree file names, Footer links, TOC inactive links, SearchModal descriptions. Use `gray-600` minimum.
 - **Add `scope="col"` to InfoTable headers** — `src/components/mdx/InfoTable.tsx` lines 66-78 missing scope attributes for screen readers.
 

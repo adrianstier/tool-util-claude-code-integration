@@ -439,8 +439,17 @@ test.describe('Link Checker & Page Health', () => {
   // 8. Cross-Page Link Consistency
   // =========================================================================
   test.describe('Cross-Page Link Consistency', () => {
-    test('Every page with internal links only links to pages that return 200', async ({ page }) => {
+    test('Every page with internal links only links to pages that return 200', async ({
+      page,
+    }) => {
+      // This test visits every internal link found on a dozen content pages. On a
+      // compile-on-demand dev server that is far more work than a normal test, so
+      // it gets its own budget and checks link targets over HTTP rather than
+      // rendering each one.
+      test.setTimeout(300_000)
+
       const allBrokenLinks: { source: string; href: string; status: number | null }[] = []
+      const statusCache = new Map<string, number | null>()
 
       // Sample a subset of content-heavy pages for deeper link checking
       const contentPages = [
@@ -478,11 +487,14 @@ test.describe('Link Checker & Page Health', () => {
         })
 
         for (const href of hrefs) {
-          const response = await page.goto(`${baseURL}${href}`, {
-            waitUntil: 'domcontentloaded',
-            timeout: 30000,
-          })
-          const status = response?.status() ?? null
+          let status = statusCache.get(href)
+          if (status === undefined) {
+            const response = await page.request.get(`${baseURL}${href}`, {
+              timeout: 60000,
+            })
+            status = response.status()
+            statusCache.set(href, status)
+          }
           if (status !== 200) {
             allBrokenLinks.push({ source: pagePath, href, status })
           }

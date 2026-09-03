@@ -37,7 +37,7 @@ function ResourceCard({ resource }: { resource: Resource }) {
     <Component
       href={url}
       {...externalProps}
-      className="group relative flex items-start gap-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 transition-all hover:border-claude-300 dark:hover:border-claude-600 hover:shadow-lg"
+      className="group relative flex items-start gap-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 transition-all hover:border-primary-300 dark:hover:border-primary-600 hover:shadow-lg"
     >
       {/* New Badge */}
       {isNew && (
@@ -48,19 +48,19 @@ function ResourceCard({ resource }: { resource: Resource }) {
       )}
 
       {/* Icon */}
-      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-claude-100 dark:bg-claude-900/50 text-claude-600 dark:text-claude-400 transition-colors group-hover:bg-claude-200 dark:group-hover:bg-claude-900">
+      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400 transition-colors group-hover:bg-primary-200 dark:group-hover:bg-primary-900">
         <Icon className="h-5 w-5" aria-hidden="true" />
       </div>
 
       {/* Content */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-claude-600 dark:group-hover:text-claude-400 transition-colors">
+          <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
             {title}
           </h3>
           {!internal && (
             <ExternalLink
-              className="h-4 w-4 text-gray-400 group-hover:text-claude-500"
+              className="h-4 w-4 text-gray-400 group-hover:text-primary-500"
               aria-hidden="true"
             />
           )}
@@ -149,7 +149,7 @@ export default function ResourcesPage() {
         <nav className="mb-6 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
           <Link
             href="/"
-            className="hover:text-claude-600 dark:hover:text-claude-400 transition-colors"
+            className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
           >
             Home
           </Link>
@@ -167,12 +167,12 @@ export default function ResourcesPage() {
       </div>
 
       {/* Quick Start */}
-      <div className="mb-8 rounded-2xl bg-gradient-to-br from-claude-50 to-orange-50 dark:from-gray-800 dark:to-gray-800 p-8">
+      <div className="mb-8 rounded-2xl bg-gradient-to-br from-primary-50 to-orange-50 dark:from-gray-800 dark:to-gray-800 p-8">
         <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Start</h2>
         <div className="flex flex-wrap gap-3">
           <Link
             href="/start-here"
-            className="inline-flex items-center gap-2 rounded-lg bg-claude-600 px-4 py-2 text-sm font-medium text-white hover:bg-claude-500 transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-500 transition-colors"
           >
             <GraduationCapIcon className="h-4 w-4" aria-hidden="true" />
             Start Learning
@@ -181,7 +181,7 @@ export default function ResourcesPage() {
             href="https://docs.anthropic.com/en/docs/claude-code/overview"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600 hover:border-claude-300 dark:hover:border-claude-600 transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600 hover:border-primary-300 dark:hover:border-primary-600 transition-colors"
           >
             <BookOpenIcon className="h-4 w-4" aria-hidden="true" />
             Official Docs
@@ -191,7 +191,7 @@ export default function ResourcesPage() {
             href="https://github.com/anthropics/claude-code"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600 hover:border-claude-300 dark:hover:border-claude-600 transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600 hover:border-primary-300 dark:hover:border-primary-600 transition-colors"
           >
             <GitBranchIcon className="h-4 w-4" aria-hidden="true" />
             GitHub
@@ -214,7 +214,7 @@ export default function ResourcesPage() {
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search resources..."
             aria-label="Search resources"
-            className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 py-3 pl-10 pr-4 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:border-claude-500 focus:outline-none focus:ring-1 focus:ring-claude-500"
+            className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 py-3 pl-10 pr-4 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
           />
         </div>
 
@@ -229,7 +229,7 @@ export default function ResourcesPage() {
                 aria-pressed={selectedCategory === cat.id}
                 className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                   selectedCategory === cat.id
-                    ? 'bg-claude-600 text-white'
+                    ? 'bg-primary-600 text-white'
                     : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
                 }`}
               >
@@ -285,7 +285,7 @@ export default function ResourcesPage() {
               setSearchQuery('')
               setSelectedCategory('all')
             }}
-            className="mt-4 text-claude-600 dark:text-claude-400 hover:text-claude-500 font-medium"
+            className="mt-4 text-primary-600 dark:text-primary-400 hover:text-primary-500 font-medium"
           >
             Clear all filters
           </button>
@@ -312,7 +312,7 @@ export default function ResourcesPage() {
           href="https://github.com/anthropics/claude-code/issues/new"
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 inline-flex items-center gap-2 text-claude-600 dark:text-claude-400 hover:text-claude-500 dark:hover:text-claude-300 font-medium"
+          className="mt-4 inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300 font-medium"
         >
           <GitBranchIcon className="h-4 w-4" aria-hidden="true" />
           Suggest a resource on GitHub
