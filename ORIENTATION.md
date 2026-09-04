@@ -1,6 +1,6 @@
 # Orientation — claude-code-integration (codewithclaude.net)
 
-_Last updated: 2026-09-03 · branch `main` · all checks green (lint, typecheck, 64 Jest assertions, 417 Playwright tests, production build)_
+_Last updated: 2026-09-04 · branch `fix/site-audit-remediation`, 8 commits ahead of `main`, not pushed · all checks green (lint, typecheck, format:check, 64 Jest assertions, 417 Playwright tests, clean build 58/58)_
 
 ## What this is
 
@@ -35,28 +35,34 @@ Plus: 2 blog posts + RSS, 6 interactive tools under `/tools`, glossary, resource
 1. **Never start an MDX body with `# Heading`** — the shell owns the page's only `<h1>`, on articles, blog posts _and_ track landings. Start at `##`.
 2. **`order` is unique within a track**, `1..N`; every `index.mdx` is `order: 0`. Homepage track position comes from the `learningTracks` array in `src/app/page.tsx`, not frontmatter.
 
-## Current state (verified 2026-09-03)
+## Current state
 
-Everything below was found and fixed this session; all of it is verified green, none of it is deployed yet.
+Two passes of remediation, all committed to `fix/site-audit-remediation` and verified, none deployed.
+
+**Pass 1 — the audit fixes (2026-09-03)**
 
 - **Duplicate `<h1>` site-wide** — shell rendered one, every MDX body repeated the title. Stripped from 36 files; track landings gained a real `<h1>` (they previously had none of their own).
 - **Jest ran the Playwright specs** — 8 of 9 suites failed to load. Fixed with `testPathIgnorePatterns`.
-- **`claude-*` colour tokens** — all 300+ usages migrated to `primary-*`; the alias scale deleted from `tailwind.config.ts`. (`claude-950` in `authors/page.tsx` was genuinely undefined — the alias stopped at 900.)
-- **`order` collisions** from the March 2026 batch — every track renumbered `1..N`.
-- **`lastUpdated` year typo** — 32 files said `2025-03-25` for content committed `2026-03-25`; restamped from git history.
-- **Search missed the six March articles** — the hardcoded learning-track list is gone; entries are derived from the MDX.
-- **Homepage** — durations and readiness now derived from content (they were off by up to 8×); Advanced Topics card added (8 of 8 tracks now shown).
-- **`/git-github/:slug` 301** — now generated only while the track has no sub-articles, so a future article cannot be silently swallowed.
-- **Duplicate "Modules" heading** on `/mcp` and `/advanced-topics` — MDX section renamed to "What Each Module Covers".
-- **E2E suite** — 16 failures → 0. Stale expectations updated, the 404 check no longer trips on articles quoting `Module not found`, and the link-checker now verifies status over HTTP instead of rendering every page on a compile-on-demand dev server.
-- **Repo hygiene** — `screenshots/`, `test-results/`, `playwright-report/`, `.serena/`, `.claude/settings.local.json` gitignored and untracked; stray `firebase-debug.log` / `.Rhistory` / `.DS_Store` deleted.
+- **`claude-*` colour tokens** — all usages migrated to `primary-*`; the alias scale deleted. (`claude-950` was genuinely undefined — the alias stopped at 900.)
+- **`order` collisions** renumbered `1..N`; **`lastUpdated`** restamped on 32 files that said 2025 for 2026 content.
+- **Search and homepage derived from content** (`src/lib/search.ts`, `src/lib/tracks.ts`); the `git-github` redirect made self-healing; duplicate "Modules" heading renamed.
+- **E2E 16 failures → 0**, plus repo hygiene and doc updates.
+
+**Pass 2 — the remaining threads (2026-09-04)**
+
+- **Durations recalibrated.** Measured against consumption time, deliberately-estimated articles sit at 1.0–1.8×; a legacy group sat at 2.5–78× (`app-builder/index` claimed 6–8 hours for a ~19-minute page). Outliers brought to the house standard; `duration` removed from the four non-`selfContained` indexes, where it held a track-level estimate.
+- **WCAG AA.** The UX plan named the wrong token _and_ the wrong ratio. `gray-500` passes (4.83:1). The real failures were `ink-400` (3.05:1) and `ink-500` on dark (2.54:1), carrying real text — including the Footer's "not affiliated with Anthropic" disclaimer. All text moved to `ink-600` / `dark:ink-300`.
+- **`article:published_time` was the build clock**, re-dating every article on every deploy. Now `modifiedTime` from frontmatter.
+- **Prettier** now passes repo-wide, but **MDX is excluded** (`.prettierignore`): its printer indents a JSX closing tag after a markdown list, which MDX parses as list content — it silently broke `/git-github` prerendering, and only a _clean_ build surfaced it. Verified the `src/` reformat changes nothing visible by diffing all 51 prerendered pages before and after.
+- **`caniuse-lite`** updated; **`docs/`** archived and indexed.
 
 ## Open threads (resume here)
 
-- [ ] Nothing is committed or deployed yet — review the working tree, then commit and push.
-- [ ] Per-article `duration` values are author estimates and look generous next to word counts (e.g. `agents` sums to 11 hours across 5 articles of 1.7k–3.8k words). Worth a calibration pass.
-- [ ] `data-analysis` is still only Python/R intros; the deeper tutorials remain the V1.5 gap.
-- [ ] `docs/` holds several superseded planning docs (`BUSINESS_REQUIREMENTS.md`, the handoff files); a `stale-vibecode-audit` pass would clear them.
+- [ ] **Nothing is pushed.** Review the 8 commits, then push and open a PR.
+- [ ] `data-analysis` is still only Python/R intros — the deeper tutorials remain the V1.5 gap, and it is the thinnest track relative to its billing.
+- [ ] `docs/UX-IMPROVEMENT-PLAN.md` Phases 2–4 are the standing backlog (glossary cross-linking, learning paths on the homepage, progress visibility). Phase 1 is closed.
+- [ ] An incremental `next build` reported success while `/git-github` failed to prerender. Worth a `rm -rf .next` before trusting any build that touches MDX.
+- [ ] No CI runs these gates. Everything here was verified locally; a GitHub Action running lint/typecheck/format:check/jest/playwright would stop the next regression reaching main.
 
 ## Related
 
