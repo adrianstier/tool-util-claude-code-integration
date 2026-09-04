@@ -15,6 +15,8 @@ export interface Frontmatter {
   lastUpdated?: string
   /** True when a track's index.mdx is itself the lesson, with no sub-articles. */
   selfContained?: boolean
+  /** First-publication date, if known. Absent on most articles; never inferred. */
+  published?: string
 }
 
 export interface ContentFile {

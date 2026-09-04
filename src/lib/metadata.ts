@@ -279,6 +279,8 @@ export function getContentPageMetadata(
     description?: string
     platform?: string
     duration?: string
+    lastUpdated?: string
+    published?: string
   }
 ): Metadata {
   const trackMeta = trackMetadata[track]
@@ -316,7 +318,16 @@ export function getContentPageMetadata(
           type: 'image/png',
         },
       ],
-      publishedTime: new Date().toISOString(),
+      // Dates come from frontmatter, never from the clock: `new Date()` here
+      // re-dated every article to the build time on each deploy, telling
+      // crawlers the whole site was published seconds ago. `publishedTime` is
+      // omitted rather than guessed when an article has no `published` date.
+      ...(frontmatter.published
+        ? { publishedTime: frontmatter.published }
+        : {}),
+      ...(frontmatter.lastUpdated
+        ? { modifiedTime: new Date(frontmatter.lastUpdated).toISOString() }
+        : {}),
       authors: [siteConfig.author.name],
       section: trackMeta?.title || track,
     },
