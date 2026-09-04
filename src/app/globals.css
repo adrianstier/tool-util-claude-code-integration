@@ -397,7 +397,7 @@
     @apply bg-white dark:bg-ink-900;
     @apply border border-ink-200 dark:border-ink-700;
     @apply text-ink-900 dark:text-paper-50;
-    @apply placeholder:text-ink-400 dark:placeholder:text-ink-500;
+    @apply placeholder:text-ink-600 dark:placeholder:text-ink-300;
     @apply transition-all duration-200;
     @apply focus:border-primary-500 dark:focus:border-primary-400;
     @apply focus:ring-4 focus:ring-primary-500/10 dark:focus:ring-primary-400/10;

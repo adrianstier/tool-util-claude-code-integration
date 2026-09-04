@@ -390,7 +390,7 @@ export default function Home() {
 
                     {/* Arrow indicator */}
                     <div className="absolute top-6 right-6 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 -translate-x-2">
-                      <ArrowRight className="h-4 w-4 text-ink-400 dark:text-ink-500" />
+                      <ArrowRight className="h-4 w-4 text-ink-500 dark:text-ink-400" />
                     </div>
                   </Link>
                 )

@@ -42,7 +42,7 @@ export function InfoTable({
                   </h4>
                 ) : (
                   <p className="text-sm text-ink-600 dark:text-ink-400 leading-relaxed">
-                    <span className="font-medium text-ink-500 dark:text-ink-500">
+                    <span className="font-medium text-ink-600 dark:text-ink-300">
                       {col.header}:
                     </span>{' '}
                     {row[col.key]}
@@ -183,7 +183,7 @@ export function InfoCard({ title, description, meta, href, className }: InfoCard
         </p>
       )}
       {meta && (
-        <p className="text-xs text-ink-500 dark:text-ink-500">
+        <p className="text-xs text-ink-600 dark:text-ink-300">
           {meta}
         </p>
       )}

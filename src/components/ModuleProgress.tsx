@@ -41,7 +41,7 @@ export function ModuleProgress({ moduleId, trackName, moduleName }: ModuleProgre
         </span>
       </button>
       {completed && (
-        <span className="text-sm text-ink-400 dark:text-ink-500">
+        <span className="text-sm text-ink-600 dark:text-ink-300">
           Click to undo
         </span>
       )}

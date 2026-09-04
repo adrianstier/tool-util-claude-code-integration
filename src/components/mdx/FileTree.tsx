@@ -39,7 +39,7 @@ function getFileIcon(filename: string) {
   if (textExtensions.includes(ext || '')) {
     return <FileText className="h-4 w-4 text-ink-600 dark:text-ink-400" />
   }
-  return <File className="h-4 w-4 text-ink-400 dark:text-ink-500" />
+  return <File className="h-4 w-4 text-ink-500 dark:text-ink-400" />
 }
 
 // FileTree component with static properties for dot notation

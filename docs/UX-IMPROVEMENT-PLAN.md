@@ -1,6 +1,6 @@
 # UX Improvement Plan — Claude Code Learning Hub
 
-**Date:** February 11, 2026 · *Last updated: 2026-09-03*
+**Date:** February 11, 2026 · *Last updated: 2026-09-04*
 **Analysis by:** 4-agent UX swarm (Information Architecture, Visual Design & Accessibility, Learning Experience, Technical Performance)
 
 ---
@@ -27,16 +27,16 @@ The platform has a strong foundation — well-structured MDX content, a cohesive
 
 ### Technical / Production
 
-- **Create `src/app/error.tsx`** — No global error boundary exists. Unhandled errors show raw Next.js error page.
-- **Fix OpenGraph image references** — `src/lib/metadata.ts` references `/opengraph-image` and `/twitter-image` routes that don't exist. Either create dynamic generation routes or point metadata to the static `public/og-image.png`.
-- **Fix module sort order in `src/lib/mdx.ts`** — `getAllContent()` returns files in filesystem order, not by frontmatter `order` field. Sort by `order` to prevent broken sequencing.
+- ~~**Create `src/app/error.tsx`**~~ — done; the boundary exists.
+- ~~**Fix OpenGraph image references**~~ — done; `src/app/opengraph-image.tsx` and `src/app/twitter-image.tsx` exist and build as dynamic routes.
+- ~~**Fix module sort order in `src/lib/mdx.ts`**~~ — done; `getAllContent()` sorts by `order`.
 - ~~**Audit and fix duplicate frontmatter order values**~~ — **DONE 2026-09-03.** Every track renumbered `1..N` with no ties. The March 2026 article batch had re-introduced three collisions.
 
 ### Accessibility
 
 - ~~**Fix undefined color classes**~~ — **DONE 2026-09-03, and the original diagnosis was wrong.** `claude-500`/`claude-600` *were* defined in `tailwind.config.ts` as a backwards-compatibility alias of the `primary` scale, so nothing rendered colourless. The one genuinely undefined class was `claude-950` (the alias stopped at 900), used in `src/app/authors/page.tsx`. All `claude-*` usages have now been migrated to `primary-*` and the alias scale deleted, so the class family is gone for real.
-- **Fix low-contrast secondary text** — `text-gray-500` on white backgrounds fails WCAG AA (ratio ~2.8:1). Affected: Tabs inactive labels, FileTree file names, Footer links, TOC inactive links, SearchModal descriptions. Use `gray-600` minimum.
-- **Add `scope="col"` to InfoTable headers** — `src/components/mdx/InfoTable.tsx` lines 66-78 missing scope attributes for screen readers.
+- ~~**Fix low-contrast secondary text**~~ — **DONE 2026-09-04, and the original diagnosis was wrong on both the token and the ratio.** `text-gray-500` (#6b7280) is **4.83:1** on white and **4.76:1** on `paper-50` — it passes AA, not "~2.8:1". Computing the real ratios across the palette found the actual failures in the `ink` scale: `ink-400` is **3.05:1** on light and `ink-500` is **2.54:1** on `ink-900` / **3.33:1** on `ink-950`. Both were carrying real body text — including the Footer's "not affiliated with Anthropic" disclaimer, the site's least readable text. All text usages moved to `ink-600` / `dark:ink-300` (5.95-7.66:1 on every surface in play); icons stay at `ink-400`, which clears the 3:1 threshold for non-text UI.
+- ~~**Add `scope="col"` to InfoTable headers**~~ — already present (`src/components/mdx/InfoTable.tsx`); fixed at some point after this plan was written.
 
 ---
 
@@ -44,7 +44,7 @@ The platform has a strong foundation — well-structured MDX content, a cohesive
 
 ### Discovery & Cross-Linking
 
-- **Generate search items dynamically** — Replace hardcoded `searchItems` array in `SearchModal.tsx` with items generated from `getAllContent()` and `getAllTracks()` at build time. Prevents orphan pages when new content is added.
+- ~~**Generate search items dynamically**~~ — **DONE 2026-09-03.** `src/lib/search.ts` does exactly this; `SearchModal.tsx` now takes the index as a prop.
 - **Add cross-track links between Agents and MCP** — Agents track never mentions MCP despite MCP being central to agent tooling. Add "Next: Connect agents to real data with MCP" callout at end of agents modules.
 - **Link glossary from content** — 66-term glossary exists at `/glossary` but 0 content files link to it. Add contextual glossary links on first mention of technical terms (SSH Key, Repository, API, etc.).
 - **Display learning paths on homepage** — `LEARNING_PATHS` defined in `constants.ts` (lines 113-135) but never rendered. Create a "Choose Your Path" section showing Beginner/Analyst/Developer personas with recommended track sequences.

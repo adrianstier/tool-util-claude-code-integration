@@ -162,12 +162,12 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-ink-100 dark:border-ink-800">
           {/* Disclaimer */}
-          <p className="text-xs text-ink-400 dark:text-ink-500 text-center mb-6">
+          <p className="text-xs text-ink-600 dark:text-ink-300 text-center mb-6">
             This is an independent community resource. Not affiliated with or endorsed by Anthropic.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-ink-500 dark:text-ink-400">
+            <p className="text-sm text-ink-600 dark:text-ink-300">
               &copy; {new Date().getFullYear()} Claude Code Learning.{' '}
               <a
                 href="https://opensource.org/licenses/MIT"
@@ -178,7 +178,7 @@ export default function Footer() {
                 MIT License
               </a>
             </p>
-            <p className="text-xs text-ink-400 dark:text-ink-500">
+            <p className="text-xs text-ink-600 dark:text-ink-300">
               Built with Next.js
             </p>
           </div>

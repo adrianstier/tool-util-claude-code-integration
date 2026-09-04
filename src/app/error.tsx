@@ -57,7 +57,7 @@ export default function Error({
               {error.message || 'An unknown error occurred'}
             </p>
             {error.digest && (
-              <p className="mt-2 text-xs text-ink-500 dark:text-ink-500">
+              <p className="mt-2 text-xs text-ink-600 dark:text-ink-300">
                 Digest: {error.digest}
               </p>
             )}
@@ -65,7 +65,7 @@ export default function Error({
         </details>
 
         {/* Help Text */}
-        <p className="mt-8 text-sm text-ink-500 dark:text-ink-500">
+        <p className="mt-8 text-sm text-ink-600 dark:text-ink-300">
           If this keeps happening,{' '}
           <a
             href="https://github.com/anthropics/claude-code/issues"

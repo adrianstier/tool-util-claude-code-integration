@@ -208,7 +208,7 @@ export default function Diagram({
           onClick={() => setIsExpanded(!isExpanded)}
           className={cn(
             'p-1.5 rounded-lg transition-all',
-            'text-ink-400 hover:text-ink-600 dark:text-ink-500 dark:hover:text-ink-300',
+            'text-ink-500 hover:text-ink-700 dark:text-ink-400 dark:hover:text-ink-200',
             'hover:bg-ink-100 dark:hover:bg-ink-800',
             'opacity-0 group-hover:opacity-100',
             isExpanded && 'opacity-100'

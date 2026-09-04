@@ -94,7 +94,7 @@ export function ChecklistItem({ children, checked = false, className }: Checklis
       <span
         className={cn(
           'text-ink-700 dark:text-ink-200 leading-relaxed',
-          checked && 'line-through text-ink-400 dark:text-ink-500'
+          checked && 'line-through text-ink-600 dark:text-ink-300'
         )}
       >
         {children}
