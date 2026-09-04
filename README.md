@@ -32,14 +32,14 @@ Open [http://localhost:3001](http://localhost:3001).
 
 | Track | Lessons | Duration | Shape |
 |---|---|---|---|
-| **Start Here** — setup, platforms, research workflows, voice & remote | 11 | 5.3 hours | Landing page + articles |
-| **AI Agents** — using, building, the Agent SDK, multi-agent architectures | 5 | 11 hours | Landing page + articles |
-| **App Builder** — web apps, computer use & dispatch | 2 | 7.4 hours | Self-contained landing page + 1 article |
-| **Advanced Topics** — best practices, power features, skills, plugins & hooks | 5 | 4.6 hours | Landing page + articles |
-| **Data Analysis** — Python & R for data work | 2 | 4 hours | Landing page + articles |
-| **Automation** — scripts & workflow automation | 1 | 3.5 hours | Self-contained landing page |
-| **MCP Integration** — Model Context Protocol servers & workflows | 4 | 3 hours | Landing page + articles |
+| **Start Here** — setup, platforms, research workflows, voice & remote | 11 | 5.2 hours | Landing page + articles |
+| **MCP Integration** — Model Context Protocol servers & workflows | 4 | 2.8 hours | Landing page + articles |
+| **AI Agents** — using, building, the Agent SDK, multi-agent architectures | 5 | 2.7 hours | Landing page + articles |
+| **Advanced Topics** — best practices, power features, skills, plugins & hooks | 5 | 2.7 hours | Landing page + articles |
+| **Data Analysis** — Python & R for data work | 2 | 95 min | Landing page + articles |
 | **Git & GitHub** — version control fundamentals | 1 | 90 min | Self-contained landing page |
+| **App Builder** — web apps, computer use & dispatch | 2 | 75 min | Self-contained landing page + 1 article |
+| **Automation** — scripts & workflow automation | 1 | 50 min | Self-contained landing page |
 
 Three tracks (`git-github`, `automation`, `app-builder`) carry their tutorial **on the landing page itself**, declared with `selfContained: true` in `index.mdx` frontmatter. The homepage reads durations and readiness from the content via `getTrackStats()` (`src/lib/tracks.ts`) rather than a hardcoded list, so a card cannot advertise a track that has not been written.
 
@@ -157,6 +157,12 @@ lastUpdated: "2026-03-28"
 **Do not start the MDX body with an `# H1`.** The page shell renders the `title`
 as the page's only `<h1>`; a heading in the body creates a second one. Start at
 `##`.
+
+**`duration` is load-bearing** — it is summed into the track duration shown on the
+homepage, so it needs to mean something. The house standard is roughly **1.5x the
+time to read the page** (prose at ~200 wpm, code at ~100 wpm, plus a minute per
+`<Step>`), or **~2.5x** where the reader installs or builds something. Track-level
+estimates do not belong in frontmatter; the homepage computes them.
 
 Available MDX components: `Callout`, `Tabs`/`Tab`, `Steps`/`Step`, `FileTree`, `InfoTable`, `Diagram`, `KeyboardShortcut`.
 

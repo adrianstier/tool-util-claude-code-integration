@@ -74,6 +74,12 @@ Two rules the content pipeline depends on:
 2. **`order` is unique within a track**, numbered `1..N`; every `index.mdx` is `order: 0`.
    Track position on the homepage comes from the `learningTracks` array in
    `src/app/page.tsx`, *not* from frontmatter.
+3. **`duration` is a per-page estimate and is summed into the homepage track duration.**
+   House standard: ~1.5x the time to consume the page (prose ~200 wpm, code ~100 wpm,
+   plus a minute per `<Step>`), or ~2.5x when the reader installs or builds something.
+   Never park a track-level estimate on `index.mdx` — the homepage computes that from
+   the pages. Recalibrated 2026-09-04; before that, legacy articles ran 2.5-78x
+   (`app-builder/index.mdx` claimed 6-8 hours for a ~19-minute page).
 
 ## File Ownership
 
