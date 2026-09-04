@@ -49,7 +49,10 @@ export default function ReadingProgress({ className }: ReadingProgressProps) {
 
   return (
     <div
-      className={cn('fixed top-0 left-0 right-0 z-50 h-1 bg-gray-200 dark:bg-gray-800', className)}
+      className={cn(
+        'fixed left-0 right-0 top-0 z-50 h-1 bg-gray-200 dark:bg-gray-800',
+        className
+      )}
       role="progressbar"
       aria-valuenow={Math.round(progress)}
       aria-valuemin={0}

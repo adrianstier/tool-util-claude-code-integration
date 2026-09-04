@@ -11,7 +11,11 @@
  * Resource Category Types
  * Defines the four main sections of the Resources page
  */
-export type ResourceCategory = 'our-tools' | 'learning' | 'official' | 'community'
+export type ResourceCategory =
+  | 'our-tools'
+  | 'learning'
+  | 'official'
+  | 'community'
 
 /**
  * Skill Level Types

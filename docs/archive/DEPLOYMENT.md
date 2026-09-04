@@ -48,6 +48,7 @@ git push origin main
 Fill in the following settings:
 
 **Basic Settings:**
+
 - **Name:** `claude-code-learning-hub` (or your preferred name)
 - **Region:** Choose closest to your users (e.g., Oregon USA)
 - **Branch:** `main`
@@ -55,14 +56,17 @@ Fill in the following settings:
 - **Runtime:** `Node`
 
 **Build & Deploy:**
+
 - **Build Command:** `npm install && npm run build`
 - **Start Command:** `npm start`
 
 **Plan:**
+
 - Select **"Free"** (perfect for this project)
 
 **Environment Variables:**
 Click "Add Environment Variable" and add:
+
 - **Key:** `NODE_ENV` → **Value:** `production`
 - **Key:** `NODE_VERSION` → **Value:** `18.17.0`
 
@@ -81,6 +85,7 @@ Click "Add Environment Variable" and add:
 ### 6. Verify Deployment
 
 Once deployed, you'll see:
+
 - **Status:** "Live" with green indicator
 - **URL:** `https://claude-code-learning-hub.onrender.com` (or your custom name)
 
@@ -89,6 +94,7 @@ Click the URL to view your live site!
 ### 7. Test Your Live Site
 
 Verify these pages work:
+
 - ✅ Home page: `/`
 - ✅ Start Here: `/start-here`
 - ✅ Data Analysis: `/data-analysis`
@@ -124,12 +130,14 @@ To use your own domain:
 ### Build Fails
 
 **Check build logs:**
+
 1. Go to Render Dashboard
 2. Click on your web service
 3. View "Logs" tab
 4. Look for error messages
 
 **Common issues:**
+
 - Missing dependencies: Run `npm install` locally first
 - Build errors: Test with `npm run build` locally
 - Node version: Ensure `NODE_VERSION` env var is set
@@ -137,21 +145,25 @@ To use your own domain:
 ### Site Not Loading
 
 **Check:**
+
 1. Service status shows "Live" (not "Deploy failed")
 2. Logs show "Server running" message
 3. No errors in "Events" tab
 
 **Fix:**
+
 - Trigger manual redeploy: Click "Manual Deploy" → "Deploy latest commit"
 
 ### 404 Errors on Pages
 
 **Likely causes:**
+
 - Missing MDX files
 - Incorrect file paths
 - Build didn't include all routes
 
 **Fix:**
+
 1. Verify all content files exist locally
 2. Test production build locally: `npm run build && npm start`
 3. Redeploy if files were missing
@@ -159,11 +171,13 @@ To use your own domain:
 ### Performance Issues (Free Tier)
 
 Render's free tier spins down after 15 minutes of inactivity:
+
 - First visit after inactivity takes ~30 seconds to wake up
 - Subsequent visits are instant
 - This is normal for free tier
 
 **Solutions:**
+
 - Upgrade to paid plan ($7/month) for always-on service
 - Use uptime monitoring service to ping site every 14 minutes
 
@@ -172,6 +186,7 @@ Render's free tier spins down after 15 minutes of inactivity:
 ### View Logs
 
 Real-time logs in Render Dashboard:
+
 1. Go to your web service
 2. Click **"Logs"** tab
 3. See all server output and errors
@@ -179,6 +194,7 @@ Real-time logs in Render Dashboard:
 ### Metrics
 
 Render provides basic metrics:
+
 - CPU usage
 - Memory usage
 - Request count
@@ -229,10 +245,12 @@ To manually trigger deployment without code changes:
 ## Environment Variables
 
 Current environment variables:
+
 - `NODE_ENV=production` - Enables production optimizations
 - `NODE_VERSION=18.17.0` - Specifies Node.js version
 
 To add more variables:
+
 1. Go to **"Environment"** tab
 2. Click **"Add Environment Variable"**
 3. Enter key and value
@@ -255,6 +273,7 @@ To add more variables:
 ## Cost
 
 **Free Tier Includes:**
+
 - 750 hours/month compute time
 - Automatic HTTPS
 - Global CDN
@@ -262,6 +281,7 @@ To add more variables:
 - Custom domains
 
 **Perfect for:**
+
 - Learning projects
 - Documentation sites
 - Low-traffic applications

@@ -1,6 +1,7 @@
 # Deployment Instructions - Render.com
 
 ## Prerequisites
+
 - ✅ Code committed to git (DONE)
 - ⏳ GitHub repository created
 - ⏳ Code pushed to GitHub
@@ -102,6 +103,7 @@ To use your own domain:
 ### Build Fails
 
 Check build logs in Render dashboard:
+
 - Look for npm errors
 - Verify all dependencies are in `package.json`
 - Test locally: `npm run build`
@@ -115,6 +117,7 @@ Check build logs in Render dashboard:
 ### Slow First Load
 
 Render's free tier spins down after 15 minutes of inactivity:
+
 - First visit after idle takes ~30 seconds
 - Subsequent visits are instant
 - Upgrade to paid tier ($7/month) for always-on
@@ -122,6 +125,7 @@ Render's free tier spins down after 15 minutes of inactivity:
 ## Production Optimizations
 
 Your site is already optimized:
+
 - ✅ Next.js static generation
 - ✅ Production build mode
 - ✅ Automatic HTTPS
@@ -131,6 +135,7 @@ Your site is already optimized:
 ## Monitoring
 
 View metrics in Render dashboard:
+
 - **Logs:** Real-time server logs
 - **Metrics:** CPU, memory, request count
 - **Events:** Deployment history

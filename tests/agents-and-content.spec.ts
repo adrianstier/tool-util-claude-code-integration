@@ -4,7 +4,10 @@ import { openSearch } from './helpers'
 const baseURL = 'http://localhost:3001'
 
 /** Navigate to a page in light mode so "Switch to dark mode" button is available */
-async function gotoInLightMode(page: import('@playwright/test').Page, url: string) {
+async function gotoInLightMode(
+  page: import('@playwright/test').Page,
+  url: string
+) {
   // Set theme before any page script runs
   await page.addInitScript(() => {
     localStorage.setItem('theme', 'light')
@@ -70,7 +73,9 @@ test.describe('AI Agents Track', () => {
       await page.goto(`${baseURL}/agents`)
 
       // Set dark mode
-      const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+      const darkButton = page
+        .locator('button[aria-label="Switch to dark mode"]')
+        .first()
       await darkButton.click()
 
       // Check html has dark class
@@ -82,11 +87,15 @@ test.describe('AI Agents Track', () => {
       await expect(contentContainer).toBeVisible()
     })
 
-    test('should apply dark mode to breadcrumbs on agents page', async ({ page }) => {
+    test('should apply dark mode to breadcrumbs on agents page', async ({
+      page,
+    }) => {
       await page.goto(`${baseURL}/agents`)
 
       // Set dark mode
-      const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+      const darkButton = page
+        .locator('button[aria-label="Switch to dark mode"]')
+        .first()
       await darkButton.click()
 
       // Check breadcrumb links have dark mode hover states
@@ -98,7 +107,9 @@ test.describe('AI Agents Track', () => {
       await page.goto(`${baseURL}/agents`)
 
       // Set dark mode
-      const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+      const darkButton = page
+        .locator('button[aria-label="Switch to dark mode"]')
+        .first()
       await darkButton.click()
 
       // Check cards have dark background
@@ -110,11 +121,15 @@ test.describe('AI Agents Track', () => {
       await expect(cardBackground).toBeVisible()
     })
 
-    test('should maintain dark mode when navigating between agent pages', async ({ page }) => {
+    test('should maintain dark mode when navigating between agent pages', async ({
+      page,
+    }) => {
       await page.goto(`${baseURL}/agents`)
 
       // Set dark mode
-      const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+      const darkButton = page
+        .locator('button[aria-label="Switch to dark mode"]')
+        .first()
       await darkButton.click()
 
       const html = page.locator('html')
@@ -122,7 +137,7 @@ test.describe('AI Agents Track', () => {
 
       // Navigate to a subpage if available
       const firstLink = page.locator('a[href^="/agents/"]').first()
-      if (await firstLink.count() > 0) {
+      if ((await firstLink.count()) > 0) {
         await firstLink.click()
         await page.waitForLoadState('networkidle')
 
@@ -194,7 +209,9 @@ test.describe('Claude Code vs Web Content Page', () => {
     await gotoInLightMode(page, `${baseURL}/start-here/claude-code-vs-web`)
 
     // Set dark mode
-    const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+    const darkButton = page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .first()
     await darkButton.click()
 
     // Check html has dark class
@@ -242,7 +259,9 @@ test.describe('Track Pages Dark Mode', () => {
       await gotoInLightMode(page, `${baseURL}${track.url}`)
 
       // Set dark mode
-      const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+      const darkButton = page
+        .locator('button[aria-label="Switch to dark mode"]')
+        .first()
       await darkButton.click()
 
       // Check html has dark class
@@ -254,7 +273,9 @@ test.describe('Track Pages Dark Mode', () => {
       await expect(darkContainer).toBeVisible()
 
       // Check for dark mode text (breadcrumb uses dark:text-white)
-      const darkText = page.locator('h1, h2, [class*="dark:text-white"]').first()
+      const darkText = page
+        .locator('h1, h2, [class*="dark:text-white"]')
+        .first()
       await expect(darkText).toBeVisible()
     })
 
@@ -262,7 +283,9 @@ test.describe('Track Pages Dark Mode', () => {
       await gotoInLightMode(page, `${baseURL}${track.url}`)
 
       // Set dark mode
-      const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+      const darkButton = page
+        .locator('button[aria-label="Switch to dark mode"]')
+        .first()
       await darkButton.click()
 
       // Check cards have dark borders
@@ -271,7 +294,7 @@ test.describe('Track Pages Dark Mode', () => {
 
       // Verify dark mode is applied to page elements
       const darkBorder = page.locator('.dark\\:border-gray-700').first()
-      if (await darkBorder.count() > 0) {
+      if ((await darkBorder.count()) > 0) {
         await expect(darkBorder).toBeVisible()
       }
     })
@@ -291,7 +314,9 @@ test.describe('Content Module Pages Dark Mode', () => {
       await gotoInLightMode(page, `${baseURL}${url}`)
 
       // Set dark mode
-      const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+      const darkButton = page
+        .locator('button[aria-label="Switch to dark mode"]')
+        .first()
       await darkButton.click()
 
       // Check html has dark class
@@ -307,7 +332,9 @@ test.describe('Content Module Pages Dark Mode', () => {
       await gotoInLightMode(page, `${baseURL}${url}`)
 
       // Set dark mode
-      const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+      const darkButton = page
+        .locator('button[aria-label="Switch to dark mode"]')
+        .first()
       await darkButton.click()
 
       // Check for inline code elements
@@ -322,7 +349,9 @@ test.describe('Tools Pages Dark Mode Extended', () => {
     await gotoInLightMode(page, `${baseURL}/tools/templates`)
 
     // Set dark mode
-    const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+    const darkButton = page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .first()
     await darkButton.click()
 
     const html = page.locator('html')
@@ -344,7 +373,9 @@ test.describe('Tools Pages Dark Mode Extended', () => {
     await gotoInLightMode(page, `${baseURL}/tools/snippets`)
 
     // Set dark mode
-    const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+    const darkButton = page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .first()
     await darkButton.click()
 
     const html = page.locator('html')
@@ -359,7 +390,9 @@ test.describe('Tools Pages Dark Mode Extended', () => {
     await gotoInLightMode(page, `${baseURL}/tools/cheatsheets`)
 
     // Set dark mode
-    const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+    const darkButton = page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .first()
     await darkButton.click()
 
     const html = page.locator('html')
@@ -377,14 +410,18 @@ test.describe('Tools Pages Dark Mode Extended', () => {
     await gotoInLightMode(page, `${baseURL}/tools/mcp-explorer`)
 
     // Set dark mode
-    const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+    const darkButton = page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .first()
     await darkButton.click()
 
     const html = page.locator('html')
     await expect(html).toHaveClass(/dark/)
 
     // Check search input
-    const searchInput = page.locator('input[placeholder="Search MCP servers..."]')
+    const searchInput = page.locator(
+      'input[placeholder="Search MCP servers..."]'
+    )
     await expect(searchInput).toBeVisible()
 
     // Expand a server
@@ -404,7 +441,9 @@ test.describe('Navigation and Integration', () => {
     await openSearch(page)
 
     // Wait for modal
-    const searchInput = page.locator('input[placeholder="Search documentation..."]')
+    const searchInput = page.locator(
+      'input[placeholder="Search documentation..."]'
+    )
     await expect(searchInput).toBeVisible()
 
     // Search for agents
@@ -424,7 +463,9 @@ test.describe('Navigation and Integration', () => {
     await openSearch(page)
 
     // Wait for modal
-    const searchInput = page.locator('input[placeholder="Search documentation..."]')
+    const searchInput = page.locator(
+      'input[placeholder="Search documentation..."]'
+    )
     await expect(searchInput).toBeVisible()
 
     // Search for comparison
@@ -432,7 +473,7 @@ test.describe('Navigation and Integration', () => {
 
     // Check results contain the new page
     const result = page.locator('button:has-text("Claude Code vs")')
-    if (await result.count() > 0) {
+    if ((await result.count()) > 0) {
       await expect(result).toBeVisible()
     }
   })
@@ -443,14 +484,16 @@ test.describe('Navigation and Integration', () => {
 
     // Find and click agents link
     const agentsLink = page.locator('a[href="/agents"]').first()
-    if (await agentsLink.count() > 0) {
+    if ((await agentsLink.count()) > 0) {
       await agentsLink.click()
       await page.waitForLoadState('networkidle')
       await expect(page).toHaveURL(/\/agents/)
     }
   })
 
-  test('should navigate through all track pages without errors', async ({ page }) => {
+  test('should navigate through all track pages without errors', async ({
+    page,
+  }) => {
     const errors: string[] = []
 
     page.on('console', (msg) => {
@@ -459,7 +502,14 @@ test.describe('Navigation and Integration', () => {
       }
     })
 
-    const tracks = ['/start-here', '/data-analysis', '/app-builder', '/automation', '/git-github', '/agents']
+    const tracks = [
+      '/start-here',
+      '/data-analysis',
+      '/app-builder',
+      '/automation',
+      '/git-github',
+      '/agents',
+    ]
 
     for (const track of tracks) {
       await page.goto(`${baseURL}${track}`)
@@ -467,9 +517,8 @@ test.describe('Navigation and Integration', () => {
     }
 
     // Filter out expected errors
-    const criticalErrors = errors.filter(err =>
-      !err.includes('favicon') &&
-      !err.includes('lighthouse')
+    const criticalErrors = errors.filter(
+      (err) => !err.includes('favicon') && !err.includes('lighthouse')
     )
 
     expect(criticalErrors).toHaveLength(0)
@@ -486,7 +535,7 @@ test.describe('Forms and Interactive Components', () => {
 
     for (const category of categories) {
       const button = page.locator(`button:has-text("${category}")`)
-      if (await button.count() > 0) {
+      if ((await button.count()) > 0) {
         await button.click()
         // Should update without errors
         await page.waitForTimeout(100)
@@ -561,11 +610,15 @@ test.describe('Forms and Interactive Components', () => {
 })
 
 test.describe('Visual Consistency', () => {
-  test('dark mode applies to all major elements on homepage', async ({ page }) => {
+  test('dark mode applies to all major elements on homepage', async ({
+    page,
+  }) => {
     await gotoInLightMode(page, baseURL)
 
     // Set dark mode
-    const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+    const darkButton = page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .first()
     await darkButton.click()
 
     const html = page.locator('html')
@@ -585,7 +638,14 @@ test.describe('Visual Consistency', () => {
   })
 
   test('cards render consistently across all track pages', async ({ page }) => {
-    const tracks = ['/start-here', '/data-analysis', '/app-builder', '/automation', '/git-github', '/agents']
+    const tracks = [
+      '/start-here',
+      '/data-analysis',
+      '/app-builder',
+      '/automation',
+      '/git-github',
+      '/agents',
+    ]
 
     for (const track of tracks) {
       await page.goto(`${baseURL}${track}`)
@@ -593,7 +653,7 @@ test.describe('Visual Consistency', () => {
 
       // Check for consistent card structure
       const cards = page.locator('.rounded-2xl.border')
-      if (await cards.count() > 0) {
+      if ((await cards.count()) > 0) {
         // Cards should have consistent styling
         await expect(cards.first()).toBeVisible()
       }
@@ -604,7 +664,9 @@ test.describe('Visual Consistency', () => {
     await gotoInLightMode(page, `${baseURL}/start-here/claude-code-vs-web`)
 
     // Set dark mode
-    const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+    const darkButton = page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .first()
     await darkButton.click()
 
     // Code blocks should be visible

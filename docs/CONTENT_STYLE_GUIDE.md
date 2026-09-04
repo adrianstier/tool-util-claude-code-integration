@@ -11,15 +11,19 @@ We're warm and approachable, but we respect your time. We explain the "why" befo
 ### What This Sounds Like
 
 **Before (AI-generic):**
+
 > "This section will cover the installation of Git on your system."
 
 **After (friendly professional):**
+
 > "Let's get Git installed. Once it's running, you'll have superpowers: undo mistakes, experiment safely, and never lose your work again."
 
 **Before:**
+
 > "You will learn how to create variables in Python."
 
 **After:**
+
 > "Variables are where your data lives. Think of them as labeled boxes—you put something in, give it a name, and grab it whenever you need it."
 
 ### Key Principles
@@ -50,27 +54,35 @@ We're warm and approachable, but we respect your time. We explain the "why" befo
 Every major section should follow this pattern:
 
 ### 1. Hook (1-2 sentences)
+
 A real problem, scenario, or question that makes the reader say "yes, I need this."
 
 **Example:**
+
 > "Ever lost hours of work because you forgot to save? Or broke something and couldn't remember what it looked like before? Git fixes both."
 
 ### 2. Why It Matters (2-4 sentences)
+
 What happens without this knowledge. What's possible with it. Stakes and benefits.
 
 **Example:**
+
 > "Without version control, you're always one mistake away from disaster. With Git, every change is saved, every experiment is reversible, and you can collaborate without chaos."
 
 ### 3. The Core Concept (varies)
+
 Clear explanation of what we're learning. Use analogies when helpful.
 
 ### 4. Hands-On Practice
+
 Actual doing. Code examples, exercises, step-by-step instructions.
 
 ### 5. Quick Check
+
 A quiz question, reflection prompt, or "try this" challenge.
 
 ### 6. What's Next (1 sentence)
+
 Clear pointer to the next logical step.
 
 ---
@@ -91,14 +103,19 @@ Clear pointer to the next logical step.
 ### Diagram Usage
 
 Use diagrams for:
+
 - **Workflows**: Git flow, data pipelines, deployment processes
 - **Decision trees**: "Python or R?", "CLI or GUI?"
 - **Architecture**: How components connect
 - **Processes**: Step-by-step with branching logic
 
 ```jsx
-<Diagram title="Git Workflow" type="flowchart" caption="The basic cycle of working with Git">
-{`flowchart LR
+<Diagram
+  title="Git Workflow"
+  type="flowchart"
+  caption="The basic cycle of working with Git"
+>
+  {`flowchart LR
     A[Edit Files] --> B[Stage Changes]
     B --> C[Commit]
     C --> D{More changes?}
@@ -130,18 +147,22 @@ Use diagrams for:
 ## Real Examples Over Generic
 
 ### Variables
+
 **Bad:** `name = "Alice"`, `age = 25`
 **Good:** `project_name = "q4-sales-analysis"`, `coffee_budget = 127.50`
 
 ### Functions
+
 **Bad:** Calculator, greeting function
 **Good:** Data cleaner, email formatter, report generator
 
 ### Projects
+
 **Bad:** "Build a todo app"
 **Good:** "Automate your weekly expense report", "Clean messy CSV exports from your CRM"
 
 ### Scenarios
+
 **Bad:** "Alice lives in San Francisco and wants to..."
 **Good:** "You just got a CSV export from Salesforce. It's a mess—duplicate columns, inconsistent dates, missing values. Let's fix it."
 
@@ -150,6 +171,7 @@ Use diagrams for:
 ## Code Block Guidelines
 
 ### Always Include Context
+
 ```python
 # Good: Explain what we're doing
 # Load the sales data from our exports folder
@@ -158,6 +180,7 @@ sales = pd.read_csv("data/q4_sales.csv")
 ```
 
 ### Show Output When Helpful
+
 ```python
 >>> len(sales)
 1247
@@ -167,7 +190,9 @@ sales = pd.read_csv("data/q4_sales.csv")
 ```
 
 ### Highlight Key Lines
+
 Use comments to draw attention:
+
 ```python
 df = pd.read_csv("data.csv")
 df = df.dropna()  # <- This removes rows with missing values
@@ -208,20 +233,26 @@ Or use `<Callout>` for minor differences inline:
 ## Headings and Hierarchy
 
 ### H1: Page Title Only
+
 One per page, set in frontmatter.
 
 ### H2: Major Sections
+
 Clear, scannable. Often include benefit or outcome.
+
 - "Setting Up Your Environment" → "Getting Your Tools Ready"
 - "Understanding Variables" → "Variables: Where Your Data Lives"
 
 ### H3: Subsections
+
 More specific. Action-oriented when possible.
+
 - "Installing Python"
 - "Your First Script"
 - "Common Gotchas"
 
 ### H4+: Use Sparingly
+
 Prefer reorganizing content over deep nesting.
 
 ---
@@ -258,17 +289,17 @@ These make content feel generic. Cut them ruthlessly:
 
 ## Quick Reference: Component Usage
 
-| Component | Use For |
-|-----------|---------|
-| `<Diagram>` | Workflows, decision trees, architecture |
-| `<Callout type="tip">` | Helpful shortcuts, pro tips |
-| `<Callout type="warning">` | Potential pitfalls |
-| `<Callout type="note">` | Additional context |
-| `<Steps>` | Sequential instructions |
-| `<Tabs>` | Platform/language alternatives |
-| `<FileTree>` | Directory structures |
-| `<Kbd>` | Keyboard shortcuts (`<Kbd>Cmd</Kbd> + <Kbd>S</Kbd>`) |
-| `<Checklist>` | Task lists with checkboxes |
+| Component                  | Use For                                              |
+| -------------------------- | ---------------------------------------------------- |
+| `<Diagram>`                | Workflows, decision trees, architecture              |
+| `<Callout type="tip">`     | Helpful shortcuts, pro tips                          |
+| `<Callout type="warning">` | Potential pitfalls                                   |
+| `<Callout type="note">`    | Additional context                                   |
+| `<Steps>`                  | Sequential instructions                              |
+| `<Tabs>`                   | Platform/language alternatives                       |
+| `<FileTree>`               | Directory structures                                 |
+| `<Kbd>`                    | Keyboard shortcuts (`<Kbd>Cmd</Kbd> + <Kbd>S</Kbd>`) |
+| `<Checklist>`              | Task lists with checkboxes                           |
 
 ---
 
@@ -276,7 +307,7 @@ These make content feel generic. Cut them ruthlessly:
 
 ### Before (Generic)
 
-```markdown
+````markdown
 ## Installing Homebrew
 
 Homebrew is a package manager for macOS. It allows you to install software from the command line.
@@ -288,13 +319,16 @@ Homebrew is a package manager for macOS. It allows you to install software from 
    ```bash
    /bin/bash -c "$(curl -fsSL https://brew.sh/install.sh)"
    ```
+````
+
 3. Verify the installation by running:
    ```bash
    brew --version
    ```
 
 Homebrew is now installed on your system.
-```
+
+````
 
 ### After (Engaging)
 
@@ -328,7 +362,7 @@ Most tools you'll need (Git, Node.js, Python) can be installed with a single `br
 
   ```bash
   /bin/bash -c "$(curl -fsSL https://brew.sh/install.sh)"
-  ```
+````
 
   <Callout type="terminal">
   You'll be asked for your password. Type it (nothing appears—that's normal) and press Enter.
@@ -340,11 +374,12 @@ Most tools you'll need (Git, Node.js, Python) can be installed with a single `br
   brew --version
   ```
 
-  See a version number? You're ready to install anything.
+See a version number? You're ready to install anything.
 </Step>
 </Steps>
 
 **Next up:** Let's use Homebrew to install Git, your first superpower tool.
+
 ```
 
 ---
@@ -358,3 +393,4 @@ Most tools you'll need (Git, Node.js, Python) can be installed with a single `br
 5. **Language**: Active, direct, "you" and "we"
 
 When in doubt, ask: "Would a skilled friend explain it this way?"
+```

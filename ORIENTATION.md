@@ -8,16 +8,16 @@ A public Next.js 14 learning site — **[codewithclaude.net](https://codewithcla
 
 ## Content inventory
 
-| Track | Lessons | Duration | Shape |
-|---|---|---|---|
-| `start-here` | 11 | 5.3 h | Landing + articles |
-| `agents` | 5 | 11 h | Landing + articles |
-| `app-builder` | 2 | 7.4 h | **Self-contained** landing + 1 article |
-| `advanced-topics` | 5 | 4.6 h | Landing + articles |
-| `data-analysis` | 2 | 4 h | Landing + articles |
-| `automation` | 1 | 3.5 h | **Self-contained** landing |
-| `mcp` | 4 | 3 h | Landing + articles |
-| `git-github` | 1 | 90 min | **Self-contained** landing |
+| Track             | Lessons | Duration | Shape                                  |
+| ----------------- | ------- | -------- | -------------------------------------- |
+| `start-here`      | 11      | 5.3 h    | Landing + articles                     |
+| `agents`          | 5       | 11 h     | Landing + articles                     |
+| `app-builder`     | 2       | 7.4 h    | **Self-contained** landing + 1 article |
+| `advanced-topics` | 5       | 4.6 h    | Landing + articles                     |
+| `data-analysis`   | 2       | 4 h      | Landing + articles                     |
+| `automation`      | 1       | 3.5 h    | **Self-contained** landing             |
+| `mcp`             | 4       | 3 h      | Landing + articles                     |
+| `git-github`      | 1       | 90 min   | **Self-contained** landing             |
 
 **Self-contained** means the tutorial lives on `index.mdx` itself — 2,100+ words, not a stub. Those three declare `selfContained: true` and `getTrackStats()` counts them as a lesson. No track is "coming soon".
 
@@ -32,7 +32,7 @@ Plus: 2 blog posts + RSS, 6 interactive tools under `/tools`, glossary, resource
 
 ## Two content rules the pipeline depends on
 
-1. **Never start an MDX body with `# Heading`** — the shell owns the page's only `<h1>`, on articles, blog posts *and* track landings. Start at `##`.
+1. **Never start an MDX body with `# Heading`** — the shell owns the page's only `<h1>`, on articles, blog posts _and_ track landings. Start at `##`.
 2. **`order` is unique within a track**, `1..N`; every `index.mdx` is `order: 0`. Homepage track position comes from the `learningTracks` array in `src/app/page.tsx`, not frontmatter.
 
 ## Current state (verified 2026-09-03)

@@ -1,7 +1,11 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { siteConfig, generatePersonSchema, generateBreadcrumbSchema } from '@/lib/metadata'
+import {
+  siteConfig,
+  generatePersonSchema,
+  generateBreadcrumbSchema,
+} from '@/lib/metadata'
 import { getAllContent } from '@/lib/mdx'
 import { Users, BookOpen, Code, ArrowLeft, ExternalLink } from 'lucide-react'
 
@@ -42,7 +46,10 @@ We believe that AI coding assistants like Claude Code represent a fundamental sh
     ],
     links: [
       { name: 'GitHub', url: 'https://github.com/anthropics/claude-code' },
-      { name: 'Documentation', url: 'https://docs.claude.com/en/docs/claude-code/overview' },
+      {
+        name: 'Documentation',
+        url: 'https://docs.claude.com/en/docs/claude-code/overview',
+      },
       { name: 'Anthropic', url: 'https://anthropic.com' },
     ],
   },
@@ -54,7 +61,9 @@ interface PageProps {
   }
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const author = authorsData[params.id]
   if (!author) {
     return {}
@@ -88,7 +97,12 @@ function getAuthorArticles() {
     'advanced-topics',
   ]
 
-  const articles: { track: string; slug: string; title: string; description?: string }[] = []
+  const articles: {
+    track: string
+    slug: string
+    title: string
+    description?: string
+  }[] = []
 
   for (const track of tracks) {
     try {
@@ -167,7 +181,7 @@ export default function AuthorPage({ params }: PageProps) {
         {/* Back Link */}
         <Link
           href="/authors"
-          className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 mb-8"
+          className="mb-8 inline-flex items-center gap-2 text-sm text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
         >
           <ArrowLeft className="h-4 w-4" />
           All Authors
@@ -175,10 +189,10 @@ export default function AuthorPage({ params }: PageProps) {
 
         {/* Author Header */}
         <header className="mb-12">
-          <div className="flex flex-col sm:flex-row gap-6 items-start">
+          <div className="flex flex-col items-start gap-6 sm:flex-row">
             {/* Avatar */}
             <div className="flex-shrink-0">
-              <div className="h-32 w-32 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center shadow-lg">
+              <div className="flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg">
                 <Users className="h-16 w-16 text-white" />
               </div>
             </div>
@@ -188,7 +202,7 @@ export default function AuthorPage({ params }: PageProps) {
               <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
                 {author.name}
               </h1>
-              <p className="mt-1 text-lg text-primary-600 dark:text-primary-400 font-medium">
+              <p className="mt-1 text-lg font-medium text-primary-600 dark:text-primary-400">
                 {author.role}
               </p>
 
@@ -212,7 +226,7 @@ export default function AuthorPage({ params }: PageProps) {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                    className="inline-flex items-center gap-1.5 text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
                   >
                     <ExternalLink className="h-3.5 w-3.5" />
                     {link.name}
@@ -225,8 +239,10 @@ export default function AuthorPage({ params }: PageProps) {
 
         {/* Bio Section */}
         <section className="mb-12">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">About</h2>
-          <div className="prose prose-gray dark:prose-invert max-w-none">
+          <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+            About
+          </h2>
+          <div className="prose prose-gray max-w-none dark:prose-invert">
             {author.fullBio.split('\n\n').map((paragraph, i) => (
               <p key={i} className="text-gray-600 dark:text-gray-300">
                 {paragraph}
@@ -237,14 +253,14 @@ export default function AuthorPage({ params }: PageProps) {
 
         {/* Expertise Section */}
         <section className="mb-12">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
             Areas of Expertise
           </h2>
           <div className="flex flex-wrap gap-2">
             {author.expertise.map((topic) => (
               <span
                 key={topic}
-                className="inline-flex items-center rounded-full bg-primary-100 dark:bg-primary-900/50 px-3 py-1 text-sm font-medium text-primary-700 dark:text-primary-300"
+                className="inline-flex items-center rounded-full bg-primary-100 px-3 py-1 text-sm font-medium text-primary-700 dark:bg-primary-900/50 dark:text-primary-300"
               >
                 {topic}
               </span>
@@ -254,7 +270,7 @@ export default function AuthorPage({ params }: PageProps) {
 
         {/* Articles Section */}
         <section>
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
             Recent Articles
           </h2>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -262,16 +278,16 @@ export default function AuthorPage({ params }: PageProps) {
               <Link
                 key={`${article.track}/${article.slug}`}
                 href={`/${article.track}/${article.slug}`}
-                className="block rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-4 hover:shadow-md hover:border-primary-300 dark:hover:border-primary-600 transition-all"
+                className="block rounded-xl border border-gray-200 bg-white p-4 transition-all hover:border-primary-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800/50 dark:hover:border-primary-600"
               >
                 <span className="text-xs font-medium text-primary-600 dark:text-primary-400">
                   {trackNames[article.track] || article.track}
                 </span>
-                <h3 className="mt-1 font-semibold text-gray-900 dark:text-white line-clamp-2">
+                <h3 className="mt-1 line-clamp-2 font-semibold text-gray-900 dark:text-white">
                   {article.title}
                 </h3>
                 {article.description && (
-                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
+                  <p className="mt-1 line-clamp-2 text-sm text-gray-500 dark:text-gray-400">
                     {article.description}
                   </p>
                 )}
@@ -283,7 +299,7 @@ export default function AuthorPage({ params }: PageProps) {
             <div className="mt-6 text-center">
               <Link
                 href="/start-here"
-                className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium"
+                className="inline-flex items-center gap-2 font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
               >
                 View all content
                 <ArrowLeft className="h-4 w-4 rotate-180" />

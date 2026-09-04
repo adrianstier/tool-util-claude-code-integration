@@ -25,24 +25,32 @@ export default function Card({
   badgeColor = 'primary',
 }: CardProps) {
   const badgeColors = {
-    primary: 'bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300',
+    primary:
+      'bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300',
     sage: 'bg-sage-100 dark:bg-sage-900/40 text-sage-700 dark:text-sage-300',
     plum: 'bg-plum-100 dark:bg-plum-900/40 text-plum-700 dark:text-plum-300',
-    amber: 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300',
-    cobalt: 'bg-cobalt-100 dark:bg-cobalt-900/40 text-cobalt-700 dark:text-cobalt-300',
+    amber:
+      'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300',
+    cobalt:
+      'bg-cobalt-100 dark:bg-cobalt-900/40 text-cobalt-700 dark:text-cobalt-300',
   }
 
   const content = (
     <>
       <div className="relative">
         {icon && (
-          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 dark:bg-primary-900/30 text-2xl">
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-2xl dark:bg-primary-900/30">
             {icon}
           </div>
         )}
         {badge && (
-          <div className="absolute top-0 right-0">
-            <span className={cn('inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium', badgeColors[badgeColor])}>
+          <div className="absolute right-0 top-0">
+            <span
+              className={cn(
+                'inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium',
+                badgeColors[badgeColor]
+              )}
+            >
               {badge}
             </span>
           </div>
@@ -60,7 +68,7 @@ export default function Card({
       {children && <div className="mt-4">{children}</div>}
 
       {href && (
-        <div className="mt-4 flex items-center gap-1.5 text-sm font-semibold text-primary-600 dark:text-primary-400 transition-colors group-hover:text-primary-500 dark:group-hover:text-primary-300">
+        <div className="mt-4 flex items-center gap-1.5 text-sm font-semibold text-primary-600 transition-colors group-hover:text-primary-500 dark:text-primary-400 dark:group-hover:text-primary-300">
           <span>Learn more</span>
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </div>
@@ -86,9 +94,5 @@ export default function Card({
     )
   }
 
-  return (
-    <div className={cn(baseClasses, className)}>
-      {content}
-    </div>
-  )
+  return <div className={cn(baseClasses, className)}>{content}</div>
 }

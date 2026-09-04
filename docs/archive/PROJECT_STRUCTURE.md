@@ -72,6 +72,7 @@ claude-code-integration/
 ## Files by Purpose
 
 ### Configuration Files
+
 - `.vscode/settings.json` - VS Code workspace settings optimized for Claude Code
 - `tsconfig.json` - TypeScript compiler configuration
 - `tailwind.config.ts` - Tailwind CSS theming and content paths
@@ -83,46 +84,54 @@ claude-code-integration/
 - `.claudeignore` - Claude context exclusions
 
 ### Documentation
+
 - `README.md` - Project overview, setup instructions, and quick start
 - `CLAUDE.md` - Detailed context for working with Claude on this project
 - `ARCHITECTURE.md` - System architecture and technical decisions
 - `PROJECT_STRUCTURE.md` - This file
 
 ### Source Code
+
 - `src/app/layout.tsx` - Root layout component
 - `src/app/page.tsx` - Landing page
 - `src/app/globals.css` - Global styles
 - (Additional app routes will be created as needed)
 
 ### Content
+
 - `content/**/*.mdx` - Learning modules written in MDX
 - Each track has an `index.mdx` overview page
 - Platform-specific guides (mac-setup, windows-setup)
 
 ### Database
+
 - `scripts/migrate.js` - Migration system (up/down/create commands)
 - `scripts/setup-db.js` - Initial database setup
 - `migrations/*.sql` - Migration files
 - `migrations/applied/` - Applied migration history
 
 ### Templates
+
 - Root files (`CLAUDE.md`, `.claudeignore`, `.vscode/settings.json`) serve as templates
 - `templates/README.md` - Instructions for using templates
 
 ## Key Files to Know
 
 ### For Contributors
+
 1. **CLAUDE.md** - Read this first! Contains project context, workflows, and example prompts
 2. **ARCHITECTURE.md** - Technical architecture and design decisions
 3. **README.md** - Setup and usage instructions
 4. **package.json** - Available scripts and dependencies
 
 ### For Content Creators
+
 1. `content/**/*.mdx` - Learning content files
 2. `src/components/` - Reusable components for MDX
 3. Frontmatter schema in ARCHITECTURE.md
 
 ### For Developers
+
 1. `src/app/` - Next.js pages and layouts
 2. `src/components/` - React components
 3. `src/lib/` - Utility functions
@@ -159,6 +168,7 @@ These will be created as development progresses:
 ## Questions?
 
 Refer to:
+
 - **CLAUDE.md** for workflow questions
 - **ARCHITECTURE.md** for technical questions
 - **README.md** for setup questions

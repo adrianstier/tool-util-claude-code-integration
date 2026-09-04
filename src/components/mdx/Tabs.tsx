@@ -1,6 +1,13 @@
 'use client'
 
-import { useState, ReactNode, Children, isValidElement, createContext, useContext } from 'react'
+import {
+  useState,
+  ReactNode,
+  Children,
+  isValidElement,
+  createContext,
+  useContext,
+} from 'react'
 import { cn } from '@/lib/utils'
 
 interface TabsContextType {
@@ -42,7 +49,11 @@ export function Tabs({ defaultTab, children, className }: TabsProps) {
     if (isValidElement(child) && child.type === TabList) {
       const tabListChild = child as React.ReactElement<TabListProps>
       Children.forEach(tabListChild.props.children, (tabChild) => {
-        if (isValidElement(tabChild) && tabChild.type === Tab && !firstTabValue) {
+        if (
+          isValidElement(tabChild) &&
+          tabChild.type === Tab &&
+          !firstTabValue
+        ) {
           const tabElement = tabChild as React.ReactElement<TabProps>
           firstTabValue = tabElement.props.value
         }
@@ -63,7 +74,7 @@ export function TabList({ children, className }: TabListProps) {
   return (
     <div
       className={cn(
-        'flex gap-1 border-b border-ink-200 dark:border-ink-700 overflow-x-auto scrollbar-hide',
+        'scrollbar-hide flex gap-1 overflow-x-auto border-b border-ink-200 dark:border-ink-700',
         className
       )}
       role="tablist"
@@ -86,10 +97,10 @@ export function Tab({ value, children, icon, className }: TabProps) {
       aria-selected={isActive}
       onClick={() => setActiveTab(value)}
       className={cn(
-        'flex items-center gap-2 px-4 py-3 text-sm font-medium transition-all whitespace-nowrap border-b-2 -mb-px',
+        '-mb-px flex items-center gap-2 whitespace-nowrap border-b-2 px-4 py-3 text-sm font-medium transition-all',
         isActive
           ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-          : 'border-transparent text-ink-600 dark:text-ink-400 hover:text-ink-700 dark:hover:text-ink-300 hover:border-ink-300 dark:hover:border-ink-600',
+          : 'border-transparent text-ink-600 hover:border-ink-300 hover:text-ink-700 dark:text-ink-400 dark:hover:border-ink-600 dark:hover:text-ink-300',
         className
       )}
     >
@@ -111,7 +122,7 @@ export function TabPanel({ value, children, className }: TabPanelProps) {
   return (
     <div
       role="tabpanel"
-      className={cn('pt-6 animate-in fade-in-50 duration-200', className)}
+      className={cn('animate-in fade-in-50 pt-6 duration-200', className)}
     >
       {children}
     </div>

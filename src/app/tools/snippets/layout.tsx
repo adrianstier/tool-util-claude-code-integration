@@ -23,8 +23,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Code Snippets | Claude Code Learning Hub',
-    description:
-      'Ready-to-use code snippets for Claude Code workflows.',
+    description: 'Ready-to-use code snippets for Claude Code workflows.',
   },
 }
 

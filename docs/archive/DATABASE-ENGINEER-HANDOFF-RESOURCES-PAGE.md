@@ -16,13 +16,13 @@ This document provides the complete database and data layer implementation speci
 
 ### Key Deliverables
 
-| Deliverable | V1 Status | V1.5 Consideration |
-|-------------|-----------|-------------------|
-| Type definitions (`src/types/resources.ts`) | **Required** | Schema migration ready |
-| Static data file (`src/data/resources.ts`) | **Required** | Database seeder compatible |
-| Utility functions (`src/lib/resources.ts`) | **Required** | Repository pattern ready |
-| Database schema design | Documented only | **Implementation** |
-| API layer design | Not implemented | **Implementation** |
+| Deliverable                                 | V1 Status       | V1.5 Consideration         |
+| ------------------------------------------- | --------------- | -------------------------- |
+| Type definitions (`src/types/resources.ts`) | **Required**    | Schema migration ready     |
+| Static data file (`src/data/resources.ts`)  | **Required**    | Database seeder compatible |
+| Utility functions (`src/lib/resources.ts`)  | **Required**    | Repository pattern ready   |
+| Database schema design                      | Documented only | **Implementation**         |
+| API layer design                            | Not implemented | **Implementation**         |
 
 ---
 
@@ -32,14 +32,14 @@ This document provides the complete database and data layer implementation speci
 
 **Existing Implementation:** [src/app/resources/page.tsx:100-307](src/app/resources/page.tsx#L100-L307)
 
-| Aspect | Current | Issue | Solution |
-|--------|---------|-------|----------|
-| Data location | Inline in component | 207 lines of data in UI code | Extract to data layer |
-| Type definitions | Local to file | Not reusable | Shared types module |
-| Icon references | React components | Not serializable for SSR | String-based mapping |
-| Unique identifiers | None (uses URL) | Not database-ready | Add `id` field |
-| Temporal tracking | None | No recency sorting | Add `dateAdded` field |
-| Search optimization | Tag arrays | Good but no indexes | Prepare for full-text search |
+| Aspect              | Current             | Issue                        | Solution                     |
+| ------------------- | ------------------- | ---------------------------- | ---------------------------- |
+| Data location       | Inline in component | 207 lines of data in UI code | Extract to data layer        |
+| Type definitions    | Local to file       | Not reusable                 | Shared types module          |
+| Icon references     | React components    | Not serializable for SSR     | String-based mapping         |
+| Unique identifiers  | None (uses URL)     | Not database-ready           | Add `id` field               |
+| Temporal tracking   | None                | No recency sorting           | Add `dateAdded` field        |
+| Search optimization | Tag arrays          | Good but no indexes          | Prepare for full-text search |
 
 ### 1.2 Project Constraints (from CLAUDE.md)
 
@@ -51,6 +51,7 @@ V1 Launch Status: READY ✅
 ```
 
 **Implication:** V1 data layer must be:
+
 - File-based (no database runtime)
 - Statically importable (build-time optimization)
 - Serializable (SSR-compatible)
@@ -59,11 +60,13 @@ V1 Launch Status: READY ✅
 ### 1.3 Existing Codebase Patterns
 
 **Reference Files:**
+
 - [src/lib/constants.ts](src/lib/constants.ts) - Constants organization pattern
 - [src/lib/utils.ts](src/lib/utils.ts) - Utility function patterns (`groupBy`, `sortBy`)
 - [src/lib/metadata.ts](src/lib/metadata.ts) - Schema generation patterns
 
 **Established Conventions:**
+
 - TypeScript strict mode
 - `as const` for literal type inference
 - Export both types and values
@@ -83,7 +86,11 @@ V1 Launch Status: READY ✅
  * Resource Category Types
  * Defines the four main sections of the Resources page
  */
-export type ResourceCategory = 'our-tools' | 'learning' | 'official' | 'community'
+export type ResourceCategory =
+  | 'our-tools'
+  | 'learning'
+  | 'official'
+  | 'community'
 
 /**
  * Skill Level Types
@@ -211,17 +218,13 @@ export const RESOURCE_CATEGORIES = [
   'our-tools',
   'learning',
   'official',
-  'community'
+  'community',
 ] as const
 
 /**
  * Valid skill levels (for runtime validation)
  */
-export const SKILL_LEVELS = [
-  'beginner',
-  'intermediate',
-  'advanced'
-] as const
+export const SKILL_LEVELS = ['beginner', 'intermediate', 'advanced'] as const
 
 /**
  * Valid icon names (for runtime validation and autocomplete)
@@ -243,10 +246,10 @@ export const VALID_ICON_NAMES = [
   'Server',
   'Search',
   'Layers',
-  'Sparkles'
+  'Sparkles',
 ] as const
 
-export type ValidIconName = typeof VALID_ICON_NAMES[number]
+export type ValidIconName = (typeof VALID_ICON_NAMES)[number]
 ```
 
 ### 2.3 Type Guards
@@ -256,7 +259,10 @@ export type ValidIconName = typeof VALID_ICON_NAMES[number]
  * Type guard for ResourceCategory
  */
 export function isResourceCategory(value: unknown): value is ResourceCategory {
-  return typeof value === 'string' && RESOURCE_CATEGORIES.includes(value as ResourceCategory)
+  return (
+    typeof value === 'string' &&
+    RESOURCE_CATEGORIES.includes(value as ResourceCategory)
+  )
 }
 
 /**
@@ -270,7 +276,10 @@ export function isSkillLevel(value: unknown): value is SkillLevel {
  * Type guard for valid icon name
  */
 export function isValidIconName(value: unknown): value is ValidIconName {
-  return typeof value === 'string' && VALID_ICON_NAMES.includes(value as ValidIconName)
+  return (
+    typeof value === 'string' &&
+    VALID_ICON_NAMES.includes(value as ValidIconName)
+  )
 }
 ```
 
@@ -283,7 +292,11 @@ export function isValidIconName(value: unknown): value is ValidIconName {
 **File:** `src/data/resources.ts`
 
 ```typescript
-import type { ResourceSectionConfig, CategoryFilterOption, ResourceCategory } from '@/types/resources'
+import type {
+  ResourceSectionConfig,
+  CategoryFilterOption,
+  ResourceCategory,
+} from '@/types/resources'
 
 /**
  * Section Configuration
@@ -295,28 +308,32 @@ export const SECTION_CONFIG: Record<ResourceCategory, ResourceSectionConfig> = {
     title: 'Our Tools',
     description: 'Interactive tools and references we built for you',
     icon: 'Wrench',
-    colorClass: 'bg-primary-100 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300',
+    colorClass:
+      'bg-primary-100 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300',
   },
   learning: {
     id: 'learning',
     title: 'Learning Paths',
     description: 'Structured courses and tracks to build your skills',
     icon: 'GraduationCap',
-    colorClass: 'bg-cobalt-100 text-cobalt-700 dark:bg-cobalt-900/50 dark:text-cobalt-300',
+    colorClass:
+      'bg-cobalt-100 text-cobalt-700 dark:bg-cobalt-900/50 dark:text-cobalt-300',
   },
   official: {
     id: 'official',
     title: 'Official Resources',
     description: 'Documentation and tools from Anthropic',
     icon: 'BookOpen',
-    colorClass: 'bg-sage-100 text-sage-700 dark:bg-sage-900/50 dark:text-sage-300',
+    colorClass:
+      'bg-sage-100 text-sage-700 dark:bg-sage-900/50 dark:text-sage-300',
   },
   community: {
     id: 'community',
     title: 'Community & External',
     description: 'Connect with others and explore third-party tools',
     icon: 'Users',
-    colorClass: 'bg-plum-100 text-plum-700 dark:bg-plum-900/50 dark:text-plum-300',
+    colorClass:
+      'bg-plum-100 text-plum-700 dark:bg-plum-900/50 dark:text-plum-300',
   },
 } as const
 
@@ -367,7 +384,8 @@ export const RESOURCES: Resource[] = [
   {
     id: 'cheatsheets',
     title: 'Cheatsheets',
-    description: '7 quick reference guides for Claude Code, Git, Terminal, Python, and more',
+    description:
+      '7 quick reference guides for Claude Code, Git, Terminal, Python, and more',
     url: '/tools/cheatsheets',
     internal: true,
     icon: 'FileText',
@@ -403,7 +421,8 @@ export const RESOURCES: Resource[] = [
   {
     id: 'project-templates',
     title: 'Project Templates',
-    description: '6 starter templates for web apps, data science, automation, and more',
+    description:
+      '6 starter templates for web apps, data science, automation, and more',
     url: '/tools/templates',
     internal: true,
     icon: 'FolderOpen',
@@ -444,7 +463,8 @@ export const RESOURCES: Resource[] = [
   {
     id: 'start-here-guide',
     title: 'Start Here Guide',
-    description: 'Complete setup guide for beginners - install Claude Code, VS Code, and Git',
+    description:
+      'Complete setup guide for beginners - install Claude Code, VS Code, and Git',
     url: '/start-here',
     internal: true,
     icon: 'GraduationCap',
@@ -483,7 +503,8 @@ export const RESOURCES: Resource[] = [
   {
     id: 'ai-agents-track',
     title: 'AI Agents Track',
-    description: 'Build autonomous AI agents that can reason, plan, and take actions',
+    description:
+      'Build autonomous AI agents that can reason, plan, and take actions',
     url: '/agents',
     internal: true,
     icon: 'Lightbulb',
@@ -657,10 +678,10 @@ export const RESOURCE_COUNT = RESOURCES.length
  * Resource counts by category
  */
 export const RESOURCE_COUNTS_BY_CATEGORY: Record<ResourceCategory, number> = {
-  'our-tools': RESOURCES.filter(r => r.category === 'our-tools').length,
-  'learning': RESOURCES.filter(r => r.category === 'learning').length,
-  'official': RESOURCES.filter(r => r.category === 'official').length,
-  'community': RESOURCES.filter(r => r.category === 'community').length,
+  'our-tools': RESOURCES.filter((r) => r.category === 'our-tools').length,
+  learning: RESOURCES.filter((r) => r.category === 'learning').length,
+  official: RESOURCES.filter((r) => r.category === 'official').length,
+  community: RESOURCES.filter((r) => r.category === 'community').length,
 }
 ```
 
@@ -697,7 +718,7 @@ import type {
   Resource,
   ResourceCategory,
   GroupedResources,
-  SkillLevel
+  SkillLevel,
 } from '@/types/resources'
 
 /**
@@ -766,10 +787,11 @@ export function filterResources(
     const matchesCategory = category === 'all' || resource.category === category
 
     // Search filter (matches title, description, or tags)
-    const matchesSearch = searchLower === '' ||
+    const matchesSearch =
+      searchLower === '' ||
       resource.title.toLowerCase().includes(searchLower) ||
       resource.description.toLowerCase().includes(searchLower) ||
-      resource.tags?.some(tag => tag.toLowerCase().includes(searchLower))
+      resource.tags?.some((tag) => tag.toLowerCase().includes(searchLower))
 
     return matchesCategory && matchesSearch
   })
@@ -790,9 +812,9 @@ export function groupResourcesByCategory(
 ): GroupedResources {
   const groups: GroupedResources = {
     'our-tools': [],
-    'learning': [],
-    'official': [],
-    'community': [],
+    learning: [],
+    official: [],
+    community: [],
   }
 
   resources.forEach((resource) => {
@@ -832,8 +854,10 @@ export function sortResources(resources: Resource[]): Resource[] {
  * @param resources - Array of resources to filter
  * @returns Resources with isNew=true
  */
-export function getNewResources(resources: readonly Resource[] | Resource[]): Resource[] {
-  return resources.filter(r => r.isNew === true)
+export function getNewResources(
+  resources: readonly Resource[] | Resource[]
+): Resource[] {
+  return resources.filter((r) => r.isNew === true)
 }
 
 /**
@@ -847,7 +871,7 @@ export function getResourcesBySkillLevel(
   resources: readonly Resource[] | Resource[],
   level: SkillLevel
 ): Resource[] {
-  return resources.filter(r => r.skillLevel === level)
+  return resources.filter((r) => r.skillLevel === level)
 }
 
 /**
@@ -861,7 +885,7 @@ export function getResourceById(
   resources: readonly Resource[] | Resource[],
   id: string
 ): Resource | undefined {
-  return resources.find(r => r.id === id)
+  return resources.find((r) => r.id === id)
 }
 
 /**
@@ -873,7 +897,7 @@ export function getResourceById(
 export function getInternalResources(
   resources: readonly Resource[] | Resource[]
 ): Resource[] {
-  return resources.filter(r => r.internal === true)
+  return resources.filter((r) => r.internal === true)
 }
 
 /**
@@ -885,7 +909,7 @@ export function getInternalResources(
 export function getExternalResources(
   resources: readonly Resource[] | Resource[]
 ): Resource[] {
-  return resources.filter(r => !r.internal)
+  return resources.filter((r) => !r.internal)
 }
 ```
 
@@ -914,7 +938,8 @@ export function parseFilterState(
 
   const categoryParam = searchParams.get('category')
   const category: 'all' | ResourceCategory =
-    categoryParam && RESOURCE_CATEGORIES.includes(categoryParam as ResourceCategory)
+    categoryParam &&
+    RESOURCE_CATEGORIES.includes(categoryParam as ResourceCategory)
       ? (categoryParam as ResourceCategory)
       : 'all'
 
@@ -964,12 +989,15 @@ import { siteConfig } from '@/lib/metadata'
  * @param resources - Array of resources to include
  * @returns JSON-LD schema object
  */
-export function generateResourcesCollectionSchema(resources: readonly Resource[]) {
+export function generateResourcesCollectionSchema(
+  resources: readonly Resource[]
+) {
   return {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: 'Claude Code Resources',
-    description: 'A curated collection of resources to help you master Claude Code and AI-powered development.',
+    description:
+      'A curated collection of resources to help you master Claude Code and AI-powered development.',
     url: `${siteConfig.url}/resources`,
     numberOfItems: resources.length,
     itemListElement: resources.slice(0, 20).map((resource, index) => ({
@@ -997,9 +1025,9 @@ export function generateCategorySchema(
 ) {
   const categoryNames: Record<ResourceCategory, string> = {
     'our-tools': 'Claude Code Learning Hub Tools',
-    'learning': 'Learning Resources',
-    'official': 'Official Anthropic Resources',
-    'community': 'Community Resources',
+    learning: 'Learning Resources',
+    official: 'Official Anthropic Resources',
+    community: 'Community Resources',
   }
 
   return {
@@ -1027,7 +1055,11 @@ export function generateCategorySchema(
 
 ```typescript
 import type { Resource } from '@/types/resources'
-import { RESOURCE_CATEGORIES, SKILL_LEVELS, VALID_ICON_NAMES } from '@/types/resources'
+import {
+  RESOURCE_CATEGORIES,
+  SKILL_LEVELS,
+  VALID_ICON_NAMES,
+} from '@/types/resources'
 
 /**
  * Validation result for a single resource
@@ -1058,10 +1090,12 @@ export function validateResource(
   } else {
     // ID format check
     if (!/^[a-z0-9-]+$/.test(resource.id)) {
-      errors.push(`Invalid id format: "${resource.id}" (must be lowercase, hyphenated)`)
+      errors.push(
+        `Invalid id format: "${resource.id}" (must be lowercase, hyphenated)`
+      )
     }
     // Uniqueness check
-    const duplicates = allResources.filter(r => r.id === resource.id)
+    const duplicates = allResources.filter((r) => r.id === resource.id)
     if (duplicates.length > 1) {
       errors.push(`Duplicate id: "${resource.id}"`)
     }
@@ -1074,7 +1108,9 @@ export function validateResource(
   if (!resource.description || resource.description.trim() === '') {
     errors.push('Missing required field: description')
   } else if (resource.description.length > 200) {
-    warnings.push(`Description exceeds 200 chars (${resource.description.length})`)
+    warnings.push(
+      `Description exceeds 200 chars (${resource.description.length})`
+    )
   }
 
   if (!resource.url || resource.url.trim() === '') {
@@ -1091,7 +1127,11 @@ export function validateResource(
 
   if (!resource.icon) {
     errors.push('Missing required field: icon')
-  } else if (!VALID_ICON_NAMES.includes(resource.icon as typeof VALID_ICON_NAMES[number])) {
+  } else if (
+    !VALID_ICON_NAMES.includes(
+      resource.icon as (typeof VALID_ICON_NAMES)[number]
+    )
+  ) {
     warnings.push(`Unknown icon name: "${resource.icon}"`)
   }
 
@@ -1105,7 +1145,9 @@ export function validateResource(
   }
 
   if (resource.dateAdded && !/^\d{4}-\d{2}-\d{2}$/.test(resource.dateAdded)) {
-    errors.push(`Invalid dateAdded format: "${resource.dateAdded}" (expected YYYY-MM-DD)`)
+    errors.push(
+      `Invalid dateAdded format: "${resource.dateAdded}" (expected YYYY-MM-DD)`
+    )
   }
 
   if (resource.tags) {
@@ -1129,13 +1171,13 @@ export function validateResource(
  * @returns Validation summary
  */
 export function validateAllResources(resources: readonly Resource[]) {
-  const results = resources.map(r => ({
+  const results = resources.map((r) => ({
     id: r.id,
     ...validateResource(r, resources),
   }))
 
-  const invalid = results.filter(r => !r.valid)
-  const withWarnings = results.filter(r => r.warnings.length > 0)
+  const invalid = results.filter((r) => !r.valid)
+  const withWarnings = results.filter((r) => r.warnings.length > 0)
 
   return {
     valid: invalid.length === 0,
@@ -1144,8 +1186,10 @@ export function validateAllResources(resources: readonly Resource[]) {
     warningCount: withWarnings.length,
     results,
     summary: {
-      errors: invalid.flatMap(r => r.errors.map(e => `[${r.id}] ${e}`)),
-      warnings: withWarnings.flatMap(r => r.warnings.map(w => `[${r.id}] ${w}`)),
+      errors: invalid.flatMap((r) => r.errors.map((e) => `[${r.id}] ${e}`)),
+      warnings: withWarnings.flatMap((r) =>
+        r.warnings.map((w) => `[${r.id}] ${w}`)
+      ),
     },
   }
 }
@@ -1183,20 +1227,22 @@ if (validation.valid) {
 
   if (validation.warningCount > 0) {
     console.log(`\n⚠️  Warnings (${validation.warningCount}):`)
-    validation.summary.warnings.forEach(w => console.log(`   ${w}`))
+    validation.summary.warnings.forEach((w) => console.log(`   ${w}`))
   }
 
   process.exit(0)
 } else {
   console.log('❌ Validation failed!')
-  console.log(`   Invalid: ${validation.invalidCount}/${validation.totalResources}`)
+  console.log(
+    `   Invalid: ${validation.invalidCount}/${validation.totalResources}`
+  )
 
   console.log('\n🚫 Errors:')
-  validation.summary.errors.forEach(e => console.log(`   ${e}`))
+  validation.summary.errors.forEach((e) => console.log(`   ${e}`))
 
   if (validation.warningCount > 0) {
     console.log(`\n⚠️  Warnings:`)
-    validation.summary.warnings.forEach(w => console.log(`   ${w}`))
+    validation.summary.warnings.forEach((w) => console.log(`   ${w}`))
   }
 
   process.exit(1)
@@ -1303,22 +1349,25 @@ export async function up(db: Database) {
 
   // Seed from static data
   for (const resource of RESOURCES) {
-    await db.run(`
+    await db.run(
+      `
       INSERT INTO resources (id, title, description, url, icon, internal, category, skill_level, is_new, date_added, sort_order)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `, [
-      resource.id,
-      resource.title,
-      resource.description,
-      resource.url,
-      resource.icon,
-      resource.internal ? 1 : 0,
-      resource.category,
-      resource.skillLevel || null,
-      resource.isNew ? 1 : 0,
-      resource.dateAdded || null,
-      resource.sortOrder || null,
-    ])
+    `,
+      [
+        resource.id,
+        resource.title,
+        resource.description,
+        resource.url,
+        resource.icon,
+        resource.internal ? 1 : 0,
+        resource.category,
+        resource.skillLevel || null,
+        resource.isNew ? 1 : 0,
+        resource.dateAdded || null,
+        resource.sortOrder || null,
+      ]
+    )
 
     // Insert tags
     if (resource.tags) {
@@ -1346,25 +1395,26 @@ export async function down(db: Database) {
 
 ### 7.1 Build-Time Optimization
 
-| Optimization | Implementation | Impact |
-|--------------|----------------|--------|
-| Static import | `RESOURCES` array imported at build time | Zero runtime fetch |
-| Tree-shaking | Unused utilities eliminated | Smaller bundle |
-| Type stripping | TypeScript types removed at build | No runtime overhead |
-| Const assertion | `as const` enables literal types | Better tree-shaking |
+| Optimization    | Implementation                           | Impact              |
+| --------------- | ---------------------------------------- | ------------------- |
+| Static import   | `RESOURCES` array imported at build time | Zero runtime fetch  |
+| Tree-shaking    | Unused utilities eliminated              | Smaller bundle      |
+| Type stripping  | TypeScript types removed at build        | No runtime overhead |
+| Const assertion | `as const` enables literal types         | Better tree-shaking |
 
 ### 7.2 Runtime Performance
 
-| Concern | Mitigation |
-|---------|------------|
-| Filter recalculation | `useMemo` with category/search deps |
+| Concern               | Mitigation                            |
+| --------------------- | ------------------------------------- |
+| Filter recalculation  | `useMemo` with category/search deps   |
 | Icon component lookup | Single `ICON_MAP` object, O(1) access |
-| Grouped resources | Computed once per filter change |
-| URL state sync | Debounced updates (300ms recommended) |
+| Grouped resources     | Computed once per filter change       |
+| URL state sync        | Debounced updates (300ms recommended) |
 
 ### 7.3 Bundle Size Impact
 
 Estimated additions:
+
 - Types: ~0 KB (stripped at build)
 - Data file: ~8 KB (23 resources × ~350 bytes)
 - Utilities: ~2 KB (tree-shaken)
@@ -1409,34 +1459,45 @@ describe('filterResources', () => {
 
   it('filters by category', () => {
     const result = filterResources(RESOURCES, 'learning', '')
-    expect(result.every(r => r.category === 'learning')).toBe(true)
+    expect(result.every((r) => r.category === 'learning')).toBe(true)
   })
 
   it('filters by search term in title', () => {
     const result = filterResources(RESOURCES, 'all', 'git')
     expect(result.length).toBeGreaterThan(0)
-    expect(result.every(r =>
-      r.title.toLowerCase().includes('git') ||
-      r.description.toLowerCase().includes('git') ||
-      r.tags?.some(t => t.includes('git'))
-    )).toBe(true)
+    expect(
+      result.every(
+        (r) =>
+          r.title.toLowerCase().includes('git') ||
+          r.description.toLowerCase().includes('git') ||
+          r.tags?.some((t) => t.includes('git'))
+      )
+    ).toBe(true)
   })
 
   it('combines category and search filters', () => {
     const result = filterResources(RESOURCES, 'learning', 'beginner')
-    expect(result.every(r => r.category === 'learning')).toBe(true)
+    expect(result.every((r) => r.category === 'learning')).toBe(true)
   })
 })
 
 describe('groupResourcesByCategory', () => {
   it('groups resources into all categories', () => {
     const grouped = groupResourcesByCategory(RESOURCES)
-    expect(Object.keys(grouped)).toEqual(['our-tools', 'learning', 'official', 'community'])
+    expect(Object.keys(grouped)).toEqual([
+      'our-tools',
+      'learning',
+      'official',
+      'community',
+    ])
   })
 
   it('maintains resource count', () => {
     const grouped = groupResourcesByCategory(RESOURCES)
-    const total = Object.values(grouped).reduce((sum, arr) => sum + arr.length, 0)
+    const total = Object.values(grouped).reduce(
+      (sum, arr) => sum + arr.length,
+      0
+    )
     expect(total).toBe(RESOURCES.length)
   })
 })
@@ -1463,7 +1524,9 @@ describe('buildFilterParams', () => {
   })
 
   it('includes category when not all', () => {
-    expect(buildFilterParams({ category: 'learning', search: '' })).toBe('category=learning')
+    expect(buildFilterParams({ category: 'learning', search: '' })).toBe(
+      'category=learning'
+    )
   })
 
   it('includes search when not empty', () => {
@@ -1482,7 +1545,7 @@ describe('validateResource', () => {
     const invalid = { ...RESOURCES[0], id: '' }
     const result = validateResource(invalid, [invalid])
     expect(result.valid).toBe(false)
-    expect(result.errors.some(e => e.includes('id'))).toBe(true)
+    expect(result.errors.some((e) => e.includes('id'))).toBe(true)
   })
 })
 ```
@@ -1492,24 +1555,26 @@ describe('validateResource', () => {
 ```typescript
 describe('RESOURCES data integrity', () => {
   it('has unique IDs', () => {
-    const ids = RESOURCES.map(r => r.id)
+    const ids = RESOURCES.map((r) => r.id)
     const uniqueIds = new Set(ids)
     expect(uniqueIds.size).toBe(ids.length)
   })
 
   it('has valid categories', () => {
     const validCategories = ['our-tools', 'learning', 'official', 'community']
-    expect(RESOURCES.every(r => validCategories.includes(r.category))).toBe(true)
+    expect(RESOURCES.every((r) => validCategories.includes(r.category))).toBe(
+      true
+    )
   })
 
   it('has correct URL format for internal resources', () => {
-    const internal = RESOURCES.filter(r => r.internal)
-    expect(internal.every(r => r.url.startsWith('/'))).toBe(true)
+    const internal = RESOURCES.filter((r) => r.internal)
+    expect(internal.every((r) => r.url.startsWith('/'))).toBe(true)
   })
 
   it('has correct URL format for external resources', () => {
-    const external = RESOURCES.filter(r => !r.internal)
-    expect(external.every(r => r.url.startsWith('http'))).toBe(true)
+    const external = RESOURCES.filter((r) => !r.internal)
+    expect(external.every((r) => r.url.startsWith('http'))).toBe(true)
   })
 })
 ```
@@ -1520,13 +1585,13 @@ describe('RESOURCES data integrity', () => {
 
 ### 9.1 File Creation Order
 
-| Step | File | Priority | Dependencies |
-|------|------|----------|--------------|
-| 1 | `src/types/resources.ts` | **Critical** | None |
-| 2 | `src/data/resources.ts` | **Critical** | Types |
-| 3 | `src/lib/resources.ts` | **Critical** | Types |
-| 4 | `scripts/validate-resources.ts` | Medium | Data + Lib |
-| 5 | `src/lib/__tests__/resources.test.ts` | Medium | All above |
+| Step | File                                  | Priority     | Dependencies |
+| ---- | ------------------------------------- | ------------ | ------------ |
+| 1    | `src/types/resources.ts`              | **Critical** | None         |
+| 2    | `src/data/resources.ts`               | **Critical** | Types        |
+| 3    | `src/lib/resources.ts`                | **Critical** | Types        |
+| 4    | `scripts/validate-resources.ts`       | Medium       | Data + Lib   |
+| 5    | `src/lib/__tests__/resources.test.ts` | Medium       | All above    |
 
 ### 9.2 Acceptance Criteria
 
@@ -1546,9 +1611,14 @@ describe('RESOURCES data integrity', () => {
 ### 9.3 Integration Points
 
 **For Frontend Engineers:**
+
 ```typescript
 // Import types
-import type { Resource, ResourceCategory, GroupedResources } from '@/types/resources'
+import type {
+  Resource,
+  ResourceCategory,
+  GroupedResources,
+} from '@/types/resources'
 
 // Import data
 import { RESOURCES, SECTION_CONFIG, CATEGORY_FILTERS } from '@/data/resources'
@@ -1564,6 +1634,7 @@ import {
 ```
 
 **For Backend Engineers (V1.5+):**
+
 ```typescript
 // Seed database from static data
 import { RESOURCES } from '@/data/resources'
@@ -1579,13 +1650,13 @@ import type { Resource } from '@/types/resources'
 
 ## Part 10: Risk Assessment
 
-| Risk | Probability | Impact | Mitigation |
-|------|-------------|--------|------------|
-| Icon name typo | Medium | Low | Fallback icon + validation script |
-| Duplicate IDs | Low | Medium | Validation script + unique constraint |
-| URL format mismatch | Low | High | Validation + internal/external checks |
-| Type drift | Low | Medium | Shared types + strict TypeScript |
-| Bundle size growth | Low | Low | Tree-shaking + const assertions |
+| Risk                | Probability | Impact | Mitigation                            |
+| ------------------- | ----------- | ------ | ------------------------------------- |
+| Icon name typo      | Medium      | Low    | Fallback icon + validation script     |
+| Duplicate IDs       | Low         | Medium | Validation script + unique constraint |
+| URL format mismatch | Low         | High   | Validation + internal/external checks |
+| Type drift          | Low         | Medium | Shared types + strict TypeScript      |
+| Bundle size growth  | Low         | Low    | Tree-shaking + const assertions       |
 
 ---
 

@@ -32,21 +32,25 @@ async function checkConsoleErrors(page: Page): Promise<string[]> {
 // Helper function to check performance metrics
 async function getPerformanceMetrics(page: Page) {
   const metrics = await page.evaluate(() => {
-    const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming
+    const navigation = performance.getEntriesByType(
+      'navigation'
+    )[0] as PerformanceNavigationTiming
     const paint = performance.getEntriesByType('paint')
 
     return {
-      domContentLoaded: navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart,
+      domContentLoaded:
+        navigation.domContentLoadedEventEnd -
+        navigation.domContentLoadedEventStart,
       loadComplete: navigation.loadEventEnd - navigation.loadEventStart,
-      firstPaint: paint.find(p => p.name === 'first-paint')?.startTime || 0,
-      firstContentfulPaint: paint.find(p => p.name === 'first-contentful-paint')?.startTime || 0,
+      firstPaint: paint.find((p) => p.name === 'first-paint')?.startTime || 0,
+      firstContentfulPaint:
+        paint.find((p) => p.name === 'first-contentful-paint')?.startTime || 0,
     }
   })
   return metrics
 }
 
 test.describe('Comprehensive Verification Suite', () => {
-
   test.describe('Performance Tests', () => {
     for (const pageInfo of pages) {
       test(`${pageInfo.name} - Performance metrics`, async ({ page }) => {
@@ -56,10 +60,14 @@ test.describe('Comprehensive Verification Suite', () => {
         const metrics = await getPerformanceMetrics(page)
 
         console.log(`${pageInfo.name} Performance:`)
-        console.log(`  DOM Content Loaded: ${metrics.domContentLoaded.toFixed(2)}ms`)
+        console.log(
+          `  DOM Content Loaded: ${metrics.domContentLoaded.toFixed(2)}ms`
+        )
         console.log(`  Load Complete: ${metrics.loadComplete.toFixed(2)}ms`)
         console.log(`  First Paint: ${metrics.firstPaint.toFixed(2)}ms`)
-        console.log(`  First Contentful Paint: ${metrics.firstContentfulPaint.toFixed(2)}ms`)
+        console.log(
+          `  First Contentful Paint: ${metrics.firstContentfulPaint.toFixed(2)}ms`
+        )
 
         // Performance assertions
         expect(metrics.domContentLoaded).toBeLessThan(3000) // DOM should load in < 3s
@@ -113,7 +121,9 @@ test.describe('Comprehensive Verification Suite', () => {
 
         // Tab through interactive elements
         await page.keyboard.press('Tab')
-        const focusedElement = await page.evaluate(() => document.activeElement?.tagName)
+        const focusedElement = await page.evaluate(
+          () => document.activeElement?.tagName
+        )
         expect(['A', 'BUTTON', 'INPUT']).toContain(focusedElement)
 
         console.log(`✓ ${pageInfo.name} - Keyboard navigation works`)
@@ -140,13 +150,17 @@ test.describe('Comprehensive Verification Suite', () => {
         await page.waitForLoadState('networkidle')
 
         // Filter out expected errors (if any)
-        const criticalErrors = errors.filter(err =>
-          !err.includes('favicon') && // Ignore favicon errors
-          !err.includes('lighthouse') // Ignore lighthouse-related errors
+        const criticalErrors = errors.filter(
+          (err) =>
+            !err.includes('favicon') && // Ignore favicon errors
+            !err.includes('lighthouse') // Ignore lighthouse-related errors
         )
 
         if (criticalErrors.length > 0) {
-          console.log(`${pageInfo.name} - Console errors found:`, criticalErrors)
+          console.log(
+            `${pageInfo.name} - Console errors found:`,
+            criticalErrors
+          )
         }
 
         expect(criticalErrors).toHaveLength(0)
@@ -214,7 +228,7 @@ test.describe('Comprehensive Verification Suite', () => {
         '/start-here/mac-setup',
         '/start-here/windows-setup',
         '/data-analysis/python-intro',
-        '/git-github'
+        '/git-github',
       ]
 
       for (const url of pagesWithCode) {
@@ -230,7 +244,9 @@ test.describe('Comprehensive Verification Suite', () => {
           expect(content?.trim().length).toBeGreaterThan(0)
         }
 
-        console.log(`✓ ${url} - ${codeBlocks.length} code blocks found and formatted`)
+        console.log(
+          `✓ ${url} - ${codeBlocks.length} code blocks found and formatted`
+        )
       }
     })
   })
@@ -244,14 +260,22 @@ test.describe('Comprehensive Verification Suite', () => {
     ]
 
     for (const viewport of viewports) {
-      test(`Home page - ${viewport.name} (${viewport.width}x${viewport.height})`, async ({ page }) => {
-        await page.setViewportSize({ width: viewport.width, height: viewport.height })
+      test(`Home page - ${viewport.name} (${viewport.width}x${viewport.height})`, async ({
+        page,
+      }) => {
+        await page.setViewportSize({
+          width: viewport.width,
+          height: viewport.height,
+        })
         await page.goto(baseURL)
         await page.waitForLoadState('networkidle')
 
         // Check for horizontal scrolling
         const hasHorizontalScroll = await page.evaluate(() => {
-          return document.documentElement.scrollWidth > document.documentElement.clientWidth
+          return (
+            document.documentElement.scrollWidth >
+            document.documentElement.clientWidth
+          )
         })
 
         expect(hasHorizontalScroll).toBe(false)

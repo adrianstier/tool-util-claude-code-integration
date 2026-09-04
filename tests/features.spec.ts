@@ -4,7 +4,10 @@ import { openSearch } from './helpers'
 const baseURL = 'http://localhost:3001'
 
 /** Navigate to a page in light mode so "Switch to dark mode" button is available */
-async function gotoInLightMode(page: import('@playwright/test').Page, url: string) {
+async function gotoInLightMode(
+  page: import('@playwright/test').Page,
+  url: string
+) {
   // Set theme before any page script runs
   await page.addInitScript(() => {
     localStorage.setItem('theme', 'light')
@@ -25,7 +28,9 @@ test.describe('Dark Mode', () => {
     await page.goto('http://localhost:3001')
 
     // Wait for theme toggle to be visible (use first() as there are desktop and mobile versions)
-    const themeToggle = page.locator('button[aria-label="Switch to dark mode"]').first()
+    const themeToggle = page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .first()
     await expect(themeToggle).toBeVisible()
 
     // Check initial state (should be light or system)
@@ -36,7 +41,9 @@ test.describe('Dark Mode', () => {
     await expect(html).toHaveClass(/dark/)
 
     // Click light mode button (after toggling to dark, label changes)
-    const lightButton = page.locator('button[aria-label="Switch to light mode"]').first()
+    const lightButton = page
+      .locator('button[aria-label="Switch to light mode"]')
+      .first()
     await lightButton.click()
     await expect(html).not.toHaveClass(/dark/)
   })
@@ -45,7 +52,9 @@ test.describe('Dark Mode', () => {
     await page.goto('http://localhost:3001')
 
     // Set dark mode (use first() as there are desktop and mobile versions)
-    const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+    const darkButton = page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .first()
     await darkButton.click()
 
     // Wait for theme to be applied
@@ -61,7 +70,9 @@ test.describe('Dark Mode', () => {
     await page.goto('http://localhost:3001')
 
     // Toggle to dark mode (use first() as there are desktop and mobile versions)
-    const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+    const darkButton = page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .first()
     await darkButton.click()
 
     // Check localStorage is set to dark
@@ -73,7 +84,9 @@ test.describe('Dark Mode', () => {
     await page.goto('http://localhost:3001')
 
     // Set dark mode (use first() as there are desktop and mobile versions)
-    const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+    const darkButton = page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .first()
     await darkButton.click()
 
     // Check html has dark class
@@ -85,7 +98,9 @@ test.describe('Dark Mode', () => {
     await page.goto('http://localhost:3001')
 
     // Set dark mode (use first() as there are desktop and mobile versions)
-    const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+    const darkButton = page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .first()
     await darkButton.click()
 
     // Check html has dark class (footer styling is applied via dark: prefix)
@@ -104,7 +119,9 @@ test.describe('Search Modal', () => {
     await openSearch(page)
 
     // Check modal is visible
-    const searchInput = page.locator('input[placeholder="Search documentation..."]')
+    const searchInput = page.locator(
+      'input[placeholder="Search documentation..."]'
+    )
     await expect(searchInput).toBeVisible()
     await expect(searchInput).toBeFocused()
   })
@@ -115,7 +132,9 @@ test.describe('Search Modal', () => {
     await searchButton.click()
 
     // Check modal is visible
-    const searchInput = page.locator('input[placeholder="Search documentation..."]')
+    const searchInput = page.locator(
+      'input[placeholder="Search documentation..."]'
+    )
     await expect(searchInput).toBeVisible()
   })
 
@@ -127,7 +146,9 @@ test.describe('Search Modal', () => {
     await page.keyboard.press('Escape')
 
     // Check modal is closed
-    const searchInput = page.locator('input[placeholder="Search documentation..."]')
+    const searchInput = page.locator(
+      'input[placeholder="Search documentation..."]'
+    )
     await expect(searchInput).not.toBeVisible()
   })
 
@@ -136,7 +157,9 @@ test.describe('Search Modal', () => {
     await openSearch(page)
 
     // Wait for modal to open
-    const searchInput = page.locator('input[placeholder="Search documentation..."]')
+    const searchInput = page.locator(
+      'input[placeholder="Search documentation..."]'
+    )
     await expect(searchInput).toBeVisible()
 
     // Press Escape to close (more reliable than clicking backdrop)
@@ -151,7 +174,9 @@ test.describe('Search Modal', () => {
     await openSearch(page)
 
     // Wait for modal to be ready
-    const searchInput = page.locator('input[placeholder="Search documentation..."]')
+    const searchInput = page.locator(
+      'input[placeholder="Search documentation..."]'
+    )
     await expect(searchInput).toBeVisible()
 
     // Type search query
@@ -167,7 +192,9 @@ test.describe('Search Modal', () => {
     await openSearch(page)
 
     // Wait for modal to be visible
-    await expect(page.locator('input[placeholder="Search documentation..."]')).toBeVisible()
+    await expect(
+      page.locator('input[placeholder="Search documentation..."]')
+    ).toBeVisible()
 
     // Press down arrow
     await page.keyboard.press('ArrowDown')
@@ -184,7 +211,9 @@ test.describe('Search Modal', () => {
     await openSearch(page)
 
     // Wait for modal to open
-    const searchInput = page.locator('input[placeholder="Search documentation..."]')
+    const searchInput = page.locator(
+      'input[placeholder="Search documentation..."]'
+    )
     await expect(searchInput).toBeVisible()
 
     // Wait for the results list to render before pressing Enter — the list is
@@ -206,7 +235,9 @@ test.describe('Search Modal', () => {
     await openSearch(page)
 
     // Wait for modal to open
-    const searchInput = page.locator('input[placeholder="Search documentation..."]')
+    const searchInput = page.locator(
+      'input[placeholder="Search documentation..."]'
+    )
     await expect(searchInput).toBeVisible()
 
     // Type to filter results
@@ -221,7 +252,9 @@ test.describe('Search Modal', () => {
     await expect(page).toHaveURL(/\/start-here/)
   })
 
-  test('should show "no results" message for invalid search', async ({ page }) => {
+  test('should show "no results" message for invalid search', async ({
+    page,
+  }) => {
     // Open modal
     await openSearch(page)
 
@@ -238,7 +271,9 @@ test.describe('Search Modal', () => {
     await openSearch(page)
 
     // Wait for modal
-    const searchInput = page.locator('input[placeholder="Search documentation..."]')
+    const searchInput = page.locator(
+      'input[placeholder="Search documentation..."]'
+    )
     await expect(searchInput).toBeVisible()
 
     await page.keyboard.type('git')
@@ -256,7 +291,9 @@ test.describe('Search Modal', () => {
     await openSearch(page)
 
     // Wait for modal
-    const searchInput = page.locator('input[placeholder="Search documentation..."]')
+    const searchInput = page.locator(
+      'input[placeholder="Search documentation..."]'
+    )
     await expect(searchInput).toBeVisible()
 
     // Type "templates" to find the new pages
@@ -284,7 +321,9 @@ test.describe('Project Templates Gallery', () => {
     await page.locator('button:has-text("Web App")').click()
 
     // Check only Web App templates are shown
-    const templates = page.locator('.rounded-xl.border:has-text("Next.js Starter")')
+    const templates = page.locator(
+      '.rounded-xl.border:has-text("Next.js Starter")'
+    )
     await expect(templates).toBeVisible()
   })
 
@@ -304,11 +343,15 @@ test.describe('Project Templates Gallery', () => {
 
   test('should collapse template files on second click', async ({ page }) => {
     // Click "View Files" twice
-    const viewFilesButton = page.locator('button:has-text("View Files")').first()
+    const viewFilesButton = page
+      .locator('button:has-text("View Files")')
+      .first()
     await viewFilesButton.click()
 
     // Button text should change to "Hide Files"
-    await expect(page.locator('button:has-text("Hide Files")').first()).toBeVisible()
+    await expect(
+      page.locator('button:has-text("Hide Files")').first()
+    ).toBeVisible()
 
     // Click again to hide
     await page.locator('button:has-text("Hide Files")').first().click()
@@ -420,9 +463,13 @@ test.describe('Code Snippet Library', () => {
     await expect(bashBadge).toBeVisible()
   })
 
-  test('should show "no snippets found" for invalid search', async ({ page }) => {
+  test('should show "no snippets found" for invalid search', async ({
+    page,
+  }) => {
     // Type invalid search
-    await page.locator('input[placeholder="Search snippets..."]').fill('xyznonexistent')
+    await page
+      .locator('input[placeholder="Search snippets..."]')
+      .fill('xyznonexistent')
 
     // Check no results message
     const noResults = page.locator('text=No snippets found')
@@ -497,7 +544,9 @@ test.describe('Cheat Sheets', () => {
     await expect(sectionTitle.first()).toBeVisible()
   })
 
-  test('should display command and description for each item', async ({ page }) => {
+  test('should display command and description for each item', async ({
+    page,
+  }) => {
     // Expand cheat sheet
     await page.locator('button:has-text("View")').first().click()
 
@@ -506,7 +555,9 @@ test.describe('Cheat Sheets', () => {
     await expect(codeElements.first()).toBeVisible()
   })
 
-  test('should display number of sections for each cheat sheet', async ({ page }) => {
+  test('should display number of sections for each cheat sheet', async ({
+    page,
+  }) => {
     // Check for "X sections" text
     const sectionsText = page.locator('text=/\\d+ sections/')
     await expect(sectionsText.first()).toBeVisible()
@@ -536,7 +587,9 @@ test.describe('MCP Server Explorer', () => {
 
   test('should search servers', async ({ page }) => {
     // Type in search box
-    await page.locator('input[placeholder="Search MCP servers..."]').fill('github')
+    await page
+      .locator('input[placeholder="Search MCP servers..."]')
+      .fill('github')
 
     // Check filtered results
     const githubServer = page.locator('h3:has-text("GitHub")')
@@ -584,7 +637,9 @@ test.describe('MCP Server Explorer', () => {
     await page.locator('button:has-text("View Config")').first().click()
 
     // Click copy button for config
-    const copyConfigButton = page.locator('.text-gray-400.hover\\:text-gray-600').last()
+    const copyConfigButton = page
+      .locator('.text-gray-400.hover\\:text-gray-600')
+      .last()
     await copyConfigButton.click()
 
     // Check for success indicator
@@ -602,9 +657,13 @@ test.describe('MCP Server Explorer', () => {
     await expect(externalLink).toBeVisible()
   })
 
-  test('should show "no servers found" for invalid search', async ({ page }) => {
+  test('should show "no servers found" for invalid search', async ({
+    page,
+  }) => {
     // Type invalid search
-    await page.locator('input[placeholder="Search MCP servers..."]').fill('xyznonexistent')
+    await page
+      .locator('input[placeholder="Search MCP servers..."]')
+      .fill('xyznonexistent')
 
     // Check no results message
     const noResults = page.locator('text=No servers found')
@@ -664,9 +723,12 @@ test.describe('Progress Tracking', () => {
       const progress = {
         completedModules: ['test-module-1', 'test-module-2'],
         startedAt: new Date().toISOString(),
-        lastVisited: new Date().toISOString()
+        lastVisited: new Date().toISOString(),
       }
-      localStorage.setItem('claude-code-learning-progress', JSON.stringify(progress))
+      localStorage.setItem(
+        'claude-code-learning-progress',
+        JSON.stringify(progress)
+      )
     })
 
     // Check that localStorage is set correctly (before reload)
@@ -705,9 +767,12 @@ test.describe('Progress Tracking', () => {
       const progress = {
         completedModules: ['module-1', 'module-2', 'module-3'],
         startedAt: new Date().toISOString(),
-        lastVisited: new Date().toISOString()
+        lastVisited: new Date().toISOString(),
       }
-      localStorage.setItem('claude-code-learning-progress', JSON.stringify(progress))
+      localStorage.setItem(
+        'claude-code-learning-progress',
+        JSON.stringify(progress)
+      )
     })
 
     // Check count (read immediately without reload)
@@ -721,11 +786,15 @@ test.describe('Progress Tracking', () => {
 })
 
 test.describe('Cross-feature Integration', () => {
-  test('should maintain dark mode when navigating between pages', async ({ page }) => {
+  test('should maintain dark mode when navigating between pages', async ({
+    page,
+  }) => {
     await gotoInLightMode(page, baseURL)
 
     // Set dark mode (use first() as there are desktop and mobile versions)
-    const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+    const darkButton = page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .first()
     await darkButton.click()
 
     // Wait for theme to be applied
@@ -744,14 +813,18 @@ test.describe('Cross-feature Integration', () => {
     await gotoInLightMode(page, baseURL)
 
     // Set dark mode (use first() as there are desktop and mobile versions)
-    const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+    const darkButton = page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .first()
     await darkButton.click()
 
     // Open search (use Control+k for Playwright compatibility)
     await openSearch(page)
 
     // Check search modal has dark styles - use the dialog role selector
-    const searchModal = page.locator('[role="dialog"][aria-label="Search documentation"]')
+    const searchModal = page.locator(
+      '[role="dialog"][aria-label="Search documentation"]'
+    )
     await expect(searchModal).toBeVisible()
   })
 
@@ -780,13 +853,18 @@ test.describe('Cross-feature Integration', () => {
       const progress = {
         completedModules: ['preserved-module'],
         startedAt: new Date().toISOString(),
-        lastVisited: new Date().toISOString()
+        lastVisited: new Date().toISOString(),
       }
-      localStorage.setItem('claude-code-learning-progress', JSON.stringify(progress))
+      localStorage.setItem(
+        'claude-code-learning-progress',
+        JSON.stringify(progress)
+      )
     })
 
     // Toggle theme (use first() as there are desktop and mobile versions)
-    const darkButton = page.locator('button[aria-label="Switch to dark mode"]').first()
+    const darkButton = page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .first()
     await darkButton.click()
 
     // Check that localStorage still has our progress (theme switching shouldn't affect it)
@@ -806,7 +884,9 @@ test.describe('Mobile Responsiveness', () => {
     await gotoInLightMode(page, baseURL)
 
     // Theme toggle should be visible on mobile (use last() since desktop is first but hidden)
-    const themeToggle = page.locator('button[aria-label="Switch to dark mode"]').last()
+    const themeToggle = page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .last()
     await expect(themeToggle).toBeVisible()
   })
 
@@ -826,11 +906,15 @@ test.describe('Mobile Responsiveness', () => {
     await searchButton.click()
 
     // Modal should be visible
-    const searchInput = page.locator('input[placeholder="Search documentation..."]')
+    const searchInput = page.locator(
+      'input[placeholder="Search documentation..."]'
+    )
     await expect(searchInput).toBeVisible()
   })
 
-  test('should display templates in single column on mobile', async ({ page }) => {
+  test('should display templates in single column on mobile', async ({
+    page,
+  }) => {
     await page.goto('http://localhost:3001/tools/templates')
 
     // Page should load without errors
@@ -840,12 +924,16 @@ test.describe('Mobile Responsiveness', () => {
 })
 
 test.describe('Accessibility', () => {
-  test('should have proper aria labels on theme toggle button', async ({ page }) => {
+  test('should have proper aria labels on theme toggle button', async ({
+    page,
+  }) => {
     await gotoInLightMode(page, baseURL)
 
     // The theme toggle is a single button that changes label based on current state
     // In light mode it says "Switch to dark mode"
-    const themeToggle = page.locator('button[aria-label="Switch to dark mode"]').first()
+    const themeToggle = page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .first()
     await expect(themeToggle).toBeVisible()
   })
 
@@ -863,18 +951,24 @@ test.describe('Accessibility', () => {
     await openSearch(page)
 
     // Check input is focused
-    const searchInput = page.locator('input[placeholder="Search documentation..."]')
+    const searchInput = page.locator(
+      'input[placeholder="Search documentation..."]'
+    )
     await expect(searchInput).toBeFocused()
   })
 
-  test('should have keyboard navigation hints in search modal', async ({ page }) => {
+  test('should have keyboard navigation hints in search modal', async ({
+    page,
+  }) => {
     await page.goto('http://localhost:3001')
 
     // Open search (use Control+k for Playwright compatibility)
     await openSearch(page)
 
     // Wait for modal to be visible
-    const searchInput = page.locator('input[placeholder="Search documentation..."]')
+    const searchInput = page.locator(
+      'input[placeholder="Search documentation..."]'
+    )
     await expect(searchInput).toBeVisible()
 
     // Check for keyboard hints (use first() as text may appear elsewhere)
@@ -890,8 +984,14 @@ test.describe('Edge Cases', () => {
 
     // Rapidly switch themes (use first() as there are desktop and mobile versions)
     for (let i = 0; i < 5; i++) {
-      await page.locator('button[aria-label="Switch to dark mode"]').first().click()
-      await page.locator('button[aria-label="Switch to light mode"]').first().click()
+      await page
+        .locator('button[aria-label="Switch to dark mode"]')
+        .first()
+        .click()
+      await page
+        .locator('button[aria-label="Switch to light mode"]')
+        .first()
+        .click()
     }
 
     // Page should not crash
@@ -963,7 +1063,10 @@ test.describe('Edge Cases', () => {
     })
 
     // Toggle theme - should handle gracefully (use first() as there are desktop and mobile versions)
-    await page.locator('button[aria-label="Switch to dark mode"]').first().click()
+    await page
+      .locator('button[aria-label="Switch to dark mode"]')
+      .first()
+      .click()
 
     // Page should not crash
     await expect(page.locator('nav')).toBeVisible()

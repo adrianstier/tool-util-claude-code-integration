@@ -29,24 +29,24 @@ This document provides a comprehensive technical architecture for improving the 
 
 **File:** `src/app/resources/page.tsx` (619 lines)
 
-| Aspect | Current Implementation | Assessment |
-|--------|----------------------|------------|
-| **Data Storage** | Inline array (207 lines of data) | Needs extraction |
-| **State Management** | `useState` for search/category | Works but not persistent |
-| **Components** | `ResourceCard`, `ResourceSection` (local) | Could be reusable |
-| **Filtering** | Client-side with `useMemo` | Efficient |
-| **Types** | Well-defined interfaces | Good |
-| **Accessibility** | ARIA attributes present | Good |
+| Aspect               | Current Implementation                    | Assessment               |
+| -------------------- | ----------------------------------------- | ------------------------ |
+| **Data Storage**     | Inline array (207 lines of data)          | Needs extraction         |
+| **State Management** | `useState` for search/category            | Works but not persistent |
+| **Components**       | `ResourceCard`, `ResourceSection` (local) | Could be reusable        |
+| **Filtering**        | Client-side with `useMemo`                | Efficient                |
+| **Types**            | Well-defined interfaces                   | Good                     |
+| **Accessibility**    | ARIA attributes present                   | Good                     |
 
 ### 1.2 Comparison with Existing Patterns
 
-| Pattern | Resources Page | Glossary Page | Cheatsheets Page |
-|---------|---------------|---------------|------------------|
-| Data location | Inline | Inline | Inline |
-| Server/Client | Client ('use client') | Server | Client |
-| Metadata | None | `export const metadata` | None |
-| URL persistence | No | Hash links | No |
-| Data structure | Flat with categories | Flat with categories | Nested sections |
+| Pattern         | Resources Page        | Glossary Page           | Cheatsheets Page |
+| --------------- | --------------------- | ----------------------- | ---------------- |
+| Data location   | Inline                | Inline                  | Inline           |
+| Server/Client   | Client ('use client') | Server                  | Client           |
+| Metadata        | None                  | `export const metadata` | None             |
+| URL persistence | No                    | Hash links              | No               |
+| Data structure  | Flat with categories  | Flat with categories    | Nested sections  |
 
 ### 1.3 Identified Technical Debt
 
@@ -133,21 +133,25 @@ src/
 
 ```typescript
 // src/types/resources.ts
-export type ResourceCategory = 'our-tools' | 'learning' | 'official' | 'community'
+export type ResourceCategory =
+  | 'our-tools'
+  | 'learning'
+  | 'official'
+  | 'community'
 export type SkillLevel = 'beginner' | 'intermediate' | 'advanced'
 
 export interface Resource {
-  id: string                                    // NEW: Unique identifier
+  id: string // NEW: Unique identifier
   title: string
   description: string
   url: string
-  icon: string                                  // CHANGE: String icon name instead of component
+  icon: string // CHANGE: String icon name instead of component
   internal?: boolean
   category: ResourceCategory
   skillLevel?: SkillLevel
   isNew?: boolean
   tags?: string[]
-  dateAdded?: string                            // NEW: For sorting by recency
+  dateAdded?: string // NEW: For sorting by recency
 }
 
 export interface ResourceSectionConfig {
@@ -170,7 +174,8 @@ export const SECTION_CONFIG: Record<string, ResourceSectionConfig> = {
     title: 'Our Tools',
     description: 'Interactive tools and references we built for you',
     icon: 'Wrench',
-    colorClass: 'bg-primary-100 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300',
+    colorClass:
+      'bg-primary-100 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300',
   },
   // ... other sections
 }
@@ -179,7 +184,8 @@ export const RESOURCES: Resource[] = [
   {
     id: 'cheatsheets',
     title: 'Cheatsheets',
-    description: '7 quick reference guides for Claude Code, Git, Terminal, Python, and more',
+    description:
+      '7 quick reference guides for Claude Code, Git, Terminal, Python, and more',
     url: '/tools/cheatsheets',
     internal: true,
     icon: 'FileText',
@@ -191,11 +197,17 @@ export const RESOURCES: Resource[] = [
 ]
 
 // Utility exports
-export const RESOURCE_CATEGORIES = ['our-tools', 'learning', 'official', 'community'] as const
+export const RESOURCE_CATEGORIES = [
+  'our-tools',
+  'learning',
+  'official',
+  'community',
+] as const
 export const SKILL_LEVELS = ['beginner', 'intermediate', 'advanced'] as const
 ```
 
 **Rationale:**
+
 - Icons as strings allow server-side rendering and dynamic imports
 - Unique IDs enable future database migration
 - Date tracking enables "recently added" sorting
@@ -219,44 +231,52 @@ export function useResourceFilters() {
   const pathname = usePathname()
 
   // Read from URL
-  const category = (searchParams.get('category') as ResourceCategory | 'all') || 'all'
+  const category =
+    (searchParams.get('category') as ResourceCategory | 'all') || 'all'
   const search = searchParams.get('q') || ''
 
   // Update URL
-  const setFilters = useCallback((updates: { category?: string; search?: string }) => {
-    const params = new URLSearchParams(searchParams)
+  const setFilters = useCallback(
+    (updates: { category?: string; search?: string }) => {
+      const params = new URLSearchParams(searchParams)
 
-    if (updates.category !== undefined) {
-      if (updates.category === 'all') {
-        params.delete('category')
-      } else {
-        params.set('category', updates.category)
+      if (updates.category !== undefined) {
+        if (updates.category === 'all') {
+          params.delete('category')
+        } else {
+          params.set('category', updates.category)
+        }
       }
-    }
 
-    if (updates.search !== undefined) {
-      if (updates.search === '') {
-        params.delete('q')
-      } else {
-        params.set('q', updates.search)
+      if (updates.search !== undefined) {
+        if (updates.search === '') {
+          params.delete('q')
+        } else {
+          params.set('q', updates.search)
+        }
       }
-    }
 
-    const queryString = params.toString()
-    router.replace(`${pathname}${queryString ? `?${queryString}` : ''}`, { scroll: false })
-  }, [searchParams, router, pathname])
+      const queryString = params.toString()
+      router.replace(`${pathname}${queryString ? `?${queryString}` : ''}`, {
+        scroll: false,
+      })
+    },
+    [searchParams, router, pathname]
+  )
 
   return { category, search, setFilters }
 }
 ```
 
 **URL Examples:**
+
 - `/resources` - All resources, no filter
 - `/resources?category=learning` - Learning category
 - `/resources?q=git` - Search for "git"
 - `/resources?category=official&q=api` - Combined filters
 
 **Benefits:**
+
 - Shareable filtered views
 - Browser back/forward navigation works
 - Bookmarkable states
@@ -339,17 +359,22 @@ interface ResourcesClientProps {
   sectionConfig: Record<string, ResourceSectionConfig>
 }
 
-export function ResourcesClient({ resources, sectionConfig }: ResourcesClientProps) {
+export function ResourcesClient({
+  resources,
+  sectionConfig,
+}: ResourcesClientProps) {
   const { category, search, setFilters } = useResourceFilters()
 
   const filteredResources = useMemo(() => {
     return resources.filter((resource) => {
-      const matchesCategory = category === 'all' || resource.category === category
+      const matchesCategory =
+        category === 'all' || resource.category === category
       const searchLower = search.toLowerCase().trim()
-      const matchesSearch = searchLower === '' ||
+      const matchesSearch =
+        searchLower === '' ||
         resource.title.toLowerCase().includes(searchLower) ||
         resource.description.toLowerCase().includes(searchLower) ||
-        resource.tags?.some(tag => tag.toLowerCase().includes(searchLower))
+        resource.tags?.some((tag) => tag.toLowerCase().includes(searchLower))
 
       return matchesCategory && matchesSearch
     })
@@ -441,16 +466,44 @@ export function ResourceCard({ resource, className }: ResourceCardProps) {
 
 ```typescript
 import {
-  BookOpen, ExternalLink, GitBranch, FileText, Video, Code2,
-  Wrench, GraduationCap, Lightbulb, Users, Terminal, FolderOpen,
-  PenTool, Server, Search, Layers, Sparkles
+  BookOpen,
+  ExternalLink,
+  GitBranch,
+  FileText,
+  Video,
+  Code2,
+  Wrench,
+  GraduationCap,
+  Lightbulb,
+  Users,
+  Terminal,
+  FolderOpen,
+  PenTool,
+  Server,
+  Search,
+  Layers,
+  Sparkles,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 const iconMap: Record<string, LucideIcon> = {
-  BookOpen, ExternalLink, GitBranch, FileText, Video, Code2,
-  Wrench, GraduationCap, Lightbulb, Users, Terminal, FolderOpen,
-  PenTool, Server, Search, Layers, Sparkles
+  BookOpen,
+  ExternalLink,
+  GitBranch,
+  FileText,
+  Video,
+  Code2,
+  Wrench,
+  GraduationCap,
+  Lightbulb,
+  Users,
+  Terminal,
+  FolderOpen,
+  PenTool,
+  Server,
+  Search,
+  Layers,
+  Sparkles,
 }
 
 export function getIconComponent(iconName: string): LucideIcon {
@@ -467,6 +520,7 @@ export function getIconComponent(iconName: string): LucideIcon {
 3. **ItemList** - Resource items for rich snippets
 
 **Open Graph & Twitter Cards:**
+
 - Dynamic OG image showing resource count
 - Category-specific descriptions when filtered
 
@@ -476,50 +530,50 @@ export function getIconComponent(iconName: string): LucideIcon {
 
 ### Phase 1: Data Layer (Database Engineer / Frontend Engineer)
 
-| Task | Priority | Effort | Dependencies |
-|------|----------|--------|--------------|
-| Create `src/types/resources.ts` | High | 1h | None |
-| Create `src/data/resources.ts` | High | 2h | Types |
-| Create `src/lib/resources.ts` | High | 1h | Types |
-| Add unique IDs to all resources | High | 30m | Data file |
-| Add `dateAdded` to all resources | Medium | 30m | Data file |
+| Task                             | Priority | Effort | Dependencies |
+| -------------------------------- | -------- | ------ | ------------ |
+| Create `src/types/resources.ts`  | High     | 1h     | None         |
+| Create `src/data/resources.ts`   | High     | 2h     | Types        |
+| Create `src/lib/resources.ts`    | High     | 1h     | Types        |
+| Add unique IDs to all resources  | High     | 30m    | Data file    |
+| Add `dateAdded` to all resources | Medium   | 30m    | Data file    |
 
 ### Phase 2: Component Extraction (Frontend Engineer)
 
-| Task | Priority | Effort | Dependencies |
-|------|----------|--------|--------------|
-| Extract `ResourceCard.tsx` | High | 1h | Data layer |
-| Extract `ResourceSection.tsx` | High | 1h | ResourceCard |
-| Extract `ResourceFilters.tsx` | High | 1h | None |
-| Create barrel export `index.ts` | Low | 15m | Components |
-| Update page to use new components | High | 1h | All above |
+| Task                              | Priority | Effort | Dependencies |
+| --------------------------------- | -------- | ------ | ------------ |
+| Extract `ResourceCard.tsx`        | High     | 1h     | Data layer   |
+| Extract `ResourceSection.tsx`     | High     | 1h     | ResourceCard |
+| Extract `ResourceFilters.tsx`     | High     | 1h     | None         |
+| Create barrel export `index.ts`   | Low      | 15m    | Components   |
+| Update page to use new components | High     | 1h     | All above    |
 
 ### Phase 3: Server/Client Split (Frontend Engineer)
 
-| Task | Priority | Effort | Dependencies |
-|------|----------|--------|--------------|
-| Create `ResourcesClient.tsx` | High | 2h | Components |
-| Convert `page.tsx` to server component | High | 1h | Client component |
-| Add metadata export | High | 30m | Server component |
-| Add JSON-LD structured data | Medium | 1h | Server component |
+| Task                                   | Priority | Effort | Dependencies     |
+| -------------------------------------- | -------- | ------ | ---------------- |
+| Create `ResourcesClient.tsx`           | High     | 2h     | Components       |
+| Convert `page.tsx` to server component | High     | 1h     | Client component |
+| Add metadata export                    | High     | 30m    | Server component |
+| Add JSON-LD structured data            | Medium   | 1h     | Server component |
 
 ### Phase 4: URL State Management (Frontend Engineer)
 
-| Task | Priority | Effort | Dependencies |
-|------|----------|--------|--------------|
-| Implement `useResourceFilters` hook | High | 2h | None |
-| Update filters to use URL state | High | 1h | Hook |
-| Add debounced search input | Medium | 30m | Hook |
-| Test browser navigation | High | 30m | All above |
+| Task                                | Priority | Effort | Dependencies |
+| ----------------------------------- | -------- | ------ | ------------ |
+| Implement `useResourceFilters` hook | High     | 2h     | None         |
+| Update filters to use URL state     | High     | 1h     | Hook         |
+| Add debounced search input          | Medium   | 30m    | Hook         |
+| Test browser navigation             | High     | 30m    | All above    |
 
 ### Phase 5: Testing & Polish (Frontend Engineer / QA)
 
-| Task | Priority | Effort | Dependencies |
-|------|----------|--------|--------------|
-| Unit tests for utilities | Medium | 1h | Utilities |
-| Integration tests for filtering | Medium | 2h | Full implementation |
-| Accessibility audit | High | 1h | Full implementation |
-| Performance testing | Medium | 1h | Full implementation |
+| Task                            | Priority | Effort | Dependencies        |
+| ------------------------------- | -------- | ------ | ------------------- |
+| Unit tests for utilities        | Medium   | 1h     | Utilities           |
+| Integration tests for filtering | Medium   | 2h     | Full implementation |
+| Accessibility audit             | High     | 1h     | Full implementation |
+| Performance testing             | Medium   | 1h     | Full implementation |
 
 ---
 
@@ -527,30 +581,31 @@ export function getIconComponent(iconName: string): LucideIcon {
 
 ### 5.1 Why Server/Client Split?
 
-| Approach | Pros | Cons | Decision |
-|----------|------|------|----------|
-| **Full Client** | Simpler, current approach | No SSR, no SEO metadata | Rejected |
-| **Full Server** | Best SEO, fastest initial load | No interactivity without JS | Rejected |
-| **Server + Client** | SEO + interactivity | More complexity | **Selected** |
+| Approach            | Pros                           | Cons                        | Decision     |
+| ------------------- | ------------------------------ | --------------------------- | ------------ |
+| **Full Client**     | Simpler, current approach      | No SSR, no SEO metadata     | Rejected     |
+| **Full Server**     | Best SEO, fastest initial load | No interactivity without JS | Rejected     |
+| **Server + Client** | SEO + interactivity            | More complexity             | **Selected** |
 
 ### 5.2 Why String Icons Instead of Components?
 
-| Approach | Pros | Cons | Decision |
-|----------|------|------|----------|
-| **Component refs** | Type-safe, direct usage | Can't serialize for SSR | Rejected |
-| **String names** | Serializable, dynamic | Needs mapping function | **Selected** |
+| Approach           | Pros                    | Cons                    | Decision     |
+| ------------------ | ----------------------- | ----------------------- | ------------ |
+| **Component refs** | Type-safe, direct usage | Can't serialize for SSR | Rejected     |
+| **String names**   | Serializable, dynamic   | Needs mapping function  | **Selected** |
 
 ### 5.3 Why URL State Over localStorage?
 
-| Approach | Pros | Cons | Decision |
-|----------|------|------|----------|
-| **useState only** | Simple, current approach | Lost on navigation | Rejected |
-| **localStorage** | Persists across sessions | Not shareable, no SEO | Rejected |
-| **URL params** | Shareable, SEO, back/forward | Slightly more complex | **Selected** |
+| Approach          | Pros                         | Cons                  | Decision     |
+| ----------------- | ---------------------------- | --------------------- | ------------ |
+| **useState only** | Simple, current approach     | Lost on navigation    | Rejected     |
+| **localStorage**  | Persists across sessions     | Not shareable, no SEO | Rejected     |
+| **URL params**    | Shareable, SEO, back/forward | Slightly more complex | **Selected** |
 
 ### 5.4 Why Not Use a Database Yet?
 
 Per project constraints (CLAUDE.md), V1 is frontend-only:
+
 - User authentication deferred to V1.5
 - Backend progress persistence deferred
 - Current static data approach aligns with Vercel static deployment
@@ -562,30 +617,35 @@ Per project constraints (CLAUDE.md), V1 is frontend-only:
 ## Part 6: Acceptance Criteria
 
 ### 6.1 Data Layer
+
 - [ ] All resource data lives in `src/data/resources.ts`
 - [ ] Types are exported from `src/types/resources.ts`
 - [ ] Each resource has a unique `id` field
 - [ ] Icon mapping function handles all icons
 
 ### 6.2 Components
+
 - [ ] `ResourceCard` is extracted and reusable
 - [ ] `ResourceSection` is extracted and reusable
 - [ ] `ResourceFilters` handles search and category
 - [ ] Components follow existing project patterns (cn utility, Tailwind)
 
 ### 6.3 Server/Client Architecture
+
 - [ ] `page.tsx` exports `metadata` for SEO
 - [ ] JSON-LD structured data is rendered
 - [ ] Client component handles all interactivity
 - [ ] Data is passed as props (not imported in client)
 
 ### 6.4 URL State Management
+
 - [ ] `/resources?category=learning` filters by category
 - [ ] `/resources?q=git` filters by search term
 - [ ] Browser back/forward works correctly
 - [ ] Empty filters show clean URL (`/resources`)
 
 ### 6.5 Non-Functional Requirements
+
 - [ ] No TypeScript errors
 - [ ] Passes ESLint checks
 - [ ] Lighthouse performance score >= 90
@@ -596,12 +656,12 @@ Per project constraints (CLAUDE.md), V1 is frontend-only:
 
 ## Part 7: Risk Assessment
 
-| Risk | Probability | Impact | Mitigation |
-|------|-------------|--------|------------|
-| URL encoding issues with special characters | Medium | Low | URL-safe encoding, test with unicode |
-| Hydration mismatch errors | Medium | Medium | Clear server/client boundary, no Date in initial render |
-| Breaking existing bookmarks | N/A | N/A | No existing URL state to break |
-| Performance regression | Low | Medium | Keep useMemo, profile with React DevTools |
+| Risk                                        | Probability | Impact | Mitigation                                              |
+| ------------------------------------------- | ----------- | ------ | ------------------------------------------------------- |
+| URL encoding issues with special characters | Medium      | Low    | URL-safe encoding, test with unicode                    |
+| Hydration mismatch errors                   | Medium      | Medium | Clear server/client boundary, no Date in initial render |
+| Breaking existing bookmarks                 | N/A         | N/A    | No existing URL state to break                          |
+| Performance regression                      | Low         | Medium | Keep useMemo, profile with React DevTools               |
 
 ---
 
@@ -656,11 +716,13 @@ test('back button preserves filter state', async ({ page }) => {
 ## Part 9: Handoff Checklist
 
 ### For Database Engineer
+
 - [ ] Review data structure in `src/types/resources.ts`
 - [ ] Note: No database changes needed for V1
 - [ ] Future consideration: Schema for `resources` table
 
 ### For Frontend Engineer
+
 - [ ] Start with Phase 1 (Data Layer)
 - [ ] Follow existing component patterns in `src/components/`
 - [ ] Use `cn()` utility for class merging
@@ -668,11 +730,13 @@ test('back button preserves filter state', async ({ page }) => {
 - [ ] Test dark mode for all components
 
 ### For Backend Engineer
+
 - [ ] No backend changes needed for V1
 - [ ] Future: API endpoints for dynamic resources
 - [ ] Future: Admin interface for resource management
 
 ### For QA Engineer
+
 - [ ] Test URL state persistence
 - [ ] Verify SEO metadata with social preview tools
 - [ ] Cross-browser testing (Chrome, Firefox, Safari)
@@ -683,12 +747,12 @@ test('back button preserves filter state', async ({ page }) => {
 
 ## Appendix A: Current Resource Count
 
-| Category | Count |
-|----------|-------|
-| Our Tools | 6 |
-| Learning | 5 |
-| Official | 4 |
-| Community | 8 |
+| Category  | Count  |
+| --------- | ------ |
+| Our Tools | 6      |
+| Learning  | 5      |
+| Official  | 4      |
+| Community | 8      |
 | **Total** | **23** |
 
 ## Appendix B: Related Files
@@ -702,6 +766,7 @@ test('back button preserves filter state', async ({ page }) => {
 ## Appendix C: Dependencies
 
 No new dependencies required. All implementations use:
+
 - Next.js built-in `useSearchParams`, `useRouter`
 - Existing Lucide icons
 - Existing Tailwind configuration

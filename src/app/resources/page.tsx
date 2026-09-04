@@ -5,7 +5,12 @@ import Link from 'next/link'
 import { ExternalLink, Search, Sparkles } from 'lucide-react'
 
 // Import shared data layer
-import { RESOURCES, SECTION_CONFIG, CATEGORY_FILTERS, CATEGORY_ORDER } from '@/data/resources'
+import {
+  RESOURCES,
+  SECTION_CONFIG,
+  CATEGORY_FILTERS,
+  CATEGORY_ORDER,
+} from '@/data/resources'
 import {
   getIconComponent,
   filterResources,
@@ -19,7 +24,8 @@ import type { Resource, ResourceCategory, SkillLevel } from '@/types/resources'
 
 const skillLevelColors: Record<SkillLevel, string> = {
   beginner: 'bg-sage-100 text-sage-700 dark:bg-sage-900/50 dark:text-sage-300',
-  intermediate: 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300',
+  intermediate:
+    'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300',
   advanced: 'bg-plum-100 text-plum-700 dark:bg-plum-900/50 dark:text-plum-300',
 }
 
@@ -28,34 +34,37 @@ const skillLevelColors: Record<SkillLevel, string> = {
 // =============================================================================
 
 function ResourceCard({ resource }: { resource: Resource }) {
-  const { title, description, url, icon, internal, isNew, skillLevel } = resource
+  const { title, description, url, icon, internal, isNew, skillLevel } =
+    resource
   const Icon = getIconComponent(icon)
   const Component = internal ? Link : 'a'
-  const externalProps = internal ? {} : { target: '_blank', rel: 'noopener noreferrer' }
+  const externalProps = internal
+    ? {}
+    : { target: '_blank', rel: 'noopener noreferrer' }
 
   return (
     <Component
       href={url}
       {...externalProps}
-      className="group relative flex items-start gap-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 transition-all hover:border-primary-300 dark:hover:border-primary-600 hover:shadow-lg"
+      className="group relative flex items-start gap-4 rounded-xl border border-gray-200 bg-white p-5 transition-all hover:border-primary-300 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:hover:border-primary-600"
     >
       {/* New Badge */}
       {isNew && (
-        <span className="absolute -top-2 -right-2 inline-flex items-center gap-1 rounded-full bg-amber-100 dark:bg-amber-900/50 px-2 py-0.5 text-xs font-medium text-amber-700 dark:text-amber-300 z-10">
+        <span className="absolute -right-2 -top-2 z-10 inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700 dark:bg-amber-900/50 dark:text-amber-300">
           <Sparkles className="h-3 w-3" aria-hidden="true" />
           New
         </span>
       )}
 
       {/* Icon */}
-      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400 transition-colors group-hover:bg-primary-200 dark:group-hover:bg-primary-900">
+      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary-100 text-primary-600 transition-colors group-hover:bg-primary-200 dark:bg-primary-900/50 dark:text-primary-400 dark:group-hover:bg-primary-900">
         <Icon className="h-5 w-5" aria-hidden="true" />
       </div>
 
       {/* Content */}
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 flex-wrap">
-          <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+      <div className="min-w-0 flex-1">
+        <div className="flex flex-wrap items-center gap-2">
+          <h3 className="font-semibold text-gray-900 transition-colors group-hover:text-primary-600 dark:text-white dark:group-hover:text-primary-400">
             {title}
           </h3>
           {!internal && (
@@ -72,7 +81,9 @@ function ResourceCard({ resource }: { resource: Resource }) {
             </span>
           )}
         </div>
-        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{description}</p>
+        <p className="mt-1 line-clamp-2 text-sm text-gray-600 dark:text-gray-400">
+          {description}
+        </p>
       </div>
     </Component>
   )
@@ -91,9 +102,13 @@ function ResourceSection({
   if (resources.length === 0) return null
 
   return (
-    <section id={`section-${categoryId}`} className="mb-12 scroll-mt-32" aria-labelledby={`heading-${categoryId}`}>
+    <section
+      id={`section-${categoryId}`}
+      className="mb-12 scroll-mt-32"
+      aria-labelledby={`heading-${categoryId}`}
+    >
       <div className="mb-6">
-        <div className="flex items-center gap-3 mb-2">
+        <div className="mb-2 flex items-center gap-3">
           <div
             className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-medium ${config.colorClass}`}
           >
@@ -101,7 +116,10 @@ function ResourceSection({
             <span>{config.title}</span>
           </div>
         </div>
-        <p id={`heading-${categoryId}`} className="text-gray-600 dark:text-gray-400">
+        <p
+          id={`heading-${categoryId}`}
+          className="text-gray-600 dark:text-gray-400"
+        >
           {config.description}
         </p>
       </div>
@@ -120,7 +138,9 @@ function ResourceSection({
 
 export default function ResourcesPage() {
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState<ResourceCategory | 'all'>('all')
+  const [selectedCategory, setSelectedCategory] = useState<
+    ResourceCategory | 'all'
+  >('all')
 
   // Filter resources using shared utility
   const filteredResources = useMemo(() => {
@@ -149,7 +169,7 @@ export default function ResourcesPage() {
         <nav className="mb-6 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
           <Link
             href="/"
-            className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+            className="transition-colors hover:text-primary-600 dark:hover:text-primary-400"
           >
             Home
           </Link>
@@ -160,19 +180,22 @@ export default function ResourcesPage() {
         <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
           Resources
         </h1>
-        <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 max-w-3xl">
-          A curated collection of resources to help you master Claude Code and AI-powered
-          development. From official documentation to community tools.
+        <p className="mt-4 max-w-3xl text-lg text-gray-600 dark:text-gray-300">
+          A curated collection of resources to help you master Claude Code and
+          AI-powered development. From official documentation to community
+          tools.
         </p>
       </div>
 
       {/* Quick Start */}
-      <div className="mb-8 rounded-2xl bg-gradient-to-br from-primary-50 to-orange-50 dark:from-gray-800 dark:to-gray-800 p-8">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Start</h2>
+      <div className="mb-8 rounded-2xl bg-gradient-to-br from-primary-50 to-orange-50 p-8 dark:from-gray-800 dark:to-gray-800">
+        <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+          Quick Start
+        </h2>
         <div className="flex flex-wrap gap-3">
           <Link
             href="/start-here"
-            className="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-500 transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-500"
           >
             <GraduationCapIcon className="h-4 w-4" aria-hidden="true" />
             Start Learning
@@ -181,7 +204,7 @@ export default function ResourcesPage() {
             href="https://docs.anthropic.com/en/docs/claude-code/overview"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600 hover:border-primary-300 dark:hover:border-primary-600 transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:border-primary-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:hover:border-primary-600"
           >
             <BookOpenIcon className="h-4 w-4" aria-hidden="true" />
             Official Docs
@@ -191,7 +214,7 @@ export default function ResourcesPage() {
             href="https://github.com/anthropics/claude-code"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg bg-white dark:bg-gray-700 px-4 py-2 text-sm font-medium text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600 hover:border-primary-300 dark:hover:border-primary-600 transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:border-primary-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:hover:border-primary-600"
           >
             <GitBranchIcon className="h-4 w-4" aria-hidden="true" />
             GitHub
@@ -214,12 +237,16 @@ export default function ResourcesPage() {
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search resources..."
             aria-label="Search resources"
-            className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 py-3 pl-10 pr-4 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+            className="w-full rounded-lg border border-gray-200 bg-white py-3 pl-10 pr-4 text-gray-900 placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
           />
         </div>
 
         {/* Category Filters */}
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Filter by category">
+        <div
+          className="flex flex-wrap gap-2"
+          role="group"
+          aria-label="Filter by category"
+        >
           {CATEGORY_FILTERS.map((cat) => {
             const Icon = getIconComponent(cat.icon)
             return (
@@ -230,7 +257,7 @@ export default function ResourcesPage() {
                 className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                   selectedCategory === cat.id
                     ? 'bg-primary-600 text-white'
-                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
+                    : 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
                 }`}
               >
                 <Icon className="h-4 w-4" aria-hidden="true" />
@@ -249,7 +276,7 @@ export default function ResourcesPage() {
       {/* Sticky Section Navigation */}
       {filteredResources.length > 0 && visibleSections.length > 1 && (
         <nav
-          className="sticky top-16 z-10 -mx-4 px-4 py-3 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 mb-8"
+          className="sticky top-16 z-10 -mx-4 mb-8 border-b border-gray-200 bg-white/95 px-4 py-3 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900/95"
           aria-label="Resource sections"
         >
           <div className="flex gap-4 overflow-x-auto">
@@ -259,10 +286,12 @@ export default function ResourcesPage() {
                 <a
                   key={id}
                   href={`#section-${id}`}
-                  className="whitespace-nowrap text-sm font-medium text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+                  className="whitespace-nowrap text-sm font-medium text-gray-500 transition-colors hover:text-gray-900 dark:hover:text-gray-100"
                 >
                   {config.title}
-                  <span className="ml-1 text-gray-400">({groupedResources[id].length})</span>
+                  <span className="ml-1 text-gray-400">
+                    ({groupedResources[id].length})
+                  </span>
                 </a>
               )
             })}
@@ -272,8 +301,11 @@ export default function ResourcesPage() {
 
       {/* Resource Sections or Empty State */}
       {filteredResources.length === 0 ? (
-        <div className="text-center py-16" role="status" aria-live="polite">
-          <Search className="mx-auto h-12 w-12 text-gray-400" aria-hidden="true" />
+        <div className="py-16 text-center" role="status" aria-live="polite">
+          <Search
+            className="mx-auto h-12 w-12 text-gray-400"
+            aria-hidden="true"
+          />
           <h3 className="mt-4 text-lg font-semibold text-gray-900 dark:text-gray-100">
             No resources found
           </h3>
@@ -285,7 +317,7 @@ export default function ResourcesPage() {
               setSearchQuery('')
               setSelectedCategory('all')
             }}
-            className="mt-4 text-primary-600 dark:text-primary-400 hover:text-primary-500 font-medium"
+            className="mt-4 font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400"
           >
             Clear all filters
           </button>
@@ -303,8 +335,10 @@ export default function ResourcesPage() {
       )}
 
       {/* Contribute Section */}
-      <div className="mt-16 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-8 text-center">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white">Know a great resource?</h2>
+      <div className="mt-16 rounded-2xl border border-gray-200 bg-white p-8 text-center dark:border-gray-700 dark:bg-gray-800">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+          Know a great resource?
+        </h2>
         <p className="mt-2 text-gray-600 dark:text-gray-400">
           Help us improve this list by suggesting resources that helped you.
         </p>
@@ -312,7 +346,7 @@ export default function ResourcesPage() {
           href="https://github.com/anthropics/claude-code/issues/new"
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300 font-medium"
+          className="mt-4 inline-flex items-center gap-2 font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
         >
           <GitBranchIcon className="h-4 w-4" aria-hidden="true" />
           Suggest a resource on GitHub

@@ -60,7 +60,6 @@ const keyPages = [
 ]
 
 test.describe('Link Checker & Page Health', () => {
-
   // =========================================================================
   // 1. All Pages Load (200 status)
   // =========================================================================
@@ -81,7 +80,9 @@ test.describe('Link Checker & Page Health', () => {
   // 2. Homepage Link Crawler
   // =========================================================================
   test.describe('Homepage Link Crawler', () => {
-    test('All internal links found on homepage return 200', async ({ page }) => {
+    test('All internal links found on homepage return 200', async ({
+      page,
+    }) => {
       await page.goto(`${baseURL}/`, { waitUntil: 'networkidle' })
 
       // Collect all unique internal links from the homepage
@@ -126,10 +127,16 @@ test.describe('Link Checker & Page Health', () => {
       expect(brokenLinks).toHaveLength(0)
     })
 
-    test('Deep crawl: all internal links across all pages return 200', async ({ page }) => {
+    test('Deep crawl: all internal links across all pages return 200', async ({
+      page,
+    }) => {
       const visited = new Set<string>()
       const toVisit = new Set<string>(allPages)
-      const brokenLinks: { source: string; href: string; status: number | null }[] = []
+      const brokenLinks: {
+        source: string
+        href: string
+        status: number | null
+      }[] = []
 
       // Crawl every known page and collect internal links
       for (const pagePath of allPages) {
@@ -143,19 +150,21 @@ test.describe('Link Checker & Page Health', () => {
         }
 
         // Collect all internal links on this page
-        const hrefs = await page.locator('a[href^="/"]').evaluateAll((links) => {
-          const uniqueHrefs = new Set<string>()
-          links.forEach((link) => {
-            const href = link.getAttribute('href')
-            if (href) {
-              const cleanHref = href.split('#')[0].split('?')[0]
-              if (cleanHref) {
-                uniqueHrefs.add(cleanHref)
+        const hrefs = await page
+          .locator('a[href^="/"]')
+          .evaluateAll((links) => {
+            const uniqueHrefs = new Set<string>()
+            links.forEach((link) => {
+              const href = link.getAttribute('href')
+              if (href) {
+                const cleanHref = href.split('#')[0].split('?')[0]
+                if (cleanHref) {
+                  uniqueHrefs.add(cleanHref)
+                }
               }
-            }
+            })
+            return Array.from(uniqueHrefs)
           })
-          return Array.from(uniqueHrefs)
-        })
 
         for (const href of hrefs) {
           toVisit.add(href)
@@ -164,9 +173,13 @@ test.describe('Link Checker & Page Health', () => {
 
       // Now visit every discovered link that has not already been tested
       const allKnownSet = new Set(allPages)
-      const additionalLinks = Array.from(toVisit).filter((href) => !allKnownSet.has(href))
+      const additionalLinks = Array.from(toVisit).filter(
+        (href) => !allKnownSet.has(href)
+      )
 
-      console.log(`Discovered ${additionalLinks.length} additional internal links beyond the known page list`)
+      console.log(
+        `Discovered ${additionalLinks.length} additional internal links beyond the known page list`
+      )
 
       for (const href of additionalLinks) {
         if (visited.has(href)) continue
@@ -288,17 +301,23 @@ test.describe('Link Checker & Page Health', () => {
         await page.goto(`${baseURL}${pagePath}`, { waitUntil: 'networkidle' })
 
         // Also check img elements in the DOM for naturalWidth === 0 (broken)
-        const domBrokenImages = await page.locator('img').evaluateAll((images) => {
-          const broken: string[] = []
-          for (const img of images) {
-            const htmlImg = img as HTMLImageElement
-            // An image with naturalWidth 0 failed to load (unless it has no src)
-            if (htmlImg.src && htmlImg.complete && htmlImg.naturalWidth === 0) {
-              broken.push(htmlImg.src)
+        const domBrokenImages = await page
+          .locator('img')
+          .evaluateAll((images) => {
+            const broken: string[] = []
+            for (const img of images) {
+              const htmlImg = img as HTMLImageElement
+              // An image with naturalWidth 0 failed to load (unless it has no src)
+              if (
+                htmlImg.src &&
+                htmlImg.complete &&
+                htmlImg.naturalWidth === 0
+              ) {
+                broken.push(htmlImg.src)
+              }
             }
-          }
-          return broken
-        })
+            return broken
+          })
 
         const allBroken = [...brokenImages, ...image404s, ...domBrokenImages]
         // Deduplicate
@@ -356,17 +375,19 @@ test.describe('Link Checker & Page Health', () => {
     test('All nav links point to valid pages', async ({ page }) => {
       await page.goto(`${baseURL}/`, { waitUntil: 'networkidle' })
 
-      const navHrefs = await page.locator('nav a[href^="/"]').evaluateAll((links) => {
-        const hrefs: string[] = []
-        links.forEach((link) => {
-          const href = link.getAttribute('href')
-          if (href) {
-            const cleanHref = href.split('#')[0].split('?')[0]
-            if (cleanHref) hrefs.push(cleanHref)
-          }
+      const navHrefs = await page
+        .locator('nav a[href^="/"]')
+        .evaluateAll((links) => {
+          const hrefs: string[] = []
+          links.forEach((link) => {
+            const href = link.getAttribute('href')
+            if (href) {
+              const cleanHref = href.split('#')[0].split('?')[0]
+              if (cleanHref) hrefs.push(cleanHref)
+            }
+          })
+          return [...new Set(hrefs)]
         })
-        return [...new Set(hrefs)]
-      })
 
       expect(navHrefs.length).toBeGreaterThan(0)
       console.log(`Found ${navHrefs.length} navigation links`)
@@ -397,17 +418,19 @@ test.describe('Link Checker & Page Health', () => {
     test('Footer links all resolve to 200', async ({ page }) => {
       await page.goto(`${baseURL}/`, { waitUntil: 'networkidle' })
 
-      const footerHrefs = await page.locator('footer a[href^="/"]').evaluateAll((links) => {
-        const hrefs: string[] = []
-        links.forEach((link) => {
-          const href = link.getAttribute('href')
-          if (href) {
-            const cleanHref = href.split('#')[0].split('?')[0]
-            if (cleanHref) hrefs.push(cleanHref)
-          }
+      const footerHrefs = await page
+        .locator('footer a[href^="/"]')
+        .evaluateAll((links) => {
+          const hrefs: string[] = []
+          links.forEach((link) => {
+            const href = link.getAttribute('href')
+            if (href) {
+              const cleanHref = href.split('#')[0].split('?')[0]
+              if (cleanHref) hrefs.push(cleanHref)
+            }
+          })
+          return [...new Set(hrefs)]
         })
-        return [...new Set(hrefs)]
-      })
 
       console.log(`Found ${footerHrefs.length} footer links`)
 
@@ -448,7 +471,11 @@ test.describe('Link Checker & Page Health', () => {
       // rendering each one.
       test.setTimeout(300_000)
 
-      const allBrokenLinks: { source: string; href: string; status: number | null }[] = []
+      const allBrokenLinks: {
+        source: string
+        href: string
+        status: number | null
+      }[] = []
       const statusCache = new Map<string, number | null>()
 
       // Sample a subset of content-heavy pages for deeper link checking
@@ -474,17 +501,19 @@ test.describe('Link Checker & Page Health', () => {
         })
 
         // Collect all internal links on this page (from main content, not just nav)
-        const hrefs = await page.locator('a[href^="/"]').evaluateAll((links) => {
-          const uniqueHrefs = new Set<string>()
-          links.forEach((link) => {
-            const href = link.getAttribute('href')
-            if (href) {
-              const cleanHref = href.split('#')[0].split('?')[0]
-              if (cleanHref) uniqueHrefs.add(cleanHref)
-            }
+        const hrefs = await page
+          .locator('a[href^="/"]')
+          .evaluateAll((links) => {
+            const uniqueHrefs = new Set<string>()
+            links.forEach((link) => {
+              const href = link.getAttribute('href')
+              if (href) {
+                const cleanHref = href.split('#')[0].split('?')[0]
+                if (cleanHref) uniqueHrefs.add(cleanHref)
+              }
+            })
+            return Array.from(uniqueHrefs)
           })
-          return Array.from(uniqueHrefs)
-        })
 
         for (const href of hrefs) {
           let status = statusCache.get(href)
@@ -504,7 +533,9 @@ test.describe('Link Checker & Page Health', () => {
       if (allBrokenLinks.length > 0) {
         console.log('Broken cross-page links:')
         for (const broken of allBrokenLinks) {
-          console.log(`  [${broken.source}] -> ${broken.href} (${broken.status})`)
+          console.log(
+            `  [${broken.source}] -> ${broken.href} (${broken.status})`
+          )
         }
       }
 

@@ -20,7 +20,8 @@ export default function ScrollTracker() {
 
     const handleScroll = () => {
       const scrollTop = window.scrollY
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const docHeight =
+        document.documentElement.scrollHeight - window.innerHeight
 
       if (docHeight <= 0) return
 
@@ -29,7 +30,10 @@ export default function ScrollTracker() {
       // Track milestone depths
       const milestones: (25 | 50 | 75 | 100)[] = [25, 50, 75, 100]
       for (const milestone of milestones) {
-        if (scrollPercent >= milestone && !trackedDepths.current.has(milestone)) {
+        if (
+          scrollPercent >= milestone &&
+          !trackedDepths.current.has(milestone)
+        ) {
           trackedDepths.current.add(milestone)
           trackScrollDepth(milestone, pathname)
         }
@@ -42,7 +46,10 @@ export default function ScrollTracker() {
       // Track time milestones: 30s, 60s, 120s, 300s
       const timeThresholds = [30, 60, 120, 300]
       for (const threshold of timeThresholds) {
-        if (elapsed >= threshold && !trackedTimeThresholds.current.has(threshold)) {
+        if (
+          elapsed >= threshold &&
+          !trackedTimeThresholds.current.has(threshold)
+        ) {
           trackedTimeThresholds.current.add(threshold)
           trackTimeOnPage(threshold, pathname)
         }

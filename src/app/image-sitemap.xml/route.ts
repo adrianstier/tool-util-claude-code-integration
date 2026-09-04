@@ -72,9 +72,15 @@ export async function GET() {
 
   // Additional static pages
   const additionalPages = [
-    { path: '/glossary', title: 'Glossary - Programming & AI Development Terms' },
+    {
+      path: '/glossary',
+      title: 'Glossary - Programming & AI Development Terms',
+    },
     { path: '/blog', title: 'Blog & Updates - Claude Code Learning Hub' },
-    { path: '/authors', title: 'Authors & Contributors - Claude Code Learning Hub' },
+    {
+      path: '/authors',
+      title: 'Authors & Contributors - Claude Code Learning Hub',
+    },
   ]
 
   for (const page of additionalPages) {

@@ -69,7 +69,7 @@ export default function TableOfContents({ className }: TableOfContentsProps) {
 
   return (
     <nav className={cn('', className)} aria-label="Table of contents">
-      <div className="flex items-center gap-2 mb-4 text-sm font-semibold text-gray-900 dark:text-white">
+      <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-white">
         <List className="h-4 w-4" />
         <span>On this page</span>
       </div>
@@ -89,11 +89,11 @@ export default function TableOfContents({ className }: TableOfContentsProps) {
                 }
               }}
               className={cn(
-                'block py-1 transition-colors border-l-2 -ml-px',
+                '-ml-px block border-l-2 py-1 transition-colors',
                 heading.level === 3 ? 'pl-6' : 'pl-4',
                 activeId === heading.id
-                  ? 'border-primary-500 text-primary-600 dark:text-primary-400 font-medium'
-                  : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
+                  ? 'border-primary-500 font-medium text-primary-600 dark:text-primary-400'
+                  : 'border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-300'
               )}
             >
               {heading.text}

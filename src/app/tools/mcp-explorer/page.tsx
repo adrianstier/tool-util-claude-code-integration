@@ -36,7 +36,8 @@ const mcpServers: MCPServer[] = [
   {
     id: 'filesystem',
     name: 'Filesystem',
-    description: 'Read and write files on your local filesystem with full path support',
+    description:
+      'Read and write files on your local filesystem with full path support',
     category: 'Core',
     icon: <Folder className="h-5 w-5" />,
     author: 'Anthropic',
@@ -65,7 +66,8 @@ const mcpServers: MCPServer[] = [
   {
     id: 'github',
     name: 'GitHub',
-    description: 'Interact with GitHub repositories, issues, pull requests, and more',
+    description:
+      'Interact with GitHub repositories, issues, pull requests, and more',
     category: 'Development',
     icon: <GitBranch className="h-5 w-5" />,
     author: 'Anthropic',
@@ -149,7 +151,8 @@ const mcpServers: MCPServer[] = [
   {
     id: 'memory',
     name: 'Memory',
-    description: 'Persistent memory storage for storing and retrieving information',
+    description:
+      'Persistent memory storage for storing and retrieving information',
     category: 'Core',
     icon: <Bot className="h-5 w-5" />,
     author: 'Anthropic',
@@ -258,7 +261,10 @@ const mcpServers: MCPServer[] = [
   },
 ]
 
-const categories = ['All', ...Array.from(new Set(mcpServers.map((s) => s.category)))]
+const categories = [
+  'All',
+  ...Array.from(new Set(mcpServers.map((s) => s.category))),
+]
 
 export default function MCPExplorerPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
@@ -285,13 +291,13 @@ export default function MCPExplorerPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
+    <div className="min-h-screen bg-gray-50 py-12 dark:bg-gray-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 mb-4"
+            className="mb-4 inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
@@ -300,7 +306,8 @@ export default function MCPExplorerPage() {
             MCP Server Explorer
           </h1>
           <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Browse and install Model Context Protocol servers to extend Claude Code capabilities
+            Browse and install Model Context Protocol servers to extend Claude
+            Code capabilities
           </p>
         </div>
 
@@ -313,7 +320,7 @@ export default function MCPExplorerPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search MCP servers..."
-              className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 py-3 pl-10 pr-4 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+              className="w-full rounded-lg border border-gray-200 bg-white py-3 pl-10 pr-4 text-gray-900 placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
             />
           </div>
         </div>
@@ -327,7 +334,7 @@ export default function MCPExplorerPage() {
               className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                 selectedCategory === category
                   ? 'bg-primary-600 text-white'
-                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
+                  : 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
               }`}
             >
               {category}
@@ -338,7 +345,7 @@ export default function MCPExplorerPage() {
         {/* Server Grid */}
         <div className="grid gap-6 md:grid-cols-2">
           {filteredServers.length === 0 ? (
-            <div className="col-span-2 text-center py-12">
+            <div className="col-span-2 py-12 text-center">
               <Server className="mx-auto h-12 w-12 text-gray-400" />
               <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-gray-100">
                 No servers found
@@ -351,12 +358,12 @@ export default function MCPExplorerPage() {
             filteredServers.map((server) => (
               <div
                 key={server.id}
-                className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden"
+                className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
               >
                 <div className="p-6">
-                  <div className="flex items-start justify-between mb-4">
+                  <div className="mb-4 flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400">
                         {server.icon}
                       </div>
                       <div>
@@ -368,20 +375,20 @@ export default function MCPExplorerPage() {
                         </span>
                       </div>
                     </div>
-                    <span className="rounded-full bg-gray-100 dark:bg-gray-700 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-400">
+                    <span className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600 dark:bg-gray-700 dark:text-gray-400">
                       {server.category}
                     </span>
                   </div>
 
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                  <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
                     {server.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-1 mb-4">
+                  <div className="mb-4 flex flex-wrap gap-1">
                     {server.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="rounded bg-gray-100 dark:bg-gray-700 px-2 py-0.5 text-xs text-gray-600 dark:text-gray-400"
+                        className="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-700 dark:text-gray-400"
                       >
                         {tag}
                       </span>
@@ -390,11 +397,14 @@ export default function MCPExplorerPage() {
 
                   {/* Install Command */}
                   <div className="mb-4">
-                    <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-1">
+                    <div className="mb-1 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
                       <span>Install Command</span>
                       <button
                         onClick={() =>
-                          handleCopy(server.installCommand, `${server.id}-install`)
+                          handleCopy(
+                            server.installCommand,
+                            `${server.id}-install`
+                          )
                         }
                         className="hover:text-gray-700 dark:hover:text-gray-300"
                       >
@@ -405,7 +415,7 @@ export default function MCPExplorerPage() {
                         )}
                       </button>
                     </div>
-                    <code className="block rounded bg-gray-100 dark:bg-gray-900 px-3 py-2 text-xs font-mono text-gray-800 dark:text-gray-200 overflow-x-auto">
+                    <code className="block overflow-x-auto rounded bg-gray-100 px-3 py-2 font-mono text-xs text-gray-800 dark:bg-gray-900 dark:text-gray-200">
                       {server.installCommand}
                     </code>
                   </div>
@@ -417,15 +427,17 @@ export default function MCPExplorerPage() {
                           expandedServer === server.id ? null : server.id
                         )
                       }
-                      className="flex-1 rounded-lg border border-gray-200 dark:border-gray-600 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                      className="flex-1 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
                     >
-                      {expandedServer === server.id ? 'Hide Config' : 'View Config'}
+                      {expandedServer === server.id
+                        ? 'Hide Config'
+                        : 'View Config'}
                     </button>
                     <a
                       href={server.repo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 transition-colors"
+                      className="flex items-center gap-1 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700"
                     >
                       <ExternalLink className="h-4 w-4" />
                       Docs
@@ -435,9 +447,9 @@ export default function MCPExplorerPage() {
 
                 {/* Expanded Config */}
                 {expandedServer === server.id && (
-                  <div className="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 p-4">
+                  <div className="border-t border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900/50">
                     <div className="mb-4">
-                      <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                      <h4 className="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
                         Features
                       </h4>
                       <ul className="space-y-1">
@@ -454,11 +466,14 @@ export default function MCPExplorerPage() {
                     </div>
 
                     <div>
-                      <div className="flex items-center justify-between text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                      <div className="mb-2 flex items-center justify-between text-sm font-semibold text-gray-700 dark:text-gray-300">
                         <span>Configuration Example</span>
                         <button
                           onClick={() =>
-                            handleCopy(server.configExample, `${server.id}-config`)
+                            handleCopy(
+                              server.configExample,
+                              `${server.id}-config`
+                            )
                           }
                           className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
                         >
@@ -469,7 +484,7 @@ export default function MCPExplorerPage() {
                           )}
                         </button>
                       </div>
-                      <pre className="rounded-lg bg-gray-900 dark:bg-gray-950 p-4 text-xs text-gray-100 overflow-x-auto">
+                      <pre className="overflow-x-auto rounded-lg bg-gray-900 p-4 text-xs text-gray-100 dark:bg-gray-950">
                         <code>{server.configExample}</code>
                       </pre>
                     </div>
@@ -481,9 +496,9 @@ export default function MCPExplorerPage() {
         </div>
 
         {/* Info Box */}
-        <div className="mt-12 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
+        <div className="mt-12 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
           <div className="flex items-start gap-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400">
               <FileText className="h-5 w-5" />
             </div>
             <div>
@@ -491,14 +506,18 @@ export default function MCPExplorerPage() {
                 How to use MCP Servers
               </h3>
               <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                Add server configurations to your <code className="rounded bg-gray-100 dark:bg-gray-700 px-1 py-0.5 text-xs">~/.claude/claude_desktop_config.json</code> file,
-                then restart Claude Desktop to enable the new capabilities.
+                Add server configurations to your{' '}
+                <code className="rounded bg-gray-100 px-1 py-0.5 text-xs dark:bg-gray-700">
+                  ~/.claude/claude_desktop_config.json
+                </code>{' '}
+                file, then restart Claude Desktop to enable the new
+                capabilities.
               </p>
               <a
                 href="https://modelcontextprotocol.io"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300"
+                className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
               >
                 Learn more about MCP
                 <ExternalLink className="h-3 w-3" />

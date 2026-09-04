@@ -1,0 +1,17 @@
+# Build and dependency output
+.next/
+node_modules/
+package-lock.json
+coverage/
+
+# Test output
+screenshots/
+test-results/
+playwright-report/
+
+# MDX content is hand-authored prose, and Prettier's MDX printer is not safe
+# here: it indents JSX closing tags that follow a markdown list, which MDX then
+# parses as part of the list item. That silently broke content/git-github/index.mdx
+# ("Expected the closing tag </Callout> ...") on 2026-09-04. It also rewraps
+# paragraphs, which makes prose diffs unreadable. Format MDX by hand.
+content/

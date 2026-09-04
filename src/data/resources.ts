@@ -231,8 +231,7 @@ export const RESOURCES: Resource[] = [
   {
     id: 'best-practices-guide',
     title: 'Best Practices Guide',
-    description:
-      'Tips and techniques for working effectively with Claude Code',
+    description: 'Tips and techniques for working effectively with Claude Code',
     url: '/advanced-topics/best-practices',
     internal: true,
     icon: 'Lightbulb',

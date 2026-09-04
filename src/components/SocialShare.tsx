@@ -25,7 +25,9 @@ export default function SocialShare({ title, url }: SocialShareProps) {
     hackernews: `https://news.ycombinator.com/submitlink?u=${encodedUrl}&t=${encodedTitle}`,
   }
 
-  const handleShare = (platform: 'twitter' | 'linkedin' | 'reddit' | 'hackernews') => {
+  const handleShare = (
+    platform: 'twitter' | 'linkedin' | 'reddit' | 'hackernews'
+  ) => {
     trackSocialShare(platform, title, url)
   }
 
@@ -52,7 +54,7 @@ export default function SocialShare({ title, url }: SocialShareProps) {
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => handleShare('twitter')}
-          className="group flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 transition-all hover:bg-[#1DA1F2] hover:text-white"
+          className="group flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-all hover:bg-[#1DA1F2] hover:text-white dark:bg-gray-800 dark:text-gray-400"
           aria-label="Share on Twitter"
         >
           <Twitter className="h-5 w-5" aria-hidden="true" />
@@ -64,7 +66,7 @@ export default function SocialShare({ title, url }: SocialShareProps) {
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => handleShare('linkedin')}
-          className="group flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 transition-all hover:bg-[#0A66C2] hover:text-white"
+          className="group flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-all hover:bg-[#0A66C2] hover:text-white dark:bg-gray-800 dark:text-gray-400"
           aria-label="Share on LinkedIn"
         >
           <Linkedin className="h-5 w-5" aria-hidden="true" />
@@ -76,7 +78,7 @@ export default function SocialShare({ title, url }: SocialShareProps) {
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => handleShare('reddit')}
-          className="group flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 transition-all hover:bg-[#FF4500] hover:text-white"
+          className="group flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-all hover:bg-[#FF4500] hover:text-white dark:bg-gray-800 dark:text-gray-400"
           aria-label="Share on Reddit"
         >
           <MessageCircle className="h-5 w-5" aria-hidden="true" />
@@ -88,10 +90,12 @@ export default function SocialShare({ title, url }: SocialShareProps) {
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => handleShare('hackernews')}
-          className="group flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 transition-all hover:bg-[#FF6600] hover:text-white"
+          className="group flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-600 transition-all hover:bg-[#FF6600] hover:text-white dark:bg-gray-800 dark:text-gray-400"
           aria-label="Share on Hacker News"
         >
-          <span className="text-sm font-bold" aria-hidden="true">Y</span>
+          <span className="text-sm font-bold" aria-hidden="true">
+            Y
+          </span>
         </a>
 
         {/* Copy Link */}
@@ -100,7 +104,7 @@ export default function SocialShare({ title, url }: SocialShareProps) {
           className={`group flex h-10 w-10 items-center justify-center rounded-lg transition-all ${
             copied
               ? 'bg-green-500 text-white'
-              : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-primary-500 hover:text-white'
+              : 'bg-gray-100 text-gray-600 hover:bg-primary-500 hover:text-white dark:bg-gray-800 dark:text-gray-400'
           }`}
           aria-label={copied ? 'Link copied!' : 'Copy link'}
         >
@@ -116,7 +120,13 @@ export default function SocialShare({ title, url }: SocialShareProps) {
 }
 
 // Floating share bar for mobile
-export function FloatingShareBar({ title, url }: { title: string; url: string }) {
+export function FloatingShareBar({
+  title,
+  url,
+}: {
+  title: string
+  url: string
+}) {
   const [isOpen, setIsOpen] = useState(false)
   const [copied, setCopied] = useState(false)
 
@@ -160,7 +170,7 @@ export function FloatingShareBar({ title, url }: { title: string; url: string })
     <div className="fixed bottom-6 right-6 z-50 lg:hidden">
       {/* Share options */}
       {isOpen && (
-        <div className="absolute bottom-16 right-0 flex flex-col gap-2 animate-in slide-in-from-bottom-2">
+        <div className="animate-in slide-in-from-bottom-2 absolute bottom-16 right-0 flex flex-col gap-2">
           <a
             href={shareLinks.twitter}
             target="_blank"
@@ -191,7 +201,11 @@ export function FloatingShareBar({ title, url }: { title: string; url: string })
               copied ? 'bg-green-500' : 'bg-gray-700'
             } text-white`}
           >
-            {copied ? <Check className="h-5 w-5" /> : <Link2 className="h-5 w-5" />}
+            {copied ? (
+              <Check className="h-5 w-5" />
+            ) : (
+              <Link2 className="h-5 w-5" />
+            )}
           </button>
         </div>
       )}

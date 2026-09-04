@@ -5,6 +5,7 @@ This directory contains reusable templates that users can copy into their own pr
 ## Available Templates
 
 ### Core Templates (In Root)
+
 - **CLAUDE.md**: Project context and workflow documentation
 - **.claudeignore**: Context management for Claude
 - **.vscode/settings.json**: VS Code configuration optimized for Claude Code
@@ -14,6 +15,7 @@ This directory contains reusable templates that users can copy into their own pr
 ### For New Projects
 
 1. Copy the templates you need:
+
    ```bash
    cp ../CLAUDE.md ./
    cp ../.claudeignore ./

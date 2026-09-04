@@ -31,7 +31,8 @@ const snippets: Snippet[] = [
   {
     id: 'git-commit',
     title: 'Git Commit with Claude',
-    description: 'Commit changes with a well-formatted message following conventional commits',
+    description:
+      'Commit changes with a well-formatted message following conventional commits',
     category: 'Git',
     language: 'bash',
     code: `# Stage all changes
@@ -50,7 +51,8 @@ Co-authored-by: Claude <claude@anthropic.com>"`,
   {
     id: 'python-dataframe',
     title: 'Pandas DataFrame Operations',
-    description: 'Common pandas operations for data cleaning and transformation',
+    description:
+      'Common pandas operations for data cleaning and transformation',
     category: 'Data Analysis',
     language: 'python',
     code: `import pandas as pd
@@ -396,13 +398,13 @@ export default function SnippetsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
+    <div className="min-h-screen bg-gray-50 py-12 dark:bg-gray-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 mb-4"
+            className="mb-4 inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
@@ -425,7 +427,7 @@ export default function SnippetsPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search snippets..."
               aria-label="Search code snippets"
-              className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 py-3 pl-10 pr-4 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+              className="w-full rounded-lg border border-gray-200 bg-white py-3 pl-10 pr-4 text-gray-900 placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
             />
           </div>
         </div>
@@ -441,7 +443,7 @@ export default function SnippetsPage() {
                 className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                   selectedCategory === category.name
                     ? 'bg-primary-600 text-white'
-                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
+                    : 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -454,8 +456,11 @@ export default function SnippetsPage() {
         {/* Snippets */}
         <div className="space-y-6">
           {filteredSnippets.length === 0 ? (
-            <div className="text-center py-12" role="status" aria-live="polite">
-              <Code className="mx-auto h-12 w-12 text-gray-400" aria-hidden="true" />
+            <div className="py-12 text-center" role="status" aria-live="polite">
+              <Code
+                className="mx-auto h-12 w-12 text-gray-400"
+                aria-hidden="true"
+              />
               <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-gray-100">
                 No snippets found
               </h3>
@@ -467,12 +472,12 @@ export default function SnippetsPage() {
             filteredSnippets.map((snippet) => (
               <div
                 key={snippet.id}
-                className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden"
+                className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
               >
-                <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+                <div className="border-b border-gray-200 p-4 dark:border-gray-700">
                   <div className="flex items-start justify-between">
                     <div>
-                      <div className="flex items-center gap-2 mb-1">
+                      <div className="mb-1 flex items-center gap-2">
                         <h3 className="font-semibold text-gray-900 dark:text-gray-100">
                           {snippet.title}
                         </h3>
@@ -490,7 +495,7 @@ export default function SnippetsPage() {
                     </div>
                     <button
                       onClick={() => handleCopy(snippet.code, snippet.id)}
-                      className="flex items-center gap-1 rounded-lg border border-gray-200 dark:border-gray-600 px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                      className="flex items-center gap-1 rounded-lg border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
                     >
                       {copiedId === snippet.id ? (
                         <>
@@ -509,14 +514,14 @@ export default function SnippetsPage() {
                     {snippet.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="rounded bg-gray-100 dark:bg-gray-700 px-2 py-0.5 text-xs text-gray-600 dark:text-gray-400"
+                        className="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-700 dark:text-gray-400"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
                 </div>
-                <div className="bg-gray-900 dark:bg-gray-950 p-4 overflow-x-auto">
+                <div className="overflow-x-auto bg-gray-900 p-4 dark:bg-gray-950">
                   <pre className="text-sm text-gray-100">
                     <code>{snippet.code}</code>
                   </pre>

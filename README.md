@@ -4,7 +4,7 @@
 
 A free, guided learning platform for Claude Code, VS Code, Git/GitHub, Python, R, MCP, and AI agents. Step-by-step tutorials designed for beginners through advanced developers.
 
-*Last updated: 2026-09-03*
+_Last updated: 2026-09-03_
 
 ## Quick Start
 
@@ -30,16 +30,16 @@ Open [http://localhost:3001](http://localhost:3001).
 
 ## Learning Tracks
 
-| Track | Lessons | Duration | Shape |
-|---|---|---|---|
-| **Start Here** — setup, platforms, research workflows, voice & remote | 11 | 5.2 hours | Landing page + articles |
-| **MCP Integration** — Model Context Protocol servers & workflows | 4 | 2.8 hours | Landing page + articles |
-| **AI Agents** — using, building, the Agent SDK, multi-agent architectures | 5 | 2.7 hours | Landing page + articles |
-| **Advanced Topics** — best practices, power features, skills, plugins & hooks | 5 | 2.7 hours | Landing page + articles |
-| **Data Analysis** — Python & R for data work | 2 | 95 min | Landing page + articles |
-| **Git & GitHub** — version control fundamentals | 1 | 90 min | Self-contained landing page |
-| **App Builder** — web apps, computer use & dispatch | 2 | 75 min | Self-contained landing page + 1 article |
-| **Automation** — scripts & workflow automation | 1 | 50 min | Self-contained landing page |
+| Track                                                                         | Lessons | Duration  | Shape                                   |
+| ----------------------------------------------------------------------------- | ------- | --------- | --------------------------------------- |
+| **Start Here** — setup, platforms, research workflows, voice & remote         | 11      | 5.2 hours | Landing page + articles                 |
+| **MCP Integration** — Model Context Protocol servers & workflows              | 4       | 2.8 hours | Landing page + articles                 |
+| **AI Agents** — using, building, the Agent SDK, multi-agent architectures     | 5       | 2.7 hours | Landing page + articles                 |
+| **Advanced Topics** — best practices, power features, skills, plugins & hooks | 5       | 2.7 hours | Landing page + articles                 |
+| **Data Analysis** — Python & R for data work                                  | 2       | 95 min    | Landing page + articles                 |
+| **Git & GitHub** — version control fundamentals                               | 1       | 90 min    | Self-contained landing page             |
+| **App Builder** — web apps, computer use & dispatch                           | 2       | 75 min    | Self-contained landing page + 1 article |
+| **Automation** — scripts & workflow automation                                | 1       | 50 min    | Self-contained landing page             |
 
 Three tracks (`git-github`, `automation`, `app-builder`) carry their tutorial **on the landing page itself**, declared with `selfContained: true` in `index.mdx` frontmatter. The homepage reads durations and readiness from the content via `getTrackStats()` (`src/lib/tracks.ts`) rather than a hardcoded list, so a card cannot advertise a track that has not been written.
 
@@ -143,14 +143,14 @@ Articles are MDX files in `content/<track>/<slug>.mdx` with frontmatter:
 
 ```yaml
 ---
-title: "Article Title"
-description: "Brief description for SEO"
-order: 1                # unique within the track; index.mdx is always 0
-track: "start-here"
-duration: "15 min"      # feeds the homepage track duration
-platform: "both"        # mac | windows | both
-prerequisites: ["mac-setup"]
-lastUpdated: "2026-03-28"
+title: 'Article Title'
+description: 'Brief description for SEO'
+order: 1 # unique within the track; index.mdx is always 0
+track: 'start-here'
+duration: '15 min' # feeds the homepage track duration
+platform: 'both' # mac | windows | both
+prerequisites: ['mac-setup']
+lastUpdated: '2026-03-28'
 ---
 ```
 

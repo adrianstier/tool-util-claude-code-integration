@@ -29,14 +29,14 @@ test.describe('UI/UX Analysis', () => {
       // Take screenshot
       await page.screenshot({
         path: `screenshots${pagePath === '/' ? '/home' : pagePath}.png`,
-        fullPage: true
+        fullPage: true,
       })
 
       // Check for basic accessibility
       await expect(page).toHaveTitle(/.+/)
 
       // Log any console errors
-      page.on('console', msg => {
+      page.on('console', (msg) => {
         if (msg.type() === 'error') {
           console.log(`Console error on ${pagePath}:`, msg.text())
         }

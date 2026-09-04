@@ -18,7 +18,13 @@ function legacySubArticleRedirects() {
 
     return hasArticles
       ? []
-      : [{ source: `/${track}/:slug`, destination: `/${track}`, permanent: true }]
+      : [
+          {
+            source: `/${track}/:slug`,
+            destination: `/${track}`,
+            permanent: true,
+          },
+        ]
   })
 }
 

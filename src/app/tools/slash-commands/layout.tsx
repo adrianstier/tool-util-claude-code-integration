@@ -23,8 +23,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Slash Commands Reference | Claude Code Learning Hub',
-    description:
-      'Complete reference for Claude Code slash commands.',
+    description: 'Complete reference for Claude Code slash commands.',
   },
 }
 

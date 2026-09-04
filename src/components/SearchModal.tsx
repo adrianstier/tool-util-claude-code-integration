@@ -2,7 +2,23 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
-import { Search, X, FileText, Rocket, BarChart3, Hammer, Zap, BookOpen, ArrowRight, Command, FolderOpen, Code, FileCode, Server, Brain } from 'lucide-react'
+import {
+  Search,
+  X,
+  FileText,
+  Rocket,
+  BarChart3,
+  Hammer,
+  Zap,
+  BookOpen,
+  ArrowRight,
+  Command,
+  FolderOpen,
+  Code,
+  FileCode,
+  Server,
+  Brain,
+} from 'lucide-react'
 
 import type { SearchIndexItem } from '@/lib/search'
 
@@ -201,12 +217,12 @@ export default function SearchModal({
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-1.5 text-sm text-gray-500 dark:text-gray-400 transition-colors hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300"
+        className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-500 transition-colors hover:border-gray-300 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-300"
         aria-label="Search"
       >
         <Search className="h-4 w-4" />
         <span className="hidden sm:inline">Search...</span>
-        <kbd className="hidden sm:inline-flex items-center gap-0.5 rounded bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 text-xs font-medium text-gray-500 dark:text-gray-400">
+        <kbd className="hidden items-center gap-0.5 rounded bg-gray-100 px-1.5 py-0.5 text-xs font-medium text-gray-500 dark:bg-gray-700 dark:text-gray-400 sm:inline-flex">
           <span className="text-xs">⌘</span>K
         </kbd>
       </button>
@@ -224,12 +240,13 @@ export default function SearchModal({
 
       {/* Modal */}
       <div
-        className="fixed left-1/2 top-[20%] z-[300] w-full max-w-xl -translate-x-1/2 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-2xl"
+        className="fixed left-1/2 top-[20%] z-[300] w-full max-w-xl -translate-x-1/2 rounded-xl border border-gray-200 bg-white shadow-2xl dark:border-gray-700 dark:bg-gray-900"
         role="dialog"
         aria-modal="true"
-        aria-label="Search documentation">
+        aria-label="Search documentation"
+      >
         {/* Search Input */}
-        <div className="flex items-center gap-3 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
+        <div className="flex items-center gap-3 border-b border-gray-200 px-4 py-3 dark:border-gray-700">
           <Search className="h-5 w-5 text-gray-400" />
           <input
             ref={inputRef}
@@ -239,11 +256,11 @@ export default function SearchModal({
             onKeyDown={handleKeyDown}
             placeholder="Search documentation..."
             aria-label="Search documentation"
-            className="flex-1 bg-transparent text-gray-900 dark:text-gray-100 placeholder-gray-400 outline-none"
+            className="flex-1 bg-transparent text-gray-900 placeholder-gray-400 outline-none dark:text-gray-100"
           />
           <button
             onClick={() => setIsOpen(false)}
-            className="rounded p-1 text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-600 dark:hover:text-gray-300"
+            className="rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
             aria-label="Close search"
           >
             <X className="h-4 w-4" />
@@ -272,22 +289,22 @@ export default function SearchModal({
                       onMouseEnter={() => setSelectedIndex(currentIndex)}
                       className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition-colors ${
                         isSelected
-                          ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300'
-                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+                          ? 'bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300'
+                          : 'text-gray-700 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-800'
                       }`}
                     >
                       <div
                         className={`flex h-8 w-8 items-center justify-center rounded-lg ${
                           isSelected
-                            ? 'bg-primary-100 dark:bg-primary-800/50 text-primary-600 dark:text-primary-400'
-                            : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400'
+                            ? 'bg-primary-100 text-primary-600 dark:bg-primary-800/50 dark:text-primary-400'
+                            : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
                         }`}
                       >
                         {ICONS[item.iconKey] ?? ICONS.file}
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium truncate">{item.title}</div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400 truncate">
+                      <div className="min-w-0 flex-1">
+                        <div className="truncate font-medium">{item.title}</div>
+                        <div className="truncate text-sm text-gray-600 dark:text-gray-400">
                           {item.description}
                         </div>
                       </div>
@@ -303,17 +320,23 @@ export default function SearchModal({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 px-4 py-2 text-xs text-gray-500 dark:text-gray-400">
+        <div className="flex items-center justify-between border-t border-gray-200 px-4 py-2 text-xs text-gray-500 dark:border-gray-700 dark:text-gray-400">
           <div className="flex items-center gap-2">
-            <kbd className="rounded bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5">↑↓</kbd>
+            <kbd className="rounded bg-gray-100 px-1.5 py-0.5 dark:bg-gray-800">
+              ↑↓
+            </kbd>
             <span>Navigate</span>
           </div>
           <div className="flex items-center gap-2">
-            <kbd className="rounded bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5">↵</kbd>
+            <kbd className="rounded bg-gray-100 px-1.5 py-0.5 dark:bg-gray-800">
+              ↵
+            </kbd>
             <span>Select</span>
           </div>
           <div className="flex items-center gap-2">
-            <kbd className="rounded bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5">Esc</kbd>
+            <kbd className="rounded bg-gray-100 px-1.5 py-0.5 dark:bg-gray-800">
+              Esc
+            </kbd>
             <span>Close</span>
           </div>
         </div>

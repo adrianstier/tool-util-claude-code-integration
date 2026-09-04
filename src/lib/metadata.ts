@@ -226,7 +226,8 @@ export function getBaseMetadata(): Metadata {
 // Generate metadata for track pages
 export function getTrackPageMetadata(track: string): Metadata {
   const trackMeta = trackMetadata[track]
-  const title = trackMeta?.title || `${track.replace(/-/g, ' ')} | Claude Code Learning`
+  const title =
+    trackMeta?.title || `${track.replace(/-/g, ' ')} | Claude Code Learning`
   const description = trackMeta?.description || siteConfig.description
   const keywords = trackMeta?.keywords || []
   const url = `${siteConfig.url}/${track}`
@@ -283,9 +284,7 @@ export function getContentPageMetadata(
   const trackMeta = trackMetadata[track]
   const title = frontmatter.title
   const description =
-    frontmatter.description ||
-    trackMeta?.description ||
-    siteConfig.description
+    frontmatter.description || trackMeta?.description || siteConfig.description
   const url = `${siteConfig.url}/${track}/${slug}`
   const ogImageUrl = `${siteConfig.url}${siteConfig.ogImage}`
 
@@ -544,7 +543,9 @@ export function generateHowToSchema(
   }
 }
 
-export function generateFAQSchema(faqs: { question: string; answer: string }[]) {
+export function generateFAQSchema(
+  faqs: { question: string; answer: string }[]
+) {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',

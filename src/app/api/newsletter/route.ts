@@ -11,10 +11,7 @@ export async function POST(request: NextRequest) {
 
     // Validate email
     if (!email || typeof email !== 'string') {
-      return NextResponse.json(
-        { error: 'Email is required' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Email is required' }, { status: 400 })
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -105,10 +102,7 @@ export async function GET(request: NextRequest) {
   const email = searchParams.get('email')
 
   if (!email) {
-    return NextResponse.json(
-      { count: subscribers.size },
-      { status: 200 }
-    )
+    return NextResponse.json({ count: subscribers.size }, { status: 200 })
   }
 
   const normalizedEmail = email.toLowerCase().trim()

@@ -1,15 +1,15 @@
 # docs/
 
-*Last updated: 2026-09-04*
+_Last updated: 2026-09-04_
 
 ## Active
 
-| Doc | What it is |
-|---|---|
-| [CONTENT_STYLE_GUIDE.md](CONTENT_STYLE_GUIDE.md) | Voice and formatting rules for the MDX content. Read before writing an article. |
+| Doc                                              | What it is                                                                                  |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------- |
+| [CONTENT_STYLE_GUIDE.md](CONTENT_STYLE_GUIDE.md) | Voice and formatting rules for the MDX content. Read before writing an article.             |
 | [UX-IMPROVEMENT-PLAN.md](UX-IMPROVEMENT-PLAN.md) | 2026-02-11 four-agent UX audit. Phase 1 is closed out; Phases 2-4 are the standing backlog. |
-| [DEPLOY_TO_RENDER.md](DEPLOY_TO_RENDER.md) | Fallback deployment path. Vercel is primary. |
-| [superpowers/specs/](superpowers/specs/) | Design specs for content batches. One per batch. |
+| [DEPLOY_TO_RENDER.md](DEPLOY_TO_RENDER.md)       | Fallback deployment path. Vercel is primary.                                                |
+| [superpowers/specs/](superpowers/specs/)         | Design specs for content batches. One per batch.                                            |
 
 The repo-level orientation lives in [`../ORIENTATION.md`](../ORIENTATION.md);
 architecture and conventions are in [`../CLAUDE.md`](../CLAUDE.md).

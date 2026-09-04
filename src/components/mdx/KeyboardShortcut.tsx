@@ -1,5 +1,3 @@
-
-
 import { cn } from '@/lib/utils'
 
 interface KeyboardShortcutProps {
@@ -42,7 +40,10 @@ function getKeyDisplay(key: string): string {
   return keyDisplayMap[normalizedKey] || key
 }
 
-export default function KeyboardShortcut({ keys, className }: KeyboardShortcutProps) {
+export default function KeyboardShortcut({
+  keys,
+  className,
+}: KeyboardShortcutProps) {
   const parsedKeys = parseKeys(keys)
 
   return (
@@ -52,16 +53,18 @@ export default function KeyboardShortcut({ keys, className }: KeyboardShortcutPr
           <kbd
             className={cn(
               'inline-flex items-center justify-center rounded-md border',
-              'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-600',
+              'border-gray-200 bg-gray-50 dark:border-gray-600 dark:bg-gray-800',
               'px-1.5 py-0.5 text-xs font-medium text-gray-700 dark:text-gray-300',
-              'font-mono shadow-sm min-w-[1.5rem]',
+              'min-w-[1.5rem] font-mono shadow-sm',
               'select-none'
             )}
           >
             {getKeyDisplay(key)}
           </kbd>
           {index < parsedKeys.length - 1 && (
-            <span className="mx-0.5 text-gray-600 dark:text-gray-500 text-xs">+</span>
+            <span className="mx-0.5 text-xs text-gray-600 dark:text-gray-500">
+              +
+            </span>
           )}
         </span>
       ))}
@@ -80,10 +83,10 @@ export function Kbd({ children, className }: KbdProps) {
     <kbd
       className={cn(
         'inline-flex items-center justify-center rounded border',
-        'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-600',
+        'border-gray-200 bg-gray-50 dark:border-gray-600 dark:bg-gray-800',
         'px-1.5 py-0.5 text-xs font-medium text-gray-700 dark:text-gray-300',
         'font-mono shadow-sm',
-        'select-none mx-0.5',
+        'mx-0.5 select-none',
         className
       )}
     >

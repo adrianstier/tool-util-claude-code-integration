@@ -50,11 +50,7 @@ export function getContentBySlug(
   slug: string
 ): ContentFile | null {
   try {
-    const filePath = path.join(
-      contentDirectory,
-      directory,
-      `${slug}.mdx`
-    )
+    const filePath = path.join(contentDirectory, directory, `${slug}.mdx`)
 
     if (!fs.existsSync(filePath)) {
       // Try .md extension
@@ -71,7 +67,8 @@ export function getContentBySlug(
         frontmatter: data as Frontmatter,
         content,
         readingTime: getReadingTime(content),
-        lastModified: (data as Frontmatter).lastUpdated || stats.mtime.toISOString(),
+        lastModified:
+          (data as Frontmatter).lastUpdated || stats.mtime.toISOString(),
       }
     }
 
@@ -84,7 +81,8 @@ export function getContentBySlug(
       frontmatter: data as Frontmatter,
       content,
       readingTime: getReadingTime(content),
-      lastModified: (data as Frontmatter).lastUpdated || stats.mtime.toISOString(),
+      lastModified:
+        (data as Frontmatter).lastUpdated || stats.mtime.toISOString(),
     }
   } catch (error) {
     logger.error(`Error reading file ${directory}/${slug}:`, error)

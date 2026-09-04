@@ -104,8 +104,7 @@ export function filterResources(
 
   return resources.filter((resource) => {
     // Category filter
-    const matchesCategory =
-      category === 'all' || resource.category === category
+    const matchesCategory = category === 'all' || resource.category === category
 
     // Search filter (matches title, description, or tags)
     const matchesSearch =
@@ -422,14 +421,10 @@ export function validateResource(
   } else {
     // URL format check
     if (resource.internal && !resource.url.startsWith('/')) {
-      errors.push(
-        `Internal resource URL must start with /: "${resource.url}"`
-      )
+      errors.push(`Internal resource URL must start with /: "${resource.url}"`)
     }
     if (!resource.internal && !resource.url.startsWith('http')) {
-      errors.push(
-        `External resource URL must be absolute: "${resource.url}"`
-      )
+      errors.push(`External resource URL must be absolute: "${resource.url}"`)
     }
   }
 

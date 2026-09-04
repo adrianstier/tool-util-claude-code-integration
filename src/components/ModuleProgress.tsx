@@ -10,7 +10,11 @@ interface ModuleProgressProps {
   moduleName: string
 }
 
-export function ModuleProgress({ moduleId, trackName, moduleName }: ModuleProgressProps) {
+export function ModuleProgress({
+  moduleId,
+  trackName,
+  moduleName,
+}: ModuleProgressProps) {
   const { isComplete, markComplete, markIncomplete } = useProgress()
   const completed = isComplete(moduleId)
 
@@ -24,11 +28,13 @@ export function ModuleProgress({ moduleId, trackName, moduleName }: ModuleProgre
   }
 
   return (
-    <div className="flex items-center gap-3 p-4 rounded-xl bg-white dark:bg-ink-900 border border-ink-100 dark:border-ink-800">
+    <div className="flex items-center gap-3 rounded-xl border border-ink-100 bg-white p-4 dark:border-ink-800 dark:bg-ink-900">
       <button
         onClick={handleToggle}
-        className={`flex items-center gap-3 flex-1 text-left transition-colors ${
-          completed ? 'text-green-600 dark:text-green-400' : 'text-ink-600 dark:text-ink-300 hover:text-primary-600 dark:hover:text-primary-400'
+        className={`flex flex-1 items-center gap-3 text-left transition-colors ${
+          completed
+            ? 'text-green-600 dark:text-green-400'
+            : 'text-ink-600 hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400'
         }`}
       >
         {completed ? (
@@ -68,7 +74,7 @@ export function ModuleProgressMini({ moduleId }: { moduleId: string }) {
       className={`flex items-center gap-2 text-sm transition-colors ${
         completed
           ? 'text-green-600 dark:text-green-400'
-          : 'text-ink-500 dark:text-ink-400 hover:text-primary-600 dark:hover:text-primary-400'
+          : 'text-ink-500 hover:text-primary-600 dark:text-ink-400 dark:hover:text-primary-400'
       }`}
       title={completed ? 'Mark incomplete' : 'Mark complete'}
     >

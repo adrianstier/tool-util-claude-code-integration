@@ -62,6 +62,7 @@ Run comprehensive automated checks on the Claude Code Onboarding website:
 ## Output
 
 Generate a comprehensive report with:
+
 - Test pass/fail status
 - Screenshots of all pages
 - Performance metrics

@@ -1,5 +1,3 @@
-
-
 import { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
@@ -32,16 +30,19 @@ export function InfoTable({
         {rows.map((row, rowIndex) => (
           <div
             key={rowIndex}
-            className="rounded-xl border border-ink-200 dark:border-ink-700 bg-white dark:bg-ink-900/50 p-5 transition-colors duration-200 hover:border-primary-300 dark:hover:border-primary-700"
+            className="rounded-xl border border-ink-200 bg-white p-5 transition-colors duration-200 hover:border-primary-300 dark:border-ink-700 dark:bg-ink-900/50 dark:hover:border-primary-700"
           >
             {columns.map((col, colIndex) => (
-              <div key={col.key} className={cn(colIndex === 0 ? 'mb-2' : 'mb-1')}>
+              <div
+                key={col.key}
+                className={cn(colIndex === 0 ? 'mb-2' : 'mb-1')}
+              >
                 {colIndex === 0 ? (
                   <h4 className="font-display font-semibold text-ink-900 dark:text-ink-100">
                     {row[col.key]}
                   </h4>
                 ) : (
-                  <p className="text-sm text-ink-600 dark:text-ink-400 leading-relaxed">
+                  <p className="text-sm leading-relaxed text-ink-600 dark:text-ink-400">
                     <span className="font-medium text-ink-600 dark:text-ink-300">
                       {col.header}:
                     </span>{' '}
@@ -57,11 +58,16 @@ export function InfoTable({
   }
 
   return (
-    <div className={cn('my-6 overflow-hidden rounded-xl border border-ink-200 dark:border-ink-700', className)}>
+    <div
+      className={cn(
+        'my-6 overflow-hidden rounded-xl border border-ink-200 dark:border-ink-700',
+        className
+      )}
+    >
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead>
-            <tr className="border-b border-ink-200 dark:border-ink-700 bg-ink-50 dark:bg-ink-800/50">
+            <tr className="border-b border-ink-200 bg-ink-50 dark:border-ink-700 dark:bg-ink-800/50">
               {columns.map((col) => (
                 <th
                   key={col.key}
@@ -82,7 +88,9 @@ export function InfoTable({
                 key={rowIndex}
                 className={cn(
                   'transition-colors hover:bg-ink-50 dark:hover:bg-ink-800/30',
-                  variant === 'striped' && rowIndex % 2 === 1 && 'bg-ink-50/50 dark:bg-ink-800/20'
+                  variant === 'striped' &&
+                    rowIndex % 2 === 1 &&
+                    'bg-ink-50/50 dark:bg-ink-800/20'
                 )}
               >
                 {columns.map((col, colIndex) => (
@@ -124,7 +132,12 @@ export function InfoRow({ children }: InfoRowProps) {
   return <>{children}</>
 }
 
-export function InfoRows({ headers, children, variant = 'default', className }: InfoRowsProps) {
+export function InfoRows({
+  headers,
+  children,
+  variant = 'default',
+  className,
+}: InfoRowsProps) {
   // This component is designed for declarative MDX usage
   // Children should be InfoRow components
   return (
@@ -139,7 +152,7 @@ export function InfoRows({ headers, children, variant = 'default', className }: 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-ink-200 dark:border-ink-700 bg-ink-50 dark:bg-ink-800/50">
+                <tr className="border-b border-ink-200 bg-ink-50 dark:border-ink-700 dark:bg-ink-800/50">
                   {headers.map((header, i) => (
                     <th
                       key={i}
@@ -171,22 +184,24 @@ interface InfoCardProps {
   className?: string
 }
 
-export function InfoCard({ title, description, meta, href, className }: InfoCardProps) {
+export function InfoCard({
+  title,
+  description,
+  meta,
+  href,
+  className,
+}: InfoCardProps) {
   const content = (
     <>
-      <h4 className="font-display font-semibold text-ink-900 dark:text-ink-100 mb-1">
+      <h4 className="mb-1 font-display font-semibold text-ink-900 dark:text-ink-100">
         {title}
       </h4>
       {description && (
-        <p className="text-sm text-ink-600 dark:text-ink-400 leading-relaxed mb-2">
+        <p className="mb-2 text-sm leading-relaxed text-ink-600 dark:text-ink-400">
           {description}
         </p>
       )}
-      {meta && (
-        <p className="text-xs text-ink-600 dark:text-ink-300">
-          {meta}
-        </p>
-      )}
+      {meta && <p className="text-xs text-ink-600 dark:text-ink-300">{meta}</p>}
     </>
   )
 
@@ -195,7 +210,7 @@ export function InfoCard({ title, description, meta, href, className }: InfoCard
       <a
         href={href}
         className={cn(
-          'block rounded-xl border border-ink-200 dark:border-ink-700 bg-white dark:bg-ink-900/50 p-5 transition-all duration-200 hover:border-primary-300 dark:hover:border-primary-700 hover:shadow-md',
+          'block rounded-xl border border-ink-200 bg-white p-5 transition-all duration-200 hover:border-primary-300 hover:shadow-md dark:border-ink-700 dark:bg-ink-900/50 dark:hover:border-primary-700',
           className
         )}
       >
@@ -207,7 +222,7 @@ export function InfoCard({ title, description, meta, href, className }: InfoCard
   return (
     <div
       className={cn(
-        'rounded-xl border border-ink-200 dark:border-ink-700 bg-white dark:bg-ink-900/50 p-5 transition-all duration-200 hover:border-primary-300 dark:hover:border-primary-700 hover:shadow-md',
+        'rounded-xl border border-ink-200 bg-white p-5 transition-all duration-200 hover:border-primary-300 hover:shadow-md dark:border-ink-700 dark:bg-ink-900/50 dark:hover:border-primary-700',
         className
       )}
     >

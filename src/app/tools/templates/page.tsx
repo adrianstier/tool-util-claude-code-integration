@@ -38,7 +38,8 @@ const templates: Template[] = [
   {
     id: 'nextjs-starter',
     name: 'Next.js Starter',
-    description: 'A modern Next.js starter template with TypeScript, Tailwind CSS, and Claude Code configuration',
+    description:
+      'A modern Next.js starter template with TypeScript, Tailwind CSS, and Claude Code configuration',
     category: 'Web App',
     icon: <Globe className="h-5 w-5" />,
     difficulty: 'Beginner',
@@ -100,7 +101,8 @@ dist/
   {
     id: 'python-data-analysis',
     name: 'Python Data Analysis',
-    description: 'Data analysis project template with pandas, matplotlib, and Jupyter notebook setup',
+    description:
+      'Data analysis project template with pandas, matplotlib, and Jupyter notebook setup',
     category: 'Data Science',
     icon: <BarChart3 className="h-5 w-5" />,
     difficulty: 'Intermediate',
@@ -158,7 +160,8 @@ openpyxl>=3.1.0`,
   {
     id: 'automation-scripts',
     name: 'Automation Scripts',
-    description: 'Collection of automation scripts with proper structure and error handling',
+    description:
+      'Collection of automation scripts with proper structure and error handling',
     category: 'Automation',
     icon: <Zap className="h-5 w-5" />,
     difficulty: 'Intermediate',
@@ -214,7 +217,8 @@ output/
   {
     id: 'cli-tool',
     name: 'CLI Tool',
-    description: 'Build command-line tools with argument parsing and interactive prompts',
+    description:
+      'Build command-line tools with argument parsing and interactive prompts',
     category: 'CLI',
     icon: <Terminal className="h-5 w-5" />,
     difficulty: 'Advanced',
@@ -345,7 +349,8 @@ npm run test:a11y
   {
     id: 'express-api',
     name: 'Express API',
-    description: 'RESTful API template with authentication, validation, and database setup',
+    description:
+      'RESTful API template with authentication, validation, and database setup',
     category: 'Backend',
     icon: <Server className="h-5 w-5" />,
     difficulty: 'Intermediate',
@@ -398,7 +403,10 @@ npm run test:integration
   },
 ]
 
-const categories = ['All', ...Array.from(new Set(templates.map((t) => t.category)))]
+const categories = [
+  'All',
+  ...Array.from(new Set(templates.map((t) => t.category))),
+]
 
 export default function TemplatesPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
@@ -444,13 +452,13 @@ export default function TemplatesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
+    <div className="min-h-screen bg-gray-50 py-12 dark:bg-gray-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 mb-4"
+            className="mb-4 inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
@@ -459,7 +467,8 @@ export default function TemplatesPage() {
             Project Templates Gallery
           </h1>
           <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Ready-to-use project templates with CLAUDE.md and configuration files
+            Ready-to-use project templates with CLAUDE.md and configuration
+            files
           </p>
         </div>
 
@@ -472,7 +481,7 @@ export default function TemplatesPage() {
               className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                 selectedCategory === category
                   ? 'bg-primary-600 text-white'
-                  : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700'
+                  : 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
               }`}
             >
               {category}
@@ -485,12 +494,12 @@ export default function TemplatesPage() {
           {filteredTemplates.map((template) => (
             <div
               key={template.id}
-              className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden hover:shadow-lg transition-shadow"
+              className="overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-lg dark:border-gray-700 dark:bg-gray-800"
             >
               <div className="p-6">
-                <div className="flex items-start justify-between mb-4">
+                <div className="mb-4 flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400">
                       {template.icon}
                     </div>
                     <div>
@@ -511,15 +520,15 @@ export default function TemplatesPage() {
                   </span>
                 </div>
 
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
                   {template.description}
                 </p>
 
-                <div className="flex flex-wrap gap-1 mb-4">
+                <div className="mb-4 flex flex-wrap gap-1">
                   {template.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded bg-gray-100 dark:bg-gray-700 px-2 py-0.5 text-xs text-gray-600 dark:text-gray-400"
+                      className="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-600 dark:bg-gray-700 dark:text-gray-400"
                     >
                       {tag}
                     </span>
@@ -533,13 +542,15 @@ export default function TemplatesPage() {
                         expandedTemplate === template.id ? null : template.id
                       )
                     }
-                    className="flex-1 rounded-lg border border-gray-200 dark:border-gray-600 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    className="flex-1 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
                   >
-                    {expandedTemplate === template.id ? 'Hide Files' : 'View Files'}
+                    {expandedTemplate === template.id
+                      ? 'Hide Files'
+                      : 'View Files'}
                   </button>
                   <button
                     onClick={() => handleDownloadAll(template)}
-                    className="flex items-center gap-1 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 transition-colors"
+                    className="flex items-center gap-1 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700"
                   >
                     <Download className="h-4 w-4" />
                     Download
@@ -549,28 +560,31 @@ export default function TemplatesPage() {
 
               {/* Expanded Files Section */}
               {expandedTemplate === template.id && (
-                <div className="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 p-4">
-                  <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                <div className="border-t border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900/50">
+                  <h4 className="mb-3 text-sm font-medium text-gray-700 dark:text-gray-300">
                     Included Files
                   </h4>
                   <div className="space-y-3">
                     {template.files.map((file) => (
                       <div
                         key={file.path}
-                        className="rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800"
+                        className="rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
                       >
-                        <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 px-3 py-2">
+                        <div className="flex items-center justify-between border-b border-gray-200 px-3 py-2 dark:border-gray-700">
                           <div className="flex items-center gap-2">
                             <FileCode className="h-4 w-4 text-gray-400" />
-                            <span className="text-sm font-mono text-gray-700 dark:text-gray-300">
+                            <span className="font-mono text-sm text-gray-700 dark:text-gray-300">
                               {file.name}
                             </span>
                           </div>
                           <button
                             onClick={() =>
-                              handleCopy(file.content, `${template.id}-${file.path}`)
+                              handleCopy(
+                                file.content,
+                                `${template.id}-${file.path}`
+                              )
                             }
-                            className="rounded p-1 text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-300"
+                            className="rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
                           >
                             {copiedFile === `${template.id}-${file.path}` ? (
                               <Check className="h-4 w-4 text-green-500" />
@@ -579,7 +593,7 @@ export default function TemplatesPage() {
                             )}
                           </button>
                         </div>
-                        <pre className="p-3 text-xs overflow-x-auto max-h-48 text-gray-700 dark:text-gray-300">
+                        <pre className="max-h-48 overflow-x-auto p-3 text-xs text-gray-700 dark:text-gray-300">
                           <code>{file.content}</code>
                         </pre>
                       </div>
@@ -592,9 +606,9 @@ export default function TemplatesPage() {
         </div>
 
         {/* Feedback Note */}
-        <div className="mt-12 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6">
+        <div className="mt-12 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
           <div className="flex items-start gap-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400">
               <Bot className="h-5 w-5" />
             </div>
             <div>
@@ -602,7 +616,8 @@ export default function TemplatesPage() {
                 Have a template idea?
               </h3>
               <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                We're always looking to add useful templates. Share your ideas and we may include them in a future update.
+                We're always looking to add useful templates. Share your ideas
+                and we may include them in a future update.
               </p>
             </div>
           </div>

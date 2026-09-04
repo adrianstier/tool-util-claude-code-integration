@@ -42,9 +42,18 @@ const cheatsheets: CheatSheet[] = [
       {
         title: 'Getting Started',
         items: [
-          { command: 'claude', description: 'Start Claude Code in current directory' },
-          { command: 'claude -p "prompt"', description: 'Start with an initial prompt' },
-          { command: 'claude --help', description: 'Show all available options' },
+          {
+            command: 'claude',
+            description: 'Start Claude Code in current directory',
+          },
+          {
+            command: 'claude -p "prompt"',
+            description: 'Start with an initial prompt',
+          },
+          {
+            command: 'claude --help',
+            description: 'Show all available options',
+          },
           { command: '/help', description: 'Show help within Claude Code' },
         ],
       },
@@ -52,7 +61,10 @@ const cheatsheets: CheatSheet[] = [
         title: 'Session Control',
         items: [
           { command: '/clear', description: 'Clear conversation history' },
-          { command: '/compact', description: 'Compact context to save tokens' },
+          {
+            command: '/compact',
+            description: 'Compact context to save tokens',
+          },
           { command: '/exit', description: 'Exit Claude Code' },
           { command: 'Ctrl+C', description: 'Cancel current operation' },
         ],
@@ -60,9 +72,15 @@ const cheatsheets: CheatSheet[] = [
       {
         title: 'File Operations',
         items: [
-          { command: '@filename', description: 'Reference a file in your prompt' },
+          {
+            command: '@filename',
+            description: 'Reference a file in your prompt',
+          },
           { command: '/add file.txt', description: 'Add file to context' },
-          { command: '/remove file.txt', description: 'Remove file from context' },
+          {
+            command: '/remove file.txt',
+            description: 'Remove file from context',
+          },
         ],
       },
       {
@@ -86,17 +104,32 @@ const cheatsheets: CheatSheet[] = [
         title: 'Setup & Config',
         items: [
           { command: 'git init', description: 'Initialize new repository' },
-          { command: 'git clone <url>', description: 'Clone remote repository' },
-          { command: 'git config user.name "name"', description: 'Set username' },
-          { command: 'git config user.email "email"', description: 'Set email' },
+          {
+            command: 'git clone <url>',
+            description: 'Clone remote repository',
+          },
+          {
+            command: 'git config user.name "name"',
+            description: 'Set username',
+          },
+          {
+            command: 'git config user.email "email"',
+            description: 'Set email',
+          },
         ],
       },
       {
         title: 'Basic Workflow',
         items: [
-          { command: 'git status', description: 'Check working directory status' },
+          {
+            command: 'git status',
+            description: 'Check working directory status',
+          },
           { command: 'git add .', description: 'Stage all changes' },
-          { command: 'git commit -m "msg"', description: 'Commit with message' },
+          {
+            command: 'git commit -m "msg"',
+            description: 'Commit with message',
+          },
           { command: 'git push', description: 'Push to remote' },
           { command: 'git pull', description: 'Pull from remote' },
         ],
@@ -107,7 +140,10 @@ const cheatsheets: CheatSheet[] = [
           { command: 'git branch', description: 'List branches' },
           { command: 'git branch <name>', description: 'Create branch' },
           { command: 'git checkout <name>', description: 'Switch branch' },
-          { command: 'git checkout -b <name>', description: 'Create and switch' },
+          {
+            command: 'git checkout -b <name>',
+            description: 'Create and switch',
+          },
           { command: 'git merge <branch>', description: 'Merge branch' },
         ],
       },
@@ -124,9 +160,18 @@ const cheatsheets: CheatSheet[] = [
         title: 'Undo Changes',
         items: [
           { command: 'git restore <file>', description: 'Discard changes' },
-          { command: 'git restore --staged <file>', description: 'Unstage file' },
-          { command: 'git reset HEAD~1', description: 'Undo last commit (keep changes)' },
-          { command: 'git reset --hard HEAD~1', description: 'Undo last commit (delete changes)' },
+          {
+            command: 'git restore --staged <file>',
+            description: 'Unstage file',
+          },
+          {
+            command: 'git reset HEAD~1',
+            description: 'Undo last commit (keep changes)',
+          },
+          {
+            command: 'git reset --hard HEAD~1',
+            description: 'Undo last commit (delete changes)',
+          },
         ],
       },
     ],
@@ -172,7 +217,10 @@ const cheatsheets: CheatSheet[] = [
         items: [
           { command: 'grep "text" <file>', description: 'Search in file' },
           { command: 'grep -r "text" .', description: 'Search recursively' },
-          { command: 'find . -name "*.js"', description: 'Find files by pattern' },
+          {
+            command: 'find . -name "*.js"',
+            description: 'Find files by pattern',
+          },
         ],
       },
     ],
@@ -186,11 +234,23 @@ const cheatsheets: CheatSheet[] = [
       {
         title: 'Virtual Environment',
         items: [
-          { command: 'python -m venv venv', description: 'Create virtual environment' },
-          { command: 'source venv/bin/activate', description: 'Activate (Mac/Linux)' },
-          { command: 'venv\\Scripts\\activate', description: 'Activate (Windows)' },
+          {
+            command: 'python -m venv venv',
+            description: 'Create virtual environment',
+          },
+          {
+            command: 'source venv/bin/activate',
+            description: 'Activate (Mac/Linux)',
+          },
+          {
+            command: 'venv\\Scripts\\activate',
+            description: 'Activate (Windows)',
+          },
           { command: 'deactivate', description: 'Deactivate environment' },
-          { command: 'pip install -r requirements.txt', description: 'Install dependencies' },
+          {
+            command: 'pip install -r requirements.txt',
+            description: 'Install dependencies',
+          },
         ],
       },
       {
@@ -207,7 +267,10 @@ const cheatsheets: CheatSheet[] = [
         title: 'Data Manipulation',
         items: [
           { command: 'df["col"]', description: 'Select column' },
-          { command: 'df[["col1", "col2"]]', description: 'Select multiple columns' },
+          {
+            command: 'df[["col1", "col2"]]',
+            description: 'Select multiple columns',
+          },
           { command: 'df.loc[row, col]', description: 'Select by label' },
           { command: 'df.iloc[0:5]', description: 'Select by position' },
           { command: 'df.query("col > 5")', description: 'Filter rows' },
@@ -216,7 +279,10 @@ const cheatsheets: CheatSheet[] = [
       {
         title: 'Aggregation',
         items: [
-          { command: 'df.groupby("col").mean()', description: 'Group and aggregate' },
+          {
+            command: 'df.groupby("col").mean()',
+            description: 'Group and aggregate',
+          },
           { command: 'df.pivot_table()', description: 'Create pivot table' },
           { command: 'df.value_counts()', description: 'Count unique values' },
         ],
@@ -235,7 +301,10 @@ const cheatsheets: CheatSheet[] = [
           { command: 'npm init -y', description: 'Initialize new project' },
           { command: 'npm install', description: 'Install all dependencies' },
           { command: 'npm install <pkg>', description: 'Install package' },
-          { command: 'npm install -D <pkg>', description: 'Install dev dependency' },
+          {
+            command: 'npm install -D <pkg>',
+            description: 'Install dev dependency',
+          },
           { command: 'npm uninstall <pkg>', description: 'Remove package' },
         ],
       },
@@ -268,28 +337,64 @@ const cheatsheets: CheatSheet[] = [
       {
         title: 'Data Quality',
         items: [
-          { command: '"Give me a data quality report for [file]"', description: 'Assess missing values, outliers, types' },
-          { command: '"Check date format consistency"', description: 'Find date formatting issues' },
-          { command: '"Flag potential data entry errors"', description: 'Identify anomalies' },
-          { command: '"Create a cleaning log"', description: 'Document all data changes' },
+          {
+            command: '"Give me a data quality report for [file]"',
+            description: 'Assess missing values, outliers, types',
+          },
+          {
+            command: '"Check date format consistency"',
+            description: 'Find date formatting issues',
+          },
+          {
+            command: '"Flag potential data entry errors"',
+            description: 'Identify anomalies',
+          },
+          {
+            command: '"Create a cleaning log"',
+            description: 'Document all data changes',
+          },
         ],
       },
       {
         title: 'Analysis',
         items: [
-          { command: '"Run descriptive statistics by [group]"', description: 'Grouped summaries' },
-          { command: '"Check assumptions for [test]"', description: 'Verify test requirements' },
-          { command: '"Show me the formula you used"', description: 'Verify calculations' },
-          { command: '"Compare to [software] output"', description: 'Cross-validate results' },
+          {
+            command: '"Run descriptive statistics by [group]"',
+            description: 'Grouped summaries',
+          },
+          {
+            command: '"Check assumptions for [test]"',
+            description: 'Verify test requirements',
+          },
+          {
+            command: '"Show me the formula you used"',
+            description: 'Verify calculations',
+          },
+          {
+            command: '"Compare to [software] output"',
+            description: 'Cross-validate results',
+          },
         ],
       },
       {
         title: 'Publication',
         items: [
-          { command: '"Create publication-ready figure"', description: 'Journal-quality output' },
-          { command: '"Format for [journal] style"', description: 'Match specific guidelines' },
-          { command: '"Export as LaTeX table"', description: 'Manuscript-ready tables' },
-          { command: '"Write figure caption"', description: 'Generate proper captions' },
+          {
+            command: '"Create publication-ready figure"',
+            description: 'Journal-quality output',
+          },
+          {
+            command: '"Format for [journal] style"',
+            description: 'Match specific guidelines',
+          },
+          {
+            command: '"Export as LaTeX table"',
+            description: 'Manuscript-ready tables',
+          },
+          {
+            command: '"Write figure caption"',
+            description: 'Generate proper captions',
+          },
         ],
       },
     ],
@@ -304,7 +409,10 @@ const cheatsheets: CheatSheet[] = [
         title: 'Data Import',
         items: [
           { command: 'read_csv("file.csv")', description: 'Read CSV file' },
-          { command: 'read_excel("file.xlsx")', description: 'Read Excel file' },
+          {
+            command: 'read_excel("file.xlsx")',
+            description: 'Read Excel file',
+          },
           { command: 'read_rds("file.rds")', description: 'Read R data file' },
           { command: 'glimpse(df)', description: 'Quick data overview' },
         ],
@@ -313,8 +421,14 @@ const cheatsheets: CheatSheet[] = [
         title: 'Data Wrangling',
         items: [
           { command: 'df %>% filter(col > 5)', description: 'Filter rows' },
-          { command: 'df %>% select(col1, col2)', description: 'Select columns' },
-          { command: 'df %>% mutate(new = col * 2)', description: 'Create new column' },
+          {
+            command: 'df %>% select(col1, col2)',
+            description: 'Select columns',
+          },
+          {
+            command: 'df %>% mutate(new = col * 2)',
+            description: 'Create new column',
+          },
           { command: 'df %>% arrange(desc(col))', description: 'Sort data' },
           { command: 'df %>% rename(new = old)', description: 'Rename column' },
         ],
@@ -322,19 +436,37 @@ const cheatsheets: CheatSheet[] = [
       {
         title: 'Summarization',
         items: [
-          { command: 'df %>% group_by(cat) %>% summarise(m = mean(x))', description: 'Group and summarize' },
+          {
+            command: 'df %>% group_by(cat) %>% summarise(m = mean(x))',
+            description: 'Group and summarize',
+          },
           { command: 'df %>% count(category)', description: 'Count by group' },
-          { command: 'df %>% summarise(across(everything(), mean))', description: 'Summarize all columns' },
+          {
+            command: 'df %>% summarise(across(everything(), mean))',
+            description: 'Summarize all columns',
+          },
         ],
       },
       {
         title: 'ggplot2 Basics',
         items: [
-          { command: 'ggplot(df, aes(x, y)) + geom_point()', description: 'Scatter plot' },
-          { command: 'ggplot(df, aes(x)) + geom_histogram()', description: 'Histogram' },
-          { command: 'ggplot(df, aes(cat, y)) + geom_boxplot()', description: 'Box plot' },
+          {
+            command: 'ggplot(df, aes(x, y)) + geom_point()',
+            description: 'Scatter plot',
+          },
+          {
+            command: 'ggplot(df, aes(x)) + geom_histogram()',
+            description: 'Histogram',
+          },
+          {
+            command: 'ggplot(df, aes(cat, y)) + geom_boxplot()',
+            description: 'Box plot',
+          },
           { command: '+ theme_minimal()', description: 'Clean theme' },
-          { command: 'ggsave("plot.png", dpi = 300)', description: 'Save high-res' },
+          {
+            command: 'ggsave("plot.png", dpi = 300)',
+            description: 'Save high-res',
+          },
         ],
       },
     ],
@@ -402,13 +534,13 @@ export default function CheatsheetsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">
+    <div className="min-h-screen bg-gray-50 py-12 dark:bg-gray-900">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 mb-4"
+            className="mb-4 inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
@@ -426,11 +558,11 @@ export default function CheatsheetsPage() {
           {cheatsheets.map((sheet) => (
             <div
               key={sheet.id}
-              className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden hover:shadow-lg transition-shadow"
+              className="overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-lg dark:border-gray-700 dark:bg-gray-800"
             >
               <div className="p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400">
+                <div className="mb-3 flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400">
                     {sheet.icon}
                   </div>
                   <div>
@@ -443,22 +575,24 @@ export default function CheatsheetsPage() {
                   </div>
                 </div>
 
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
                   {sheet.description}
                 </p>
 
                 <div className="flex gap-2">
                   <button
                     onClick={() =>
-                      setSelectedSheet(selectedSheet === sheet.id ? null : sheet.id)
+                      setSelectedSheet(
+                        selectedSheet === sheet.id ? null : sheet.id
+                      )
                     }
-                    className="flex-1 rounded-lg border border-gray-200 dark:border-gray-600 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    className="flex-1 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
                   >
                     {selectedSheet === sheet.id ? 'Hide' : 'View'}
                   </button>
                   <button
                     onClick={() => handlePrint(sheet)}
-                    className="flex items-center gap-1 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 transition-colors"
+                    className="flex items-center gap-1 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700"
                   >
                     <Printer className="h-4 w-4" />
                     Print
@@ -468,10 +602,10 @@ export default function CheatsheetsPage() {
 
               {/* Expanded Content */}
               {selectedSheet === sheet.id && (
-                <div className="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 p-4 max-h-96 overflow-y-auto">
+                <div className="max-h-96 overflow-y-auto border-t border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900/50">
                   {sheet.sections.map((section, idx) => (
                     <div key={idx} className="mb-4 last:mb-0">
-                      <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                      <h4 className="mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
                         {section.title}
                       </h4>
                       <div className="space-y-1">
@@ -480,10 +614,10 @@ export default function CheatsheetsPage() {
                             key={itemIdx}
                             className="flex items-start gap-2 text-sm"
                           >
-                            <code className="flex-shrink-0 rounded bg-gray-200 dark:bg-gray-700 px-1.5 py-0.5 font-mono text-xs text-gray-800 dark:text-gray-200">
+                            <code className="flex-shrink-0 rounded bg-gray-200 px-1.5 py-0.5 font-mono text-xs text-gray-800 dark:bg-gray-700 dark:text-gray-200">
                               {item.command}
                             </code>
-                            <span className="text-gray-600 dark:text-gray-400 text-xs">
+                            <span className="text-xs text-gray-600 dark:text-gray-400">
                               {item.description}
                             </span>
                           </div>

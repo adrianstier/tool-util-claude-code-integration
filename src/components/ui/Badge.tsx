@@ -2,7 +2,13 @@ import { HTMLAttributes } from 'react'
 import { cn } from '@/lib/utils'
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
-  variant?: 'default' | 'primary' | 'success' | 'warning' | 'error' | 'secondary'
+  variant?:
+    | 'default'
+    | 'primary'
+    | 'success'
+    | 'warning'
+    | 'error'
+    | 'secondary'
   size?: 'sm' | 'md' | 'lg'
 }
 

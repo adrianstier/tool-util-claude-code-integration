@@ -4,7 +4,11 @@ import Link from 'next/link'
 import { Calendar, Clock, Tag, ArrowLeft } from 'lucide-react'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getBlogPost, getAllBlogPosts } from '@/lib/blog'
-import { siteConfig, generateArticleSchema, generateBreadcrumbSchema } from '@/lib/metadata'
+import {
+  siteConfig,
+  generateArticleSchema,
+  generateBreadcrumbSchema,
+} from '@/lib/metadata'
 import { formatDate } from '@/lib/utils'
 import CodeBlock from '@/components/CodeBlock'
 import {
@@ -70,15 +74,23 @@ const components = {
   ChecklistItem,
   Diagram,
   pre: ({ children }: { children?: React.ReactNode }) => {
-    const child = (children as { props?: { children?: string; className?: string } })?.props
+    const child = (
+      children as { props?: { children?: string; className?: string } }
+    )?.props
     const code = child?.children || ''
     const language = child?.className?.replace('language-', '') || 'bash'
     return <CodeBlock code={code} language={language} />
   },
-  code: ({ children, className }: { children?: React.ReactNode; className?: string }) => {
+  code: ({
+    children,
+    className,
+  }: {
+    children?: React.ReactNode
+    className?: string
+  }) => {
     if (!className) {
       return (
-        <code className="rounded-md bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 text-sm font-mono text-primary-700 dark:text-primary-300 border border-gray-200 dark:border-gray-700">
+        <code className="rounded-md border border-gray-200 bg-gray-100 px-1.5 py-0.5 font-mono text-sm text-primary-700 dark:border-gray-700 dark:bg-gray-800 dark:text-primary-300">
           {children}
         </code>
       )
@@ -88,7 +100,7 @@ const components = {
   a: ({ href, children }: { href?: string; children?: React.ReactNode }) => (
     <Link
       href={href || '#'}
-      className="text-primary-600 dark:text-primary-400 hover:underline"
+      className="text-primary-600 hover:underline dark:text-primary-400"
     >
       {children}
     </Link>
@@ -138,7 +150,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         {/* Back Link */}
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 mb-8 transition-colors"
+          className="mb-8 inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Blog
@@ -146,7 +158,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         {/* Header */}
         <header className="mb-10">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
             {post.title}
           </h1>
 
@@ -173,7 +185,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   {post.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-gray-100 dark:bg-gray-700 px-2 py-0.5 text-xs font-medium"
+                      className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium dark:bg-gray-700"
                     >
                       {tag}
                     </span>
@@ -185,17 +197,17 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </header>
 
         {/* Content */}
-        <div className="rounded-2xl bg-white dark:bg-gray-800/50 p-6 sm:p-8 shadow-sm border border-gray-100 dark:border-gray-700/50">
-          <div className="prose prose-lg dark:prose-invert max-w-none">
+        <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm dark:border-gray-700/50 dark:bg-gray-800/50 sm:p-8">
+          <div className="prose prose-lg max-w-none dark:prose-invert">
             <MDXRemote source={post.content} components={components} />
           </div>
         </div>
 
         {/* Footer */}
-        <div className="mt-10 pt-8 border-t border-gray-200 dark:border-gray-700">
+        <div className="mt-10 border-t border-gray-200 pt-8 dark:border-gray-700">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300 font-medium transition-colors"
+            className="inline-flex items-center gap-2 font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
           >
             <ArrowLeft className="h-5 w-5" />
             Back to all posts

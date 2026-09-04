@@ -1,5 +1,9 @@
 import type { Metadata, Viewport } from 'next'
-import { Plus_Jakarta_Sans, Space_Grotesk, JetBrains_Mono } from 'next/font/google'
+import {
+  Plus_Jakarta_Sans,
+  Space_Grotesk,
+  JetBrains_Mono,
+} from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
 import Navigation from '@/components/Navigation'
@@ -48,9 +52,7 @@ export const metadata: Metadata = {
   ...getBaseMetadata(),
   manifest: '/manifest.json',
   icons: {
-    icon: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
-    ],
+    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
     shortcut: '/icon.svg',
     apple: '/icon.svg',
   },
@@ -162,7 +164,9 @@ export default function RootLayout({
             </a>
             <div className="flex min-h-screen flex-col">
               <Navigation searchItems={getContentSearchItems()} />
-              <main id="main-content" className="flex-1">{children}</main>
+              <main id="main-content" className="flex-1">
+                {children}
+              </main>
               <Footer />
             </div>
           </ProgressProvider>

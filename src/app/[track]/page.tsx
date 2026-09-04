@@ -187,16 +187,28 @@ const components = {
   // Map MDX code blocks to our CodeBlock component
   pre: ({ children }: { children?: React.ReactNode }) => {
     // Extract code content and language from children
-    const child = (children as { props?: { children?: string; className?: string } })?.props
+    const child = (
+      children as { props?: { children?: string; className?: string } }
+    )?.props
     const code = child?.children || ''
     const language = child?.className?.replace('language-', '') || 'bash'
 
     return <CodeBlock code={code} language={language} />
   },
-  code: ({ children, className }: { children?: React.ReactNode; className?: string }) => {
+  code: ({
+    children,
+    className,
+  }: {
+    children?: React.ReactNode
+    className?: string
+  }) => {
     // Inline code (not in pre blocks)
     if (!className) {
-      return <code className="rounded bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 text-sm font-mono text-gray-800 dark:text-gray-200">{children}</code>
+      return (
+        <code className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-sm text-gray-800 dark:bg-gray-800 dark:text-gray-200">
+          {children}
+        </code>
+      )
     }
     // Let pre handle code blocks
     return <code className={className}>{children}</code>
@@ -224,7 +236,9 @@ export default async function TrackPage({ params }: TrackPageProps) {
     notFound()
   }
 
-  const allContent = getAllContent(track).filter((item) => item.slug !== 'index')
+  const allContent = getAllContent(track).filter(
+    (item) => item.slug !== 'index'
+  )
 
   // Track display name
   const trackDisplayName =
@@ -281,72 +295,80 @@ export default async function TrackPage({ params }: TrackPageProps) {
           className="mb-8 flex items-center space-x-2 text-sm text-ink-600 dark:text-ink-300"
           aria-label="Breadcrumb"
         >
-          <Link href="/" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+          <Link
+            href="/"
+            className="transition-colors hover:text-primary-600 dark:hover:text-primary-400"
+          >
             Home
           </Link>
           <span aria-hidden="true">/</span>
-          <span className="capitalize text-ink-900 dark:text-paper-50 font-medium" aria-current="page">
+          <span
+            className="font-medium capitalize text-ink-900 dark:text-paper-50"
+            aria-current="page"
+          >
             {track.replaceAll('-', ' ')}
           </span>
         </nav>
 
-      {/* Track Header — the page's single h1 (MDX bodies must not repeat it) */}
-      <header className="mb-8">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-ink-900 dark:text-paper-50 text-balance">
-          {metadata.frontmatter.title || trackDisplayName}
-        </h1>
-        {metadata.frontmatter.description && (
-          <p className="mt-4 text-lg sm:text-xl text-ink-600 dark:text-ink-300 leading-relaxed">
-            {metadata.frontmatter.description}
-          </p>
-        )}
-      </header>
+        {/* Track Header — the page's single h1 (MDX bodies must not repeat it) */}
+        <header className="mb-8">
+          <h1 className="text-balance text-3xl font-bold tracking-tight text-ink-900 dark:text-paper-50 sm:text-4xl lg:text-5xl">
+            {metadata.frontmatter.title || trackDisplayName}
+          </h1>
+          {metadata.frontmatter.description && (
+            <p className="mt-4 text-lg leading-relaxed text-ink-600 dark:text-ink-300 sm:text-xl">
+              {metadata.frontmatter.description}
+            </p>
+          )}
+        </header>
 
-      {/* Track Overview from index.mdx */}
-      <div className="mb-12 rounded-2xl bg-white dark:bg-gray-800 p-8 shadow-sm border border-gray-100 dark:border-gray-700">
-        <div className="prose prose-lg dark:prose-invert max-w-none">
-          <MDXRemote source={metadata.content} components={components} />
-        </div>
-      </div>
-
-      {/* Module List */}
-      {allContent.length > 0 && (
-        <div className="mt-12">
-          <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">Modules</h2>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {allContent.map((item) => (
-              <Card
-                key={item.slug}
-                title={item.frontmatter.title}
-                description={item.frontmatter.description || ''}
-                href={`/${track}/${item.slug}`}
-              >
-                <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
-                  {item.frontmatter.duration && (
-                    <span className="flex items-center">
-                      <svg
-                        className="mr-1 h-4 w-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                      {item.frontmatter.duration}
-                    </span>
-                  )}
-                  <span>{item.readingTime} min read</span>
-                </div>
-              </Card>
-            ))}
+        {/* Track Overview from index.mdx */}
+        <div className="mb-12 rounded-2xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <div className="prose prose-lg max-w-none dark:prose-invert">
+            <MDXRemote source={metadata.content} components={components} />
           </div>
         </div>
-      )}
+
+        {/* Module List */}
+        {allContent.length > 0 && (
+          <div className="mt-12">
+            <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
+              Modules
+            </h2>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {allContent.map((item) => (
+                <Card
+                  key={item.slug}
+                  title={item.frontmatter.title}
+                  description={item.frontmatter.description || ''}
+                  href={`/${track}/${item.slug}`}
+                >
+                  <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+                    {item.frontmatter.duration && (
+                      <span className="flex items-center">
+                        <svg
+                          className="mr-1 h-4 w-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        {item.frontmatter.duration}
+                      </span>
+                    )}
+                    <span>{item.readingTime} min read</span>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </>
   )

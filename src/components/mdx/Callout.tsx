@@ -1,5 +1,3 @@
-
-
 import { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 import {
@@ -12,7 +10,14 @@ import {
   Zap,
 } from 'lucide-react'
 
-type CalloutType = 'info' | 'success' | 'warning' | 'error' | 'tip' | 'terminal' | 'note'
+type CalloutType =
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'error'
+  | 'tip'
+  | 'terminal'
+  | 'note'
 
 interface CalloutProps {
   type?: CalloutType
@@ -116,25 +121,30 @@ export default function Callout({
         'my-6 rounded-xl border-l-4 p-5',
         config.bgColor,
         config.borderColor,
-        'border border-ink-100 dark:border-ink-800 border-l-4',
+        'border border-l-4 border-ink-100 dark:border-ink-800',
         className
       )}
       role="alert"
     >
       <div className="flex items-start gap-4">
         {/* Icon */}
-        <div className="flex-shrink-0 flex h-8 w-8 items-center justify-center">
+        <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center">
           <Icon className={cn('h-5 w-5', config.iconColor)} />
         </div>
 
         {/* Content */}
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           {displayTitle && (
-            <p className={cn('font-display font-semibold text-sm mb-1.5', config.titleColor)}>
+            <p
+              className={cn(
+                'mb-1.5 font-display text-sm font-semibold',
+                config.titleColor
+              )}
+            >
               {displayTitle}
             </p>
           )}
-          <div className="text-sm text-ink-700 dark:text-ink-200 leading-relaxed [&>p]:mb-2 [&>p:last-child]:mb-0 [&>ul]:mt-2 [&>ol]:mt-2">
+          <div className="text-sm leading-relaxed text-ink-700 dark:text-ink-200 [&>ol]:mt-2 [&>p:last-child]:mb-0 [&>p]:mb-2 [&>ul]:mt-2">
             {children}
           </div>
         </div>

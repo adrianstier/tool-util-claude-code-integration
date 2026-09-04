@@ -54,7 +54,9 @@ test.describe('UX Improvements - Phase 1', () => {
       expect(tagText === 'New' || tagText === 'Advanced').toBeTruthy()
     })
 
-    test('every track card shows a real duration from its content', async ({ page }) => {
+    test('every track card shows a real duration from its content', async ({
+      page,
+    }) => {
       const cards = page.locator('#tracks a[href^="/"]')
       const count = await cards.count()
       expect(count).toBe(8)
@@ -79,7 +81,9 @@ test.describe('UX Improvements - Phase 1', () => {
         const card = page.locator(`a[href="${track.href}"]`).first()
         await expect(card).toBeVisible()
         await card.click()
-        await expect(page).toHaveURL(new RegExp(track.href.replace(/\//g, '\\/')))
+        await expect(page).toHaveURL(
+          new RegExp(track.href.replace(/\//g, '\\/'))
+        )
       }
     })
   })
@@ -94,7 +98,9 @@ test.describe('UX Improvements - Phase 1', () => {
 
     test('search "MCP" shows MCP results', async ({ page }) => {
       await openSearch(page)
-      const searchInput = page.locator('input[placeholder="Search documentation..."]')
+      const searchInput = page.locator(
+        'input[placeholder="Search documentation..."]'
+      )
       await expect(searchInput).toBeVisible()
 
       await page.keyboard.type('MCP')
@@ -104,20 +110,28 @@ test.describe('UX Improvements - Phase 1', () => {
       await expect(mcpResult.first()).toBeVisible()
     })
 
-    test('search "multi-agent" shows Multi-Agent Architectures result', async ({ page }) => {
+    test('search "multi-agent" shows Multi-Agent Architectures result', async ({
+      page,
+    }) => {
       await openSearch(page)
-      const searchInput = page.locator('input[placeholder="Search documentation..."]')
+      const searchInput = page.locator(
+        'input[placeholder="Search documentation..."]'
+      )
       await expect(searchInput).toBeVisible()
 
       await page.keyboard.type('multi-agent')
 
-      const result = page.locator('button:has-text("Multi-Agent Architectures")')
+      const result = page.locator(
+        'button:has-text("Multi-Agent Architectures")'
+      )
       await expect(result).toBeVisible()
     })
 
     test('search "skills" shows Skills result', async ({ page }) => {
       await openSearch(page)
-      const searchInput = page.locator('input[placeholder="Search documentation..."]')
+      const searchInput = page.locator(
+        'input[placeholder="Search documentation..."]'
+      )
       await expect(searchInput).toBeVisible()
 
       await page.keyboard.type('skills')
@@ -128,12 +142,16 @@ test.describe('UX Improvements - Phase 1', () => {
 
     test('clicking MCP result navigates to /mcp', async ({ page }) => {
       await openSearch(page)
-      const searchInput = page.locator('input[placeholder="Search documentation..."]')
+      const searchInput = page.locator(
+        'input[placeholder="Search documentation..."]'
+      )
       await expect(searchInput).toBeVisible()
 
       await page.keyboard.type('MCP Integration')
 
-      const mcpResult = page.locator('button:has-text("MCP Integration")').first()
+      const mcpResult = page
+        .locator('button:has-text("MCP Integration")')
+        .first()
       await expect(mcpResult).toBeVisible()
       await mcpResult.click()
 
@@ -179,21 +197,30 @@ test.describe('UX Improvements - Phase 1', () => {
       await expect(page.locator('h1')).toBeVisible()
     })
 
-    test('/mcp/workflows-and-troubleshooting loads with content', async ({ page }) => {
+    test('/mcp/workflows-and-troubleshooting loads with content', async ({
+      page,
+    }) => {
       // Assert on the HTTP status, not on the words "not found" — several MCP
       // articles legitimately quote a "Module not found" error in a code sample.
-      const response = await page.goto(`${baseURL}/mcp/workflows-and-troubleshooting`)
+      const response = await page.goto(
+        `${baseURL}/mcp/workflows-and-troubleshooting`
+      )
       expect(response?.status()).toBe(200)
       await expect(page.locator('h1')).toHaveCount(1)
       await expect(page.locator('h1')).toBeVisible()
     })
 
-    test('MCP track page has module cards linking to subpages', async ({ page }) => {
+    test('MCP track page has module cards linking to subpages', async ({
+      page,
+    }) => {
       await page.goto(`${baseURL}/mcp`)
 
       // The shell renders exactly one "Modules" card list. MDX bodies must not
       // add a second heading with that name (mcp/index.mdx used to).
-      const modulesHeading = page.getByRole('heading', { name: 'Modules', exact: true })
+      const modulesHeading = page.getByRole('heading', {
+        name: 'Modules',
+        exact: true,
+      })
       await expect(modulesHeading).toHaveCount(1)
       await expect(modulesHeading).toBeVisible()
 
@@ -216,7 +243,9 @@ test.describe('UX Improvements - Phase 1', () => {
   // Cross-Track Links
   // ─────────────────────────────────────────────────────────────────
   test.describe('Cross-Track Links', () => {
-    test('/agents page contains "MCP Integration track" link text', async ({ page }) => {
+    test('/agents page contains "MCP Integration track" link text', async ({
+      page,
+    }) => {
       await page.goto(`${baseURL}/agents`)
       const crossLink = page.locator('text=MCP Integration track')
       await expect(crossLink).toBeVisible()
@@ -228,17 +257,25 @@ test.describe('UX Improvements - Phase 1', () => {
       await expect(crossLink).toBeVisible()
     })
 
-    test('clicking MCP link from agents page navigates to /mcp', async ({ page }) => {
+    test('clicking MCP link from agents page navigates to /mcp', async ({
+      page,
+    }) => {
       await page.goto(`${baseURL}/agents`)
-      const mcpLink = page.locator('a[href="/mcp"]:has-text("MCP Integration track")')
+      const mcpLink = page.locator(
+        'a[href="/mcp"]:has-text("MCP Integration track")'
+      )
       await expect(mcpLink).toBeVisible()
       await mcpLink.click()
       await expect(page).toHaveURL(/\/mcp/)
     })
 
-    test('clicking agents link from MCP page navigates to /agents', async ({ page }) => {
+    test('clicking agents link from MCP page navigates to /agents', async ({
+      page,
+    }) => {
       await page.goto(`${baseURL}/mcp`)
-      const agentsLink = page.locator('a[href="/agents"]:has-text("AI Agents track")')
+      const agentsLink = page.locator(
+        'a[href="/agents"]:has-text("AI Agents track")'
+      )
       await expect(agentsLink).toBeVisible()
       await agentsLink.click()
       await expect(page).toHaveURL(/\/agents/)
@@ -249,7 +286,9 @@ test.describe('UX Improvements - Phase 1', () => {
   // Prerequisite Callouts
   // ─────────────────────────────────────────────────────────────────
   test.describe('Prerequisite Callouts', () => {
-    test('/agents page shows "Before You Start" callout mentioning "Start Here"', async ({ page }) => {
+    test('/agents page shows "Before You Start" callout mentioning "Start Here"', async ({
+      page,
+    }) => {
       await page.goto(`${baseURL}/agents`)
       const callout = page.locator('text=Before You Start')
       await expect(callout).toBeVisible()
@@ -258,7 +297,9 @@ test.describe('UX Improvements - Phase 1', () => {
       await expect(startHereLink.first()).toBeVisible()
     })
 
-    test('/mcp page shows "Before You Start" callout mentioning "Start Here"', async ({ page }) => {
+    test('/mcp page shows "Before You Start" callout mentioning "Start Here"', async ({
+      page,
+    }) => {
       await page.goto(`${baseURL}/mcp`)
       const callout = page.locator('text=Before You Start')
       await expect(callout).toBeVisible()
@@ -266,7 +307,9 @@ test.describe('UX Improvements - Phase 1', () => {
       await expect(startHereLink.first()).toBeVisible()
     })
 
-    test('/advanced-topics page shows "Before You Start" callout', async ({ page }) => {
+    test('/advanced-topics page shows "Before You Start" callout', async ({
+      page,
+    }) => {
       await page.goto(`${baseURL}/advanced-topics`)
       const callout = page.locator('text=Before You Start')
       await expect(callout).toBeVisible()
@@ -328,7 +371,9 @@ test.describe('UX Improvements - Phase 1', () => {
     ]
 
     for (const pagePath of pagesToCheck) {
-      test(`no elements with deprecated claude-500/claude-600 classes on ${pagePath}`, async ({ page }) => {
+      test(`no elements with deprecated claude-500/claude-600 classes on ${pagePath}`, async ({
+        page,
+      }) => {
         await page.goto(`${baseURL}${pagePath}`)
         await page.waitForLoadState('domcontentloaded')
 
@@ -337,7 +382,9 @@ test.describe('UX Improvements - Phase 1', () => {
         // markup would therefore render no colour at all, so this is a hard fail.
         const deprecatedElements = await page.evaluate(() => {
           const shades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
-          const selector = shades.map((s) => `[class*="claude-${s}"]`).join(', ')
+          const selector = shades
+            .map((s) => `[class*="claude-${s}"]`)
+            .join(', ')
           return document.querySelectorAll(selector).length
         })
 
@@ -365,7 +412,9 @@ test.describe('UX Improvements - Phase 1', () => {
   // Error Boundary
   // ─────────────────────────────────────────────────────────────────
   test.describe('Error Boundary', () => {
-    test('error boundary component exists and has expected UI elements', async ({ page }) => {
+    test('error boundary component exists and has expected UI elements', async ({
+      page,
+    }) => {
       // We cannot easily trigger an ErrorBoundary in a Playwright test,
       // but we can verify the component file is loaded by the app and
       // that the error page (app/error.tsx) renders for runtime errors.

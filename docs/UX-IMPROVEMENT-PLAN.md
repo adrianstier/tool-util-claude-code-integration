@@ -1,6 +1,6 @@
 # UX Improvement Plan — Claude Code Learning Hub
 
-**Date:** February 11, 2026 · *Last updated: 2026-09-04*
+**Date:** February 11, 2026 · _Last updated: 2026-09-04_
 **Analysis by:** 4-agent UX swarm (Information Architecture, Visual Design & Accessibility, Learning Experience, Technical Performance)
 
 ---
@@ -34,7 +34,7 @@ The platform has a strong foundation — well-structured MDX content, a cohesive
 
 ### Accessibility
 
-- ~~**Fix undefined color classes**~~ — **DONE 2026-09-03, and the original diagnosis was wrong.** `claude-500`/`claude-600` *were* defined in `tailwind.config.ts` as a backwards-compatibility alias of the `primary` scale, so nothing rendered colourless. The one genuinely undefined class was `claude-950` (the alias stopped at 900), used in `src/app/authors/page.tsx`. All `claude-*` usages have now been migrated to `primary-*` and the alias scale deleted, so the class family is gone for real.
+- ~~**Fix undefined color classes**~~ — **DONE 2026-09-03, and the original diagnosis was wrong.** `claude-500`/`claude-600` _were_ defined in `tailwind.config.ts` as a backwards-compatibility alias of the `primary` scale, so nothing rendered colourless. The one genuinely undefined class was `claude-950` (the alias stopped at 900), used in `src/app/authors/page.tsx`. All `claude-*` usages have now been migrated to `primary-*` and the alias scale deleted, so the class family is gone for real.
 - ~~**Fix low-contrast secondary text**~~ — **DONE 2026-09-04, and the original diagnosis was wrong on both the token and the ratio.** `text-gray-500` (#6b7280) is **4.83:1** on white and **4.76:1** on `paper-50` — it passes AA, not "~2.8:1". Computing the real ratios across the palette found the actual failures in the `ink` scale: `ink-400` is **3.05:1** on light and `ink-500` is **2.54:1** on `ink-900` / **3.33:1** on `ink-950`. Both were carrying real body text — including the Footer's "not affiliated with Anthropic" disclaimer, the site's least readable text. All text usages moved to `ink-600` / `dark:ink-300` (5.95-7.66:1 on every surface in play); icons stay at `ink-400`, which clears the 3:1 threshold for non-text UI.
 - ~~**Add `scope="col"` to InfoTable headers**~~ — already present (`src/components/mdx/InfoTable.tsx`); fixed at some point after this plan was written.
 
@@ -127,37 +127,37 @@ The platform has a strong foundation — well-structured MDX content, a cohesive
 
 ## Summary Scoring (Current State)
 
-| Dimension | Score | Key Issue |
-|---|---|---|
-| Information Architecture | 6/10 | Homepage shows 5/8 tracks; search hardcoded |
-| Visual Design | 8/10 | Strong design system; color naming inconsistency |
-| Accessibility | 5/10 | Low contrast text, missing focus traps, no aria-live |
-| Learning Experience | 7/10 | Excellent writing; weak practice exercises outside research |
-| Progress Tracking | 4/10 | Tracked but invisible; no verification |
-| Technical Performance | 7/10 | Good static gen; missing error boundary + OG images |
-| Content Completeness | 6/10 | 2/8 tracks are empty stubs; glossary unlinked |
-| **Overall** | **6.5/10** | **Strong foundation with actionable gaps** |
+| Dimension                | Score      | Key Issue                                                   |
+| ------------------------ | ---------- | ----------------------------------------------------------- |
+| Information Architecture | 6/10       | Homepage shows 5/8 tracks; search hardcoded                 |
+| Visual Design            | 8/10       | Strong design system; color naming inconsistency            |
+| Accessibility            | 5/10       | Low contrast text, missing focus traps, no aria-live        |
+| Learning Experience      | 7/10       | Excellent writing; weak practice exercises outside research |
+| Progress Tracking        | 4/10       | Tracked but invisible; no verification                      |
+| Technical Performance    | 7/10       | Good static gen; missing error boundary + OG images         |
+| Content Completeness     | 6/10       | 2/8 tracks are empty stubs; glossary unlinked               |
+| **Overall**              | **6.5/10** | **Strong foundation with actionable gaps**                  |
 
 ---
 
 ## Files Referenced
 
-| File | Issues |
-|---|---|
-| `src/app/page.tsx` | Missing tracks in grid, Coming Soon inconsistency |
-| `src/components/SearchModal.tsx` | Hardcoded items, missing new pages, no focus trap |
-| `src/lib/mdx.ts` | Module sort order uses filesystem not frontmatter |
-| `src/lib/constants.ts` | Learning paths incomplete, order collisions |
-| `src/lib/metadata.ts` | Broken OG/Twitter image references |
-| `src/components/mdx/Tabs.tsx` | Undefined `claude-*` colors, low contrast |
-| `src/components/mdx/FileTree.tsx` | Hardcoded gray colors, undefined `claude-*` |
-| `src/components/CodeBlock.tsx` | Hardcoded colors, no syntax highlighting |
-| `src/components/mdx/InfoTable.tsx` | Missing `scope="col"` on headers |
-| `src/components/ProgressTracker.tsx` | Progress saved but never displayed |
-| `src/components/mdx/Diagram.tsx` | Mermaid not code-split (~300-400KB) |
-| `src/app/api/newsletter/route.ts` | In-memory storage, not persistent |
-| `content/agents/index.mdx` | Order 6 collision with MCP |
-| `content/mcp/index.mdx` | Order 6 collision with Agents |
-| `content/start-here/*.mdx` | Duplicate order values |
-| `content/app-builder/index.mdx` | Empty stub with Coming Soon |
-| `content/automation/index.mdx` | Empty stub with Coming Soon |
+| File                                 | Issues                                            |
+| ------------------------------------ | ------------------------------------------------- |
+| `src/app/page.tsx`                   | Missing tracks in grid, Coming Soon inconsistency |
+| `src/components/SearchModal.tsx`     | Hardcoded items, missing new pages, no focus trap |
+| `src/lib/mdx.ts`                     | Module sort order uses filesystem not frontmatter |
+| `src/lib/constants.ts`               | Learning paths incomplete, order collisions       |
+| `src/lib/metadata.ts`                | Broken OG/Twitter image references                |
+| `src/components/mdx/Tabs.tsx`        | Undefined `claude-*` colors, low contrast         |
+| `src/components/mdx/FileTree.tsx`    | Hardcoded gray colors, undefined `claude-*`       |
+| `src/components/CodeBlock.tsx`       | Hardcoded colors, no syntax highlighting          |
+| `src/components/mdx/InfoTable.tsx`   | Missing `scope="col"` on headers                  |
+| `src/components/ProgressTracker.tsx` | Progress saved but never displayed                |
+| `src/components/mdx/Diagram.tsx`     | Mermaid not code-split (~300-400KB)               |
+| `src/app/api/newsletter/route.ts`    | In-memory storage, not persistent                 |
+| `content/agents/index.mdx`           | Order 6 collision with MCP                        |
+| `content/mcp/index.mdx`              | Order 6 collision with Agents                     |
+| `content/start-here/*.mdx`           | Duplicate order values                            |
+| `content/app-builder/index.mdx`      | Empty stub with Coming Soon                       |
+| `content/automation/index.mdx`       | Empty stub with Coming Soon                       |

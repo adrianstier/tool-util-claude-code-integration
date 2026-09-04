@@ -83,6 +83,7 @@ Analyze the current state of the website and implement improvements based on ver
 Run: `/improve-site`
 
 This will:
+
 1. Analyze current state
 2. Identify improvement opportunities
 3. Implement high-priority fixes

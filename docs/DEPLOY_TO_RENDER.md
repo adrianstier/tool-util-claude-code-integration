@@ -9,6 +9,7 @@
 ### Option 1: GitHub Integration (Recommended)
 
 1. **Push to GitHub:**
+
    ```bash
    git init
    git add .
@@ -72,6 +73,7 @@ If Render doesn't use `render.yaml`:
 ### Build Fails
 
 Check build logs in Render dashboard. Common issues:
+
 - Missing dependencies: Check `package.json`
 - Node version: Specified in `render.yaml`
 
@@ -84,6 +86,7 @@ Check build logs in Render dashboard. Common issues:
 ### Environment Variables
 
 If needed, add in Render dashboard:
+
 - Settings → Environment
 - Add key-value pairs
 
@@ -92,6 +95,7 @@ If needed, add in Render dashboard:
 ## Free Tier Limits
 
 Render free tier includes:
+
 - ✅ 750 hours/month
 - ✅ Auto-deploy from Git
 - ✅ Free SSL (HTTPS)

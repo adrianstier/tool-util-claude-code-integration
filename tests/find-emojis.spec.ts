@@ -28,14 +28,19 @@ test('Find emojis on data-analysis page', async ({ page }) => {
     })
 
     console.log('\nLines with emojis:')
-    emojiLines.forEach(line => console.log(line))
+    emojiLines.forEach((line) => console.log(line))
   } else {
     console.log('No emojis found! ✨')
   }
 
   // Take a screenshot
-  await page.screenshot({ path: 'tests/screenshots/data-analysis-emojis.png', fullPage: true })
-  console.log('\nScreenshot saved to: tests/screenshots/data-analysis-emojis.png')
+  await page.screenshot({
+    path: 'tests/screenshots/data-analysis-emojis.png',
+    fullPage: true,
+  })
+  console.log(
+    '\nScreenshot saved to: tests/screenshots/data-analysis-emojis.png'
+  )
 })
 
 test('Find emojis in page HTML', async ({ page }) => {
@@ -64,6 +69,6 @@ test('Find emojis in page HTML', async ({ page }) => {
     })
 
     console.log('\nHTML snippets with emojis (first 100 chars):')
-    snippets.slice(0, 10).forEach(snippet => console.log(snippet))
+    snippets.slice(0, 10).forEach((snippet) => console.log(snippet))
   }
 })

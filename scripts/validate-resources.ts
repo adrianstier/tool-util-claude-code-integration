@@ -19,7 +19,9 @@ import type { Resource } from '../src/types/resources'
 
 console.log('Validating resources...\n')
 
-const validation = validateAllResources(RESOURCES as unknown as readonly Resource[])
+const validation = validateAllResources(
+  RESOURCES as unknown as readonly Resource[]
+)
 
 if (validation.valid) {
   console.log('All resources valid!')
@@ -42,7 +44,9 @@ if (validation.valid) {
   process.exit(0)
 } else {
   console.log('Validation failed!')
-  console.log(`   Invalid: ${validation.invalidCount}/${validation.totalResources}`)
+  console.log(
+    `   Invalid: ${validation.invalidCount}/${validation.totalResources}`
+  )
 
   console.log('\nErrors:')
   validation.summary.errors.forEach((e: string) => console.log(`   ${e}`))

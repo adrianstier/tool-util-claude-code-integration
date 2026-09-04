@@ -49,6 +49,7 @@ claude-code-integration/
 ## Available Commands
 
 ### Development
+
 ```bash
 npm run dev          # Start dev server (hot reload)
 npm run build        # Build for production
@@ -56,6 +57,7 @@ npm run start        # Start production server
 ```
 
 ### Code Quality
+
 ```bash
 npm run lint         # Check for errors
 npm run format       # Format code with Prettier
@@ -63,6 +65,7 @@ npm run typecheck    # Check TypeScript
 ```
 
 ### Database (Optional)
+
 ```bash
 npm run db:setup          # Initialize database
 npm run migrate:up        # Apply migrations
@@ -75,11 +78,13 @@ npm run migrate:create -- name  # Create migration
 ### Create a New Module
 
 1. Create an MDX file in the appropriate track folder:
+
    ```bash
    touch content/data-analysis/new-lesson.mdx
    ```
 
 2. Add frontmatter:
+
    ```mdx
    ---
    title: 'Your Lesson Title'
@@ -97,11 +102,13 @@ npm run migrate:create -- name  # Create migration
 ### Create a New Track
 
 1. Create a folder in `content/`:
+
    ```bash
    mkdir content/new-track
    ```
 
 2. Create an index.mdx:
+
    ```bash
    touch content/new-track/index.mdx
    ```
@@ -121,26 +128,21 @@ title: 'My Page'
 
 # Hello World
 
-<Card
-  title="Important Note"
-  description="This is a callout"
-/>
+<Card title="Important Note" description="This is a callout" />
 
-<CodeBlock
-  code="console.log('Hello')"
-  language="javascript"
-  title="Example"
-/>
+<CodeBlock code="console.log('Hello')" language="javascript" title="Example" />
 ```
 
 ### Create New Components
 
 1. Add to `src/components/`:
+
    ```bash
    touch src/components/MyComponent.tsx
    ```
 
 2. Export and make available in MDX:
+
    ```typescript
    // In [track]/[slug]/page.tsx
    import MyComponent from '@/components/MyComponent'
@@ -156,6 +158,7 @@ title: 'My Page'
 ### Update Site Metadata
 
 Edit `src/app/layout.tsx`:
+
 ```typescript
 export const metadata: Metadata = {
   title: 'Your Title',
@@ -166,6 +169,7 @@ export const metadata: Metadata = {
 ### Add Navigation Link
 
 Edit `src/components/Navigation.tsx`:
+
 ```typescript
 const navigationItems = [
   { name: 'New Track', href: '/new-track' },
@@ -205,6 +209,7 @@ Done! Your site is live.
 For static hosting (GitHub Pages, etc.):
 
 1. Add to `next.config.js`:
+
    ```javascript
    module.exports = {
      output: 'export',
@@ -212,6 +217,7 @@ For static hosting (GitHub Pages, etc.):
    ```
 
 2. Build:
+
    ```bash
    npm run build
    ```

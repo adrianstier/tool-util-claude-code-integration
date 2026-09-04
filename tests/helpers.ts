@@ -9,7 +9,9 @@ import { expect, type Page } from '@playwright/test'
  * modal actually appears.
  */
 export async function openSearch(page: Page) {
-  const searchInput = page.locator('input[placeholder="Search documentation..."]')
+  const searchInput = page.locator(
+    'input[placeholder="Search documentation..."]'
+  )
 
   await expect(async () => {
     if (!(await searchInput.isVisible())) {

@@ -24,9 +24,9 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
     return []
   }
 
-  const files = fs.readdirSync(blogDirectory).filter(
-    (file) => file.endsWith('.mdx') || file.endsWith('.md')
-  )
+  const files = fs
+    .readdirSync(blogDirectory)
+    .filter((file) => file.endsWith('.mdx') || file.endsWith('.md'))
 
   const posts = files
     .map((file) => {
@@ -39,7 +39,9 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
         slug,
         title: data.title || slug,
         description: data.description,
-        date: data.date ? new Date(data.date).toISOString() : new Date().toISOString(),
+        date: data.date
+          ? new Date(data.date).toISOString()
+          : new Date().toISOString(),
         author: data.author,
         tags: data.tags || [],
         content,

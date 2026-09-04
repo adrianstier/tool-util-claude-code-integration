@@ -4,9 +4,23 @@ import { useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 import logger from '@/lib/logger'
 import mermaid from 'mermaid'
-import { GitBranch, Workflow, GitMerge, Database, Maximize2, Minimize2 } from 'lucide-react'
+import {
+  GitBranch,
+  Workflow,
+  GitMerge,
+  Database,
+  Maximize2,
+  Minimize2,
+} from 'lucide-react'
 
-type DiagramType = 'flowchart' | 'sequence' | 'git' | 'er' | 'journey' | 'pie' | 'mindmap'
+type DiagramType =
+  | 'flowchart'
+  | 'sequence'
+  | 'git'
+  | 'er'
+  | 'journey'
+  | 'pie'
+  | 'mindmap'
 
 interface DiagramProps {
   children: string
@@ -17,7 +31,10 @@ interface DiagramProps {
   theme?: 'default' | 'forest' | 'dark' | 'neutral'
 }
 
-const typeConfig: Record<DiagramType, { icon: typeof Workflow; label: string }> = {
+const typeConfig: Record<
+  DiagramType,
+  { icon: typeof Workflow; label: string }
+> = {
   flowchart: { icon: Workflow, label: 'Flowchart' },
   sequence: { icon: GitBranch, label: 'Sequence' },
   git: { icon: GitMerge, label: 'Git Graph' },
@@ -92,7 +109,7 @@ export default function Diagram({
     const observer = new MutationObserver(checkDarkMode)
     observer.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ['class']
+      attributeFilter: ['class'],
     })
 
     return () => observer.disconnect()
@@ -108,39 +125,41 @@ export default function Diagram({
         mermaid.initialize({
           startOnLoad: false,
           theme: 'base',
-          themeVariables: isDark ? {
-            primaryColor: '#E07A5F',
-            primaryTextColor: '#F3F4F6',
-            primaryBorderColor: '#C96A51',
-            secondaryColor: '#F4A261',
-            secondaryTextColor: '#F3F4F6',
-            tertiaryColor: '#A3B18A',
-            lineColor: '#9CA3AF',
-            textColor: '#E5E7EB',
-            mainBkg: '#1F2937',
-            nodeBorder: '#E07A5F',
-            clusterBkg: '#374151',
-            clusterBorder: '#E07A5F',
-            titleColor: '#F3F4F6',
-            edgeLabelBackground: '#374151',
-            nodeTextColor: '#F3F4F6',
-          } : {
-            primaryColor: '#E07A5F',
-            primaryTextColor: '#1F2937',
-            primaryBorderColor: '#C96A51',
-            secondaryColor: '#F4A261',
-            secondaryTextColor: '#1F2937',
-            tertiaryColor: '#A3B18A',
-            lineColor: '#6B7280',
-            textColor: '#374151',
-            mainBkg: '#FFF7ED',
-            nodeBorder: '#E07A5F',
-            clusterBkg: '#FEF3E9',
-            clusterBorder: '#E07A5F',
-            titleColor: '#1F2937',
-            edgeLabelBackground: '#FFFFFF',
-            nodeTextColor: '#1F2937',
-          },
+          themeVariables: isDark
+            ? {
+                primaryColor: '#E07A5F',
+                primaryTextColor: '#F3F4F6',
+                primaryBorderColor: '#C96A51',
+                secondaryColor: '#F4A261',
+                secondaryTextColor: '#F3F4F6',
+                tertiaryColor: '#A3B18A',
+                lineColor: '#9CA3AF',
+                textColor: '#E5E7EB',
+                mainBkg: '#1F2937',
+                nodeBorder: '#E07A5F',
+                clusterBkg: '#374151',
+                clusterBorder: '#E07A5F',
+                titleColor: '#F3F4F6',
+                edgeLabelBackground: '#374151',
+                nodeTextColor: '#F3F4F6',
+              }
+            : {
+                primaryColor: '#E07A5F',
+                primaryTextColor: '#1F2937',
+                primaryBorderColor: '#C96A51',
+                secondaryColor: '#F4A261',
+                secondaryTextColor: '#1F2937',
+                tertiaryColor: '#A3B18A',
+                lineColor: '#6B7280',
+                textColor: '#374151',
+                mainBkg: '#FFF7ED',
+                nodeBorder: '#E07A5F',
+                clusterBkg: '#FEF3E9',
+                clusterBorder: '#E07A5F',
+                titleColor: '#1F2937',
+                edgeLabelBackground: '#FFFFFF',
+                nodeTextColor: '#1F2937',
+              },
           fontFamily: '"Plus Jakarta Sans", system-ui, sans-serif',
         })
 
@@ -150,7 +169,9 @@ export default function Diagram({
         setError(null)
       } catch (err) {
         logger.error('Mermaid rendering error:', err)
-        setError(err instanceof Error ? err.message : 'Failed to render diagram')
+        setError(
+          err instanceof Error ? err.message : 'Failed to render diagram'
+        )
       }
     }
 
@@ -162,14 +183,16 @@ export default function Diagram({
 
   if (error) {
     return (
-      <div className={cn(
-        'my-6 rounded-xl border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/30 p-4',
-        className
-      )}>
-        <p className="text-red-600 dark:text-red-400 text-sm font-medium">
+      <div
+        className={cn(
+          'my-6 rounded-xl border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-950/30',
+          className
+        )}
+      >
+        <p className="text-sm font-medium text-red-600 dark:text-red-400">
           Diagram Error: {error}
         </p>
-        <pre className="mt-2 text-xs text-red-500 dark:text-red-300 overflow-auto">
+        <pre className="mt-2 overflow-auto text-xs text-red-500 dark:text-red-300">
           {children}
         </pre>
       </div>
@@ -179,25 +202,28 @@ export default function Diagram({
   return (
     <figure
       className={cn(
-        'my-8 relative group',
-        isExpanded && 'fixed inset-4 z-50 flex flex-col bg-white dark:bg-ink-900 rounded-2xl shadow-2xl',
+        'group relative my-8',
+        isExpanded &&
+          'fixed inset-4 z-50 flex flex-col rounded-2xl bg-white shadow-2xl dark:bg-ink-900',
         className
       )}
     >
       {/* Header */}
-      <div className={cn(
-        'flex items-center justify-between gap-3 mb-3',
-        isExpanded && 'px-6 pt-6'
-      )}>
+      <div
+        className={cn(
+          'mb-3 flex items-center justify-between gap-3',
+          isExpanded && 'px-6 pt-6'
+        )}
+      >
         <div className="flex items-center gap-2">
           <Icon className="h-4 w-4 text-primary-600 dark:text-primary-400" />
           {title && (
-            <span className="font-display font-semibold text-sm text-ink-900 dark:text-ink-100">
+            <span className="font-display text-sm font-semibold text-ink-900 dark:text-ink-100">
               {title}
             </span>
           )}
           {!title && (
-            <span className="text-xs text-ink-500 dark:text-ink-400 uppercase tracking-wide font-medium">
+            <span className="text-xs font-medium uppercase tracking-wide text-ink-500 dark:text-ink-400">
               {config.label}
             </span>
           )}
@@ -207,7 +233,7 @@ export default function Diagram({
         <button
           onClick={() => setIsExpanded(!isExpanded)}
           className={cn(
-            'p-1.5 rounded-lg transition-all',
+            'rounded-lg p-1.5 transition-all',
             'text-ink-500 hover:text-ink-700 dark:text-ink-400 dark:hover:text-ink-200',
             'hover:bg-ink-100 dark:hover:bg-ink-800',
             'opacity-0 group-hover:opacity-100',
@@ -230,15 +256,15 @@ export default function Diagram({
           'relative overflow-hidden rounded-xl',
           'border border-ink-100 dark:border-ink-800',
           'bg-white dark:bg-ink-900',
-          isExpanded ? 'flex-1 mx-6 mb-6' : 'p-6'
+          isExpanded ? 'mx-6 mb-6 flex-1' : 'p-6'
         )}
       >
         {/* SVG diagram - content is generated by mermaid library, not user input */}
         <div
           className={cn(
-            'relative w-full flex items-center justify-center',
+            'relative flex w-full items-center justify-center',
             isExpanded && 'h-full',
-            '[&>svg]:max-w-full [&>svg]:h-auto',
+            '[&>svg]:h-auto [&>svg]:max-w-full',
             isExpanded && '[&>svg]:max-h-full'
           )}
           dangerouslySetInnerHTML={{ __html: svg }}
@@ -247,10 +273,12 @@ export default function Diagram({
 
       {/* Caption */}
       {caption && (
-        <figcaption className={cn(
-          'mt-3 text-center text-sm text-ink-500 dark:text-ink-400',
-          isExpanded && 'px-6 pb-6'
-        )}>
+        <figcaption
+          className={cn(
+            'mt-3 text-center text-sm text-ink-500 dark:text-ink-400',
+            isExpanded && 'px-6 pb-6'
+          )}
+        >
           {caption}
         </figcaption>
       )}
@@ -258,7 +286,7 @@ export default function Diagram({
       {/* Backdrop for expanded mode */}
       {isExpanded && (
         <div
-          className="fixed inset-0 bg-black/50 -z-10"
+          className="fixed inset-0 -z-10 bg-black/50"
           onClick={() => setIsExpanded(false)}
         />
       )}

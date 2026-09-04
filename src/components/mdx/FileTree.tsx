@@ -2,7 +2,15 @@
 
 import { useState, ReactNode, Children } from 'react'
 import { cn } from '@/lib/utils'
-import { ChevronRight, Folder, FolderOpen, File, FileCode, FileJson, FileText } from 'lucide-react'
+import {
+  ChevronRight,
+  Folder,
+  FolderOpen,
+  File,
+  FileCode,
+  FileJson,
+  FileText,
+} from 'lucide-react'
 
 interface FileTreeProps {
   children: ReactNode
@@ -26,7 +34,20 @@ interface FileNodeProps {
 function getFileIcon(filename: string) {
   const ext = filename.split('.').pop()?.toLowerCase()
 
-  const codeExtensions = ['ts', 'tsx', 'js', 'jsx', 'py', 'rb', 'go', 'rs', 'java', 'cpp', 'c', 'h']
+  const codeExtensions = [
+    'ts',
+    'tsx',
+    'js',
+    'jsx',
+    'py',
+    'rb',
+    'go',
+    'rs',
+    'java',
+    'cpp',
+    'c',
+    'h',
+  ]
   const jsonExtensions = ['json', 'yaml', 'yml', 'toml']
   const textExtensions = ['md', 'mdx', 'txt', 'rst']
 
@@ -48,7 +69,7 @@ function FileTreeComponent({ children, className }: FileTreeProps) {
     <div
       className={cn(
         'my-6 rounded-xl border border-ink-200 dark:border-ink-700',
-        'bg-ink-50 dark:bg-ink-900/50 p-4 font-mono text-sm',
+        'bg-ink-50 p-4 font-mono text-sm dark:bg-ink-900/50',
         'overflow-x-auto',
         className
       )}
@@ -58,7 +79,12 @@ function FileTreeComponent({ children, className }: FileTreeProps) {
   )
 }
 
-function FolderNodeComponent({ name, children, defaultOpen = false, className }: FolderNodeProps) {
+function FolderNodeComponent({
+  name,
+  children,
+  defaultOpen = false,
+  className,
+}: FolderNodeProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen)
   const hasChildren = Children.count(children) > 0
 
@@ -67,8 +93,8 @@ function FolderNodeComponent({ name, children, defaultOpen = false, className }:
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'flex items-center gap-2 w-full text-left py-1 px-2 -ml-2 rounded-md',
-          'hover:bg-ink-200/50 dark:hover:bg-ink-800/50 transition-colors',
+          '-ml-2 flex w-full items-center gap-2 rounded-md px-2 py-1 text-left',
+          'transition-colors hover:bg-ink-200/50 dark:hover:bg-ink-800/50',
           'text-ink-700 dark:text-ink-300'
         )}
         disabled={!hasChildren}
@@ -89,7 +115,7 @@ function FolderNodeComponent({ name, children, defaultOpen = false, className }:
       </button>
 
       {hasChildren && isOpen && (
-        <ul className="ml-6 mt-1 space-y-1 border-l border-ink-200 dark:border-ink-700 pl-4">
+        <ul className="ml-6 mt-1 space-y-1 border-l border-ink-200 pl-4 dark:border-ink-700">
           {children}
         </ul>
       )}
@@ -97,11 +123,15 @@ function FolderNodeComponent({ name, children, defaultOpen = false, className }:
   )
 }
 
-function FileNodeComponent({ name, highlight = false, className }: FileNodeProps) {
+function FileNodeComponent({
+  name,
+  highlight = false,
+  className,
+}: FileNodeProps) {
   return (
     <li
       className={cn(
-        'flex items-center gap-2 py-1 px-2 -ml-2 rounded-md',
+        '-ml-2 flex items-center gap-2 rounded-md px-2 py-1',
         highlight && 'bg-primary-100/50 dark:bg-primary-900/30',
         'text-ink-600 dark:text-ink-400',
         className
@@ -109,7 +139,11 @@ function FileNodeComponent({ name, highlight = false, className }: FileNodeProps
     >
       <span className="w-3" /> {/* Spacer to align with folders */}
       {getFileIcon(name)}
-      <span className={cn(highlight && 'text-primary-700 dark:text-primary-300 font-medium')}>
+      <span
+        className={cn(
+          highlight && 'font-medium text-primary-700 dark:text-primary-300'
+        )}
+      >
         {name}
       </span>
     </li>

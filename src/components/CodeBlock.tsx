@@ -82,7 +82,7 @@ export default function CodeBlock({
   const shouldShowLineNumbers = showLineNumbers || lines.length >= 5
 
   return (
-    <div className="group my-6 overflow-hidden rounded-xl border border-ink-200 dark:border-ink-700 bg-white dark:bg-ink-900 shadow-sm transition-all hover:shadow-md">
+    <div className="group my-6 overflow-hidden rounded-xl border border-ink-200 bg-white shadow-sm transition-all hover:shadow-md dark:border-ink-700 dark:bg-ink-900">
       {/* Header */}
       <div
         className={cn(
@@ -100,13 +100,15 @@ export default function CodeBlock({
 
           {/* File icon and title */}
           {displayTitle && (
-            <div className="flex items-center gap-2 ml-2">
+            <div className="ml-2 flex items-center gap-2">
               {config.icon === 'terminal' ? (
                 <Terminal className="h-4 w-4 opacity-70" />
               ) : (
                 <FileCode className="h-4 w-4 opacity-70" />
               )}
-              <span className="text-sm font-medium opacity-90">{displayTitle}</span>
+              <span className="text-sm font-medium opacity-90">
+                {displayTitle}
+              </span>
             </div>
           )}
         </div>
@@ -156,14 +158,14 @@ export default function CodeBlock({
                   className={cn(
                     'flex',
                     isHighlighted &&
-                      'bg-primary-500/10 border-l-2 border-primary-500'
+                      'border-l-2 border-primary-500 bg-primary-500/10'
                   )}
                 >
                   {shouldShowLineNumbers && (
                     <span
                       className={cn(
                         'flex-shrink-0 select-none px-4 py-0.5 text-right text-ink-500',
-                        'border-r border-ink-800 w-12',
+                        'w-12 border-r border-ink-800',
                         isHighlighted && 'text-primary-400'
                       )}
                       aria-hidden="true"
@@ -188,8 +190,8 @@ export default function CodeBlock({
 
       {/* Caption */}
       {caption && (
-        <div className="border-t border-ink-200 dark:border-ink-700 bg-ink-50 dark:bg-ink-800/50 px-4 py-2">
-          <p className="text-xs text-ink-500 dark:text-ink-400 text-center">
+        <div className="border-t border-ink-200 bg-ink-50 px-4 py-2 dark:border-ink-700 dark:bg-ink-800/50">
+          <p className="text-center text-xs text-ink-500 dark:text-ink-400">
             {caption}
           </p>
         </div>

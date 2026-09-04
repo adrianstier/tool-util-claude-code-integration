@@ -20,6 +20,7 @@ npm run format           # Prettier
 ### Routing
 
 Next.js App Router with dynamic routes:
+
 - `src/app/page.tsx` — Homepage
 - `src/app/[track]/page.tsx` — Track landing (renders `content/<track>/index.mdx`)
 - `src/app/[track]/[slug]/page.tsx` — Article page (renders `content/<track>/<slug>.mdx`)
@@ -68,12 +69,12 @@ Each MDX file has frontmatter: `title`, `description`, `order`, `track`, `durati
 Two rules the content pipeline depends on:
 
 1. **Never start an MDX body with `# Heading`.** The page shell renders `title` as the
-   page's only `<h1>` — for articles, blog posts *and* track landings. A body `#` creates
+   page's only `<h1>` — for articles, blog posts _and_ track landings. A body `#` creates
    a duplicate `<h1>` (an a11y/SEO defect that shipped site-wide until 2026-09-03). Start
    at `##`.
 2. **`order` is unique within a track**, numbered `1..N`; every `index.mdx` is `order: 0`.
    Track position on the homepage comes from the `learningTracks` array in
-   `src/app/page.tsx`, *not* from frontmatter.
+   `src/app/page.tsx`, _not_ from frontmatter.
 3. **`duration` is a per-page estimate and is summed into the homepage track duration.**
    House standard: ~1.5x the time to consume the page (prose ~200 wpm, code ~100 wpm,
    plus a minute per `<Step>`), or ~2.5x when the reader installs or builds something.
@@ -94,6 +95,7 @@ These areas are independently editable (safe for parallel work):
 - `public/` — static assets
 
 Shared/cross-cutting (changes here affect many things):
+
 - `src/app/layout.tsx` — root layout, fonts, analytics, providers
 - `src/components/Navigation.tsx` — site nav (references all tracks)
 - `src/lib/constants.ts` — track definitions, site config
@@ -124,6 +126,7 @@ progress persistence.
 ## Environment
 
 All env vars are optional for local dev. See `.env.example`. Key ones:
+
 - `NEXT_PUBLIC_GA_MEASUREMENT_ID` — GA4
 - `NEXT_PUBLIC_SITE_URL` — defaults to `https://codewithclaude.net`
 - `RESEND_API_KEY` / `RESEND_AUDIENCE_ID` — newsletter

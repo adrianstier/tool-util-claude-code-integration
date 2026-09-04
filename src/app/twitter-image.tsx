@@ -78,7 +78,8 @@ export default async function Image() {
           style={{
             fontSize: 56,
             fontWeight: 800,
-            background: 'linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #fcd34d 100%)',
+            background:
+              'linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #fcd34d 100%)',
             backgroundClip: 'text',
             color: 'transparent',
             textAlign: 'center',
@@ -100,7 +101,8 @@ export default async function Image() {
             lineHeight: 1.4,
           }}
         >
-          Master AI-Powered Development with Claude Code, VS Code, Git, Python & R
+          Master AI-Powered Development with Claude Code, VS Code, Git, Python &
+          R
         </div>
 
         {/* Features */}
@@ -111,38 +113,40 @@ export default async function Image() {
             gap: 24,
           }}
         >
-          {['Hands-on Tutorials', 'Real Projects', 'Free & Open'].map((feature) => (
-            <div
-              key={feature}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '10px 20px',
-                backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                borderRadius: '9999px',
-                border: '1px solid rgba(245, 158, 11, 0.3)',
-              }}
-            >
+          {['Hands-on Tutorials', 'Real Projects', 'Free & Open'].map(
+            (feature) => (
               <div
+                key={feature}
                 style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: '50%',
-                  backgroundColor: '#f59e0b',
-                  marginRight: 10,
-                }}
-              />
-              <span
-                style={{
-                  color: '#fbbf24',
-                  fontSize: 16,
-                  fontWeight: 500,
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '10px 20px',
+                  backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                  borderRadius: '9999px',
+                  border: '1px solid rgba(245, 158, 11, 0.3)',
                 }}
               >
-                {feature}
-              </span>
-            </div>
-          ))}
+                <div
+                  style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: '50%',
+                    backgroundColor: '#f59e0b',
+                    marginRight: 10,
+                  }}
+                />
+                <span
+                  style={{
+                    color: '#fbbf24',
+                    fontSize: 16,
+                    fontWeight: 500,
+                  }}
+                >
+                  {feature}
+                </span>
+              </div>
+            )
+          )}
         </div>
 
         {/* URL */}

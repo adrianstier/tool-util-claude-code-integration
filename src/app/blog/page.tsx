@@ -41,7 +41,7 @@ export default async function BlogPage() {
         {posts.map((post) => (
           <article
             key={post.slug}
-            className="group relative rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6 shadow-sm transition-all hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600"
+            className="group relative rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-all hover:border-primary-300 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800/50 dark:hover:border-primary-600"
           >
             <div className="flex flex-col gap-4">
               {/* Date & Tags */}
@@ -61,7 +61,7 @@ export default async function BlogPage() {
                       {post.tags.slice(0, 3).map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-full bg-gray-100 dark:bg-gray-700 px-2 py-0.5 text-xs font-medium"
+                          className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium dark:bg-gray-700"
                         >
                           {tag}
                         </span>
@@ -73,13 +73,13 @@ export default async function BlogPage() {
 
               {/* Title & Description */}
               <div>
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                <h2 className="text-xl font-bold text-gray-900 transition-colors group-hover:text-primary-600 dark:text-white dark:group-hover:text-primary-400">
                   <Link href={`/blog/${post.slug}`} className="hover:underline">
                     {post.title}
                   </Link>
                 </h2>
                 {post.description && (
-                  <p className="mt-2 text-gray-600 dark:text-gray-300 line-clamp-2">
+                  <p className="mt-2 line-clamp-2 text-gray-600 dark:text-gray-300">
                     {post.description}
                   </p>
                 )}
@@ -100,7 +100,7 @@ export default async function BlogPage() {
         ))}
 
         {posts.length === 0 && (
-          <div className="text-center py-12">
+          <div className="py-12 text-center">
             <p className="text-gray-500 dark:text-gray-400">
               No blog posts yet. Check back soon!
             </p>
@@ -112,7 +112,7 @@ export default async function BlogPage() {
       <div className="mt-12 text-center">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300 font-medium transition-colors"
+          className="inline-flex items-center gap-2 font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
         >
           <svg
             className="h-5 w-5"

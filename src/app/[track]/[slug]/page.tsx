@@ -69,7 +69,7 @@ export async function generateMetadata({
 function AppleIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
     </svg>
   )
 }
@@ -101,16 +101,24 @@ const components = {
   InfoRows,
   // Map MDX code blocks to our CodeBlock component
   pre: ({ children }: { children?: React.ReactNode }) => {
-    const child = (children as { props?: { children?: string; className?: string } })?.props
+    const child = (
+      children as { props?: { children?: string; className?: string } }
+    )?.props
     const code = child?.children || ''
     const language = child?.className?.replace('language-', '') || 'bash'
 
     return <CodeBlock code={code} language={language} />
   },
-  code: ({ children, className }: { children?: React.ReactNode; className?: string }) => {
+  code: ({
+    children,
+    className,
+  }: {
+    children?: React.ReactNode
+    className?: string
+  }) => {
     if (!className) {
       return (
-        <code className="rounded-md bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 text-sm font-mono text-primary-700 dark:text-primary-300 border border-gray-200 dark:border-gray-700">
+        <code className="rounded-md border border-gray-200 bg-gray-100 px-1.5 py-0.5 font-mono text-sm text-primary-700 dark:border-gray-700 dark:bg-gray-800 dark:text-primary-300">
           {children}
         </code>
       )
@@ -128,7 +136,7 @@ const components = {
           src={src}
           alt={alt || 'Article image'}
           loading="lazy"
-          className="rounded-lg my-4"
+          className="my-4 rounded-lg"
           {...props}
         />
       )
@@ -140,7 +148,7 @@ const components = {
         alt={alt || 'Article image'}
         width={800}
         height={450}
-        className="rounded-lg my-4"
+        className="my-4 rounded-lg"
         loading="lazy"
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 728px"
       />
@@ -168,12 +176,17 @@ export async function generateStaticParams() {
 
 // Get adjacent articles for navigation
 function getAdjacentContent(track: string, currentSlug: string) {
-  const allContent = getAllContent(track).filter(item => item.slug !== 'index')
-  const currentIndex = allContent.findIndex(item => item.slug === currentSlug)
+  const allContent = getAllContent(track).filter(
+    (item) => item.slug !== 'index'
+  )
+  const currentIndex = allContent.findIndex((item) => item.slug === currentSlug)
 
   return {
     previous: currentIndex > 0 ? allContent[currentIndex - 1] : null,
-    next: currentIndex < allContent.length - 1 ? allContent[currentIndex + 1] : null,
+    next:
+      currentIndex < allContent.length - 1
+        ? allContent[currentIndex + 1]
+        : null,
   }
 }
 
@@ -188,14 +201,21 @@ export default async function ContentPage({ params }: PageProps) {
     notFound()
   }
 
-  const { frontmatter, content: mdxContent, readingTime, lastModified } = content
+  const {
+    frontmatter,
+    content: mdxContent,
+    readingTime,
+    lastModified,
+  } = content
   const { previous, next } = getAdjacentContent(track, slug)
 
   const PlatformIcon = frontmatter.platform === 'mac' ? AppleIcon : Monitor
 
   // Track display name for structured data
   const trackDisplayName =
-    trackSeoMetadata[track]?.title || trackNames[track] || track.replace(/-/g, ' ')
+    trackSeoMetadata[track]?.title ||
+    trackNames[track] ||
+    track.replace(/-/g, ' ')
 
   // Generate structured data for breadcrumbs
   const breadcrumbSchema = generateBreadcrumbSchema([
@@ -225,15 +245,31 @@ export default async function ContentPage({ params }: PageProps) {
   )
 
   // Generate HowTo schema for tutorial pages (start-here, data-analysis tracks)
-  const isTutorial = ['start-here', 'data-analysis', 'app-builder', 'automation', 'git-github'].includes(track)
+  const isTutorial = [
+    'start-here',
+    'data-analysis',
+    'app-builder',
+    'automation',
+    'git-github',
+  ].includes(track)
   const howToSchema = isTutorial
     ? generateHowToSchema(
         `How to ${frontmatter.title}`,
-        frontmatter.description || `Learn ${frontmatter.title} with step-by-step guidance`,
+        frontmatter.description ||
+          `Learn ${frontmatter.title} with step-by-step guidance`,
         [
-          { name: 'Read the guide', text: 'Follow along with the comprehensive tutorial content' },
-          { name: 'Practice with examples', text: 'Try the code examples and exercises provided' },
-          { name: 'Apply your knowledge', text: 'Use what you learned in your own projects' },
+          {
+            name: 'Read the guide',
+            text: 'Follow along with the comprehensive tutorial content',
+          },
+          {
+            name: 'Practice with examples',
+            text: 'Try the code examples and exercises provided',
+          },
+          {
+            name: 'Apply your knowledge',
+            text: 'Use what you learned in your own projects',
+          },
         ],
         frontmatter.duration || `PT${readingTime}M`
       )
@@ -273,31 +309,31 @@ export default async function ContentPage({ params }: PageProps) {
             <nav className="mb-8 flex items-center gap-2 text-sm text-ink-600 dark:text-ink-300">
               <Link
                 href="/"
-                className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                className="transition-colors hover:text-primary-600 dark:hover:text-primary-400"
               >
                 Home
               </Link>
               <ChevronRight className="h-4 w-4" />
               <Link
                 href={`/${track}`}
-                className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                className="transition-colors hover:text-primary-600 dark:hover:text-primary-400"
               >
                 {trackNames[track] || track}
               </Link>
               <ChevronRight className="h-4 w-4" />
-              <span className="text-gray-900 dark:text-white font-medium truncate">
+              <span className="truncate font-medium text-gray-900 dark:text-white">
                 {frontmatter.title}
               </span>
             </nav>
 
             {/* Article Header */}
             <header className="mb-10">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 dark:text-white text-balance">
+              <h1 className="text-balance text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl lg:text-5xl">
                 {frontmatter.title}
               </h1>
 
               {frontmatter.description && (
-                <p className="mt-4 text-lg sm:text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+                <p className="mt-4 text-lg leading-relaxed text-gray-600 dark:text-gray-300 sm:text-xl">
                   {frontmatter.description}
                 </p>
               )}
@@ -330,8 +366,8 @@ export default async function ContentPage({ params }: PageProps) {
             </header>
 
             {/* Article Content */}
-            <div className="rounded-2xl bg-white dark:bg-ink-900 p-6 sm:p-8 lg:p-10 shadow-sm border border-ink-100 dark:border-ink-800">
-              <div className="prose prose-lg dark:prose-invert max-w-none">
+            <div className="rounded-2xl border border-ink-100 bg-white p-6 shadow-sm dark:border-ink-800 dark:bg-ink-900 sm:p-8 lg:p-10">
+              <div className="prose prose-lg max-w-none dark:prose-invert">
                 <MDXRemote source={mdxContent} components={components} />
               </div>
             </div>
@@ -370,7 +406,7 @@ export default async function ContentPage({ params }: PageProps) {
             </div>
 
             {/* Share & Newsletter Section */}
-            <div className="mt-10 pt-8 border-t border-gray-200 dark:border-gray-700">
+            <div className="mt-10 border-t border-gray-200 pt-8 dark:border-gray-700">
               <div className="grid gap-8 sm:grid-cols-2">
                 {/* Social Share */}
                 <SocialShare
@@ -385,10 +421,10 @@ export default async function ContentPage({ params }: PageProps) {
             </div>
 
             {/* Back to track link */}
-            <nav className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+            <nav className="mt-8 border-t border-gray-200 pt-8 dark:border-gray-700">
               <Link
                 href={`/${track}`}
-                className="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300 font-medium transition-colors"
+                className="inline-flex items-center gap-2 font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
               >
                 <svg
                   className="h-5 w-5"
@@ -412,20 +448,20 @@ export default async function ContentPage({ params }: PageProps) {
           {/* Sidebar - Table of Contents */}
           <aside className="hidden lg:block">
             <div className="sticky top-24">
-              <div className="rounded-xl border border-ink-200 dark:border-ink-700 bg-white dark:bg-ink-900 p-5">
+              <div className="rounded-xl border border-ink-200 bg-white p-5 dark:border-ink-700 dark:bg-ink-900">
                 <TableOfContents />
               </div>
 
               {/* Quick links */}
-              <div className="mt-6 rounded-xl border border-ink-200 dark:border-ink-700 bg-white dark:bg-ink-900 p-5">
-                <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">
+              <div className="mt-6 rounded-xl border border-ink-200 bg-white p-5 dark:border-ink-700 dark:bg-ink-900">
+                <h4 className="mb-3 text-sm font-semibold text-gray-900 dark:text-white">
                   Quick Links
                 </h4>
                 <ul className="space-y-2 text-sm">
                   <li>
                     <Link
                       href={`/${track}`}
-                      className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                      className="text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
                     >
                       {trackNames[track]} Overview
                     </Link>
@@ -433,7 +469,7 @@ export default async function ContentPage({ params }: PageProps) {
                   <li>
                     <Link
                       href="/start-here"
-                      className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                      className="text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
                     >
                       Getting Started
                     </Link>
@@ -441,7 +477,7 @@ export default async function ContentPage({ params }: PageProps) {
                   <li>
                     <Link
                       href="/advanced-topics/best-practices"
-                      className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                      className="text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
                     >
                       Best Practices
                     </Link>

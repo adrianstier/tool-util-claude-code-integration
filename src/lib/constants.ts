@@ -4,11 +4,11 @@ export const SITE_DESCRIPTION =
 
 // UI timing constants (in milliseconds)
 export const TIMING = {
-  COPY_FEEDBACK: 2000,       // How long "Copied!" message shows
-  SCROLL_CHECK: 10000,       // Interval for checking time-on-page
-  DEBOUNCE_DEFAULT: 300,     // Default debounce delay
-  ANIMATION_FAST: 150,       // Fast animations
-  ANIMATION_NORMAL: 300,     // Normal animations
+  COPY_FEEDBACK: 2000, // How long "Copied!" message shows
+  SCROLL_CHECK: 10000, // Interval for checking time-on-page
+  DEBOUNCE_DEFAULT: 300, // Default debounce delay
+  ANIMATION_FAST: 150, // Fast animations
+  ANIMATION_NORMAL: 300, // Normal animations
 } as const
 
 // All learning tracks
@@ -40,10 +40,10 @@ export const TRACK_NAMES: Record<string, string> = {
   'start-here': 'Start Here',
   'data-analysis': 'Data Analysis',
   'app-builder': 'App Builder',
-  'automation': 'Automation',
+  automation: 'Automation',
   'git-github': 'Git & GitHub',
-  'agents': 'AI Agents',
-  'mcp': 'MCP Integration',
+  agents: 'AI Agents',
+  mcp: 'MCP Integration',
   'advanced-topics': 'Advanced Topics',
 }
 
@@ -115,7 +115,12 @@ export const LEARNING_PATHS = [
     id: 'beginner',
     name: 'Complete Beginner',
     description: 'Never used VS Code, Git, or programming before',
-    recommendedTrack: ['start-here', 'git-github', 'data-analysis', 'advanced-topics'],
+    recommendedTrack: [
+      'start-here',
+      'git-github',
+      'data-analysis',
+      'advanced-topics',
+    ],
     duration: '10-14 hours',
   },
   {
@@ -129,7 +134,13 @@ export const LEARNING_PATHS = [
     id: 'developer',
     name: 'Junior Developer',
     description: 'Some coding experience, want to build apps',
-    recommendedTrack: ['start-here', 'git-github', 'app-builder', 'agents', 'mcp'],
+    recommendedTrack: [
+      'start-here',
+      'git-github',
+      'app-builder',
+      'agents',
+      'mcp',
+    ],
     duration: '10-14 hours',
   },
 ]

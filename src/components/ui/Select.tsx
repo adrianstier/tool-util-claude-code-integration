@@ -54,8 +54,8 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
               error
                 ? `${selectId}-error`
                 : helperText
-                ? `${selectId}-helper`
-                : undefined
+                  ? `${selectId}-helper`
+                  : undefined
             }
             {...props}
           >

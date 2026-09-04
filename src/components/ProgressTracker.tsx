@@ -24,7 +24,9 @@ const defaultProgress: Progress = {
   lastVisited: null,
 }
 
-const ProgressContext = createContext<ProgressContextType | undefined>(undefined)
+const ProgressContext = createContext<ProgressContextType | undefined>(
+  undefined
+)
 
 const STORAGE_KEY = 'claude-code-learning-progress'
 
@@ -55,7 +57,10 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       }
     } catch (error) {
       // Log error and reset to defaults on corruption
-      logger.error('Error loading progress, resetting to defaults:', error instanceof Error ? error.message : error)
+      logger.error(
+        'Error loading progress, resetting to defaults:',
+        error instanceof Error ? error.message : error
+      )
       const initial = {
         ...defaultProgress,
         startedAt: new Date().toISOString(),
@@ -100,7 +105,9 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const markIncomplete = (moduleId: string) => {
     const updated = {
       ...progress,
-      completedModules: progress.completedModules.filter((id) => id !== moduleId),
+      completedModules: progress.completedModules.filter(
+        (id) => id !== moduleId
+      ),
       lastVisited: new Date().toISOString(),
     }
     setProgress(updated)
@@ -178,14 +185,14 @@ export function CompletionCheckbox({
 
   return (
     <label
-      className={`flex items-center gap-2 cursor-pointer select-none ${className}`}
+      className={`flex cursor-pointer select-none items-center gap-2 ${className}`}
     >
       <button
         onClick={handleToggle}
         className={`flex h-5 w-5 items-center justify-center rounded border-2 transition-colors ${
           completed
             ? 'border-green-500 bg-green-500 text-white'
-            : 'border-gray-300 dark:border-gray-600 hover:border-green-400'
+            : 'border-gray-300 hover:border-green-400 dark:border-gray-600'
         }`}
         aria-label={completed ? 'Mark as incomplete' : 'Mark as complete'}
       >
@@ -210,7 +217,7 @@ export function CompletionCheckbox({
         <span
           className={`text-sm ${
             completed
-              ? 'text-gray-500 dark:text-gray-400 line-through'
+              ? 'text-gray-500 line-through dark:text-gray-400'
               : 'text-gray-700 dark:text-gray-300'
           }`}
         >
@@ -238,14 +245,14 @@ export function ProgressBar({
 
   return (
     <div className={`w-full ${className}`}>
-      <div className="flex items-center justify-between mb-1">
+      <div className="mb-1 flex items-center justify-between">
         {showPercentage && (
           <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
             {percentage}% Complete
           </span>
         )}
       </div>
-      <div className="h-2 w-full rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+      <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
         <div
           className="h-full rounded-full bg-gradient-to-r from-primary-500 to-orange-500 transition-all duration-300"
           style={{ width: `${percentage}%` }}
@@ -282,9 +289,7 @@ export function ProgressStats({ className = '' }: { className?: string }) {
         <div className="text-sm font-medium text-gray-700 dark:text-gray-300">
           {formatDate(progress.startedAt)}
         </div>
-        <div className="text-xs text-gray-500 dark:text-gray-400">
-          Started
-        </div>
+        <div className="text-xs text-gray-500 dark:text-gray-400">Started</div>
       </div>
       <div className="text-center">
         <div className="text-sm font-medium text-gray-700 dark:text-gray-300">

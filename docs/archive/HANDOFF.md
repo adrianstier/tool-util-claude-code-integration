@@ -20,17 +20,18 @@ A self-paced learning platform teaching smart, motivated people how to use Claud
 
 ## Decision Authority
 
-| Role | Authority |
-|------|-----------|
-| Project Owner | All decisions |
+| Role            | Authority              |
+| --------------- | ---------------------- |
+| Project Owner   | All decisions          |
 | Success Metrics | Engagement + Retention |
-| Development | Done with Claude Code |
+| Development     | Done with Claude Code  |
 
 ---
 
 ## Current Architecture
 
 ### Tech Stack
+
 - **Framework**: Next.js 14 (App Router)
 - **Language**: TypeScript (strict mode)
 - **Styling**: Tailwind CSS
@@ -39,6 +40,7 @@ A self-paced learning platform teaching smart, motivated people how to use Claud
 - **Hosting**: Vercel (static deployment)
 
 ### Directory Structure
+
 ```
 src/
 ├── app/                    # Next.js pages
@@ -78,59 +80,61 @@ public/                     # Static assets
 
 ### Learning Tracks
 
-| Track | Status | Modules |
-|-------|--------|---------|
-| Start Here | ✅ Complete | 10 (Mac + Windows setup, quick start, research focus) |
-| Git & GitHub | ✅ Complete | 12-part comprehensive guide |
-| Data Analysis | ✅ Framework | Python intro, R intro (detailed tutorials V1.5) |
-| Agents | ✅ Complete | Using, Building, Products |
-| Advanced Topics | ✅ Complete | Best Practices, Skills, MCP |
-| App Builder | 🟡 Outlined | 4 projects defined |
-| Automation | 🟡 Outlined | 4 projects defined |
+| Track           | Status       | Modules                                               |
+| --------------- | ------------ | ----------------------------------------------------- |
+| Start Here      | ✅ Complete  | 10 (Mac + Windows setup, quick start, research focus) |
+| Git & GitHub    | ✅ Complete  | 12-part comprehensive guide                           |
+| Data Analysis   | ✅ Framework | Python intro, R intro (detailed tutorials V1.5)       |
+| Agents          | ✅ Complete  | Using, Building, Products                             |
+| Advanced Topics | ✅ Complete  | Best Practices, Skills, MCP                           |
+| App Builder     | 🟡 Outlined  | 4 projects defined                                    |
+| Automation      | 🟡 Outlined  | 4 projects defined                                    |
 
 ### Interactive Tools (`/tools/*`)
 
-| Tool | Path | Description |
-|------|------|-------------|
-| Templates | `/tools/templates` | 6 project starters with CLAUDE.md |
-| Snippets | `/tools/snippets` | Copy-paste code patterns |
-| Cheatsheets | `/tools/cheatsheets` | 7 quick reference guides |
-| Slash Commands | `/tools/slash-commands` | Built-in Claude Code commands |
-| CLAUDE.md Generator | `/tools/claude-md-generator` | Interactive form |
-| MCP Explorer | `/tools/mcp-explorer` | MCP server browser |
+| Tool                | Path                         | Description                       |
+| ------------------- | ---------------------------- | --------------------------------- |
+| Templates           | `/tools/templates`           | 6 project starters with CLAUDE.md |
+| Snippets            | `/tools/snippets`            | Copy-paste code patterns          |
+| Cheatsheets         | `/tools/cheatsheets`         | 7 quick reference guides          |
+| Slash Commands      | `/tools/slash-commands`      | Built-in Claude Code commands     |
+| CLAUDE.md Generator | `/tools/claude-md-generator` | Interactive form                  |
+| MCP Explorer        | `/tools/mcp-explorer`        | MCP server browser                |
 
 ### Pages
 
-| Page | Path | Description |
-|------|------|-------------|
-| Home | `/` | Landing with track overview |
+| Page      | Path         | Description                    |
+| --------- | ------------ | ------------------------------ |
+| Home      | `/`          | Landing with track overview    |
 | Resources | `/resources` | Curated links + internal tools |
-| Glossary | `/glossary` | 30+ term definitions |
-| Blog | `/blog` | Articles + RSS feed |
-| Authors | `/authors` | Author profiles |
+| Glossary  | `/glossary`  | 30+ term definitions           |
+| Blog      | `/blog`      | Articles + RSS feed            |
+| Authors   | `/authors`   | Author profiles                |
 
 ### Analytics (GA4 Events)
 
-| Event | Trigger |
-|-------|---------|
-| `scroll_depth` | 25%, 50%, 75%, 100% scroll |
-| `time_on_page` | Every 10 seconds |
-| `code_copy` | Copy button clicked |
-| `module_complete` | Checkbox toggled |
-| `newsletter_signup` | Form submitted |
-| `social_share` | Share button clicked |
+| Event               | Trigger                    |
+| ------------------- | -------------------------- |
+| `scroll_depth`      | 25%, 50%, 75%, 100% scroll |
+| `time_on_page`      | Every 10 seconds           |
+| `code_copy`         | Copy button clicked        |
+| `module_complete`   | Checkbox toggled           |
+| `newsletter_signup` | Form submitted             |
+| `social_share`      | Share button clicked       |
 
 ---
 
 ## Recent Changes (This Session)
 
 ### P4 Polish (Commit: a159d2d)
+
 - Extracted magic numbers to `TIMING` constants
 - Moved track arrays to `ALL_TRACK_SLUGS` and `TRACK_NAMES`
 - Added aria-labels for accessibility
 - Created `logger.ts` for dev-only console output
 
 ### Resources Page Overhaul (Commit: f26a157)
+
 - Added **Quick Reference** section (Cheatsheets, Snippets, Slash Commands)
 - Added **Project Tools** section (Templates, Generator, MCP Explorer)
 - Added Best Practices to Learning Tracks
@@ -138,6 +142,7 @@ public/                     # Static assets
 - Renamed sections for clarity
 
 ### Documentation (Commits: b1953d7, c5b619b)
+
 - Created `PROJECT_BRIEF.md` with quality gates
 - Updated `CLAUDE.md` with V1 launch status
 
@@ -145,27 +150,29 @@ public/                     # Static assets
 
 ## Quality Gates (From PROJECT_BRIEF.md)
 
-| Gate | Checkpoint | Validation |
-|------|------------|------------|
-| 1 | Environment Ready | Claude Code responds |
-| 2 | First Interaction | Quick Start complete |
-| 3 | Version Control | GitHub repo with commits |
-| 4 | Track Selection | Goal + prerequisites |
-| 5 | First Project | Working code + explanation |
-| 6 | Track Mastery | Portfolio + can teach |
-| 7 | Advanced Ready | Core complete |
+| Gate | Checkpoint        | Validation                 |
+| ---- | ----------------- | -------------------------- |
+| 1    | Environment Ready | Claude Code responds       |
+| 2    | First Interaction | Quick Start complete       |
+| 3    | Version Control   | GitHub repo with commits   |
+| 4    | Track Selection   | Goal + prerequisites       |
+| 5    | First Project     | Working code + explanation |
+| 6    | Track Mastery     | Portfolio + can teach      |
+| 7    | Advanced Ready    | Core complete              |
 
 ---
 
 ## Design System
 
 ### Colors (Tailwind)
+
 - **Primary**: `claude-*` (orange-based brand color)
 - **Dark mode**: Full support via `dark:` variants
 
 ### Components (Key Patterns)
 
 **Cards**: Rounded borders, hover effects, icon badges
+
 ```tsx
 className="rounded-xl border border-gray-200 dark:border-gray-700
            bg-white dark:bg-gray-800 p-5
@@ -173,19 +180,22 @@ className="rounded-xl border border-gray-200 dark:border-gray-700
 ```
 
 **Buttons**: Consistent sizing, clear hierarchy
+
 ```tsx
 // Primary
-className="bg-claude-600 text-white hover:bg-claude-500"
+className = 'bg-claude-600 text-white hover:bg-claude-500'
 // Secondary
-className="bg-white border border-gray-200 hover:border-claude-300"
+className = 'bg-white border border-gray-200 hover:border-claude-300'
 ```
 
 **Icons**: lucide-react throughout
+
 ```tsx
 import { BookOpen, Code2, Terminal } from 'lucide-react'
 ```
 
 ### Layout Patterns
+
 - Max width: `max-w-7xl`
 - Padding: `px-4 py-12 sm:px-6 lg:px-8`
 - Grid: `grid gap-4 sm:grid-cols-2 lg:grid-cols-3`
@@ -195,18 +205,20 @@ import { BookOpen, Code2, Terminal } from 'lucide-react'
 ## Content Patterns (MDX)
 
 ### Frontmatter
+
 ```yaml
 ---
-title: "Page Title"
-description: "Meta description"
+title: 'Page Title'
+description: 'Meta description'
 order: 1
-duration: "60 min"
-prerequisites: ["start-here"]
-lastUpdated: "2026-01-14"
+duration: '60 min'
+prerequisites: ['start-here']
+lastUpdated: '2026-01-14'
 ---
 ```
 
 ### Available Components
+
 - `<Steps>` - Numbered walkthrough
 - `<Tabs>` - Platform switcher (Mac/Windows)
 - `<CodeBlock>` - Syntax highlighting + copy
@@ -218,23 +230,24 @@ lastUpdated: "2026-01-14"
 
 ## Files to Know
 
-| File | Purpose |
-|------|---------|
-| `src/lib/constants.ts` | Timing values, track slugs, track names |
-| `src/lib/analytics.ts` | GA4 event tracking functions |
-| `src/lib/metadata.ts` | Site config, SEO defaults |
-| `src/lib/mdx.ts` | Content loading utilities |
-| `src/components/Navigation.tsx` | Main nav + mobile menu |
-| `src/components/Footer.tsx` | Footer with disclaimer |
-| `src/app/resources/page.tsx` | Resources hub (just updated) |
-| `CLAUDE.md` | Project instructions for Claude |
-| `PROJECT_BRIEF.md` | PM handoff with quality gates |
+| File                            | Purpose                                 |
+| ------------------------------- | --------------------------------------- |
+| `src/lib/constants.ts`          | Timing values, track slugs, track names |
+| `src/lib/analytics.ts`          | GA4 event tracking functions            |
+| `src/lib/metadata.ts`           | Site config, SEO defaults               |
+| `src/lib/mdx.ts`                | Content loading utilities               |
+| `src/components/Navigation.tsx` | Main nav + mobile menu                  |
+| `src/components/Footer.tsx`     | Footer with disclaimer                  |
+| `src/app/resources/page.tsx`    | Resources hub (just updated)            |
+| `CLAUDE.md`                     | Project instructions for Claude         |
+| `PROJECT_BRIEF.md`              | PM handoff with quality gates           |
 
 ---
 
 ## Known Constraints
 
 ### Must Maintain
+
 - Cross-platform (Mac + Windows) support in all content
 - Beginner-friendly language (users are smart, not necessarily developers)
 - Mobile responsive design
@@ -242,6 +255,7 @@ lastUpdated: "2026-01-14"
 - Accessibility (aria-labels, semantic HTML)
 
 ### Deferred to V1.5
+
 - User authentication
 - Backend progress persistence (currently localStorage)
 - Detailed Data Analysis tutorials
@@ -249,6 +263,7 @@ lastUpdated: "2026-01-14"
 - Automation project walkthroughs
 
 ### Not Affiliated
+
 Footer includes disclaimer: "Not affiliated with Anthropic"
 
 ---
@@ -311,4 +326,4 @@ All decisions go through the project owner. Development is done entirely with Cl
 
 ---
 
-*Document generated: January 14, 2026*
+_Document generated: January 14, 2026_

@@ -40,14 +40,15 @@ export default function AuthorsPage() {
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
       {/* Page Header */}
       <header className="mb-12 text-center">
-        <div className="mb-4 inline-flex items-center justify-center rounded-full bg-primary-100 dark:bg-primary-900/50 p-3">
+        <div className="mb-4 inline-flex items-center justify-center rounded-full bg-primary-100 p-3 dark:bg-primary-900/50">
           <Users className="h-8 w-8 text-primary-600 dark:text-primary-400" />
         </div>
         <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
           Authors & Contributors
         </h1>
         <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-          Meet the team creating comprehensive learning resources for AI-powered development
+          Meet the team creating comprehensive learning resources for AI-powered
+          development
         </p>
       </header>
 
@@ -57,12 +58,12 @@ export default function AuthorsPage() {
           <Link
             key={author.id}
             href={`/authors/${author.id}`}
-            className="block rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 p-6 shadow-sm hover:shadow-md transition-shadow"
+            className="block rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-gray-700 dark:bg-gray-800/50"
           >
-            <div className="flex flex-col sm:flex-row gap-6">
+            <div className="flex flex-col gap-6 sm:flex-row">
               {/* Avatar */}
               <div className="flex-shrink-0">
-                <div className="h-24 w-24 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
+                <div className="flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-primary-500 to-primary-600">
                   <Users className="h-12 w-12 text-white" />
                 </div>
               </div>
@@ -72,10 +73,12 @@ export default function AuthorsPage() {
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">
                   {author.name}
                 </h2>
-                <p className="text-sm text-primary-600 dark:text-primary-400 font-medium">
+                <p className="text-sm font-medium text-primary-600 dark:text-primary-400">
                   {author.role}
                 </p>
-                <p className="mt-2 text-gray-600 dark:text-gray-300">{author.bio}</p>
+                <p className="mt-2 text-gray-600 dark:text-gray-300">
+                  {author.bio}
+                </p>
 
                 {/* Stats */}
                 <div className="mt-4 flex flex-wrap gap-4 text-sm">
@@ -94,13 +97,13 @@ export default function AuthorsPage() {
                   {author.expertise.slice(0, 4).map((topic) => (
                     <span
                       key={topic}
-                      className="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:text-gray-200"
+                      className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-200"
                     >
                       {topic}
                     </span>
                   ))}
                   {author.expertise.length > 4 && (
-                    <span className="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:text-gray-200">
+                    <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-200">
                       +{author.expertise.length - 4} more
                     </span>
                   )}
@@ -112,19 +115,19 @@ export default function AuthorsPage() {
       </div>
 
       {/* Call to Action */}
-      <div className="mt-12 rounded-2xl bg-gradient-to-br from-primary-50 to-blue-50 dark:from-primary-950/50 dark:to-blue-950/50 border border-primary-200 dark:border-primary-800 p-8 text-center">
+      <div className="mt-12 rounded-2xl border border-primary-200 bg-gradient-to-br from-primary-50 to-blue-50 p-8 text-center dark:border-primary-800 dark:from-primary-950/50 dark:to-blue-950/50">
         <h3 className="text-xl font-bold text-gray-900 dark:text-white">
           Want to Contribute?
         </h3>
         <p className="mt-2 text-gray-600 dark:text-gray-300">
-          We welcome contributions from the community. Help others learn Claude Code by
-          sharing your knowledge.
+          We welcome contributions from the community. Help others learn Claude
+          Code by sharing your knowledge.
         </p>
         <a
           href="https://github.com/anthropics/claude-code"
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700 transition-colors"
+          className="mt-4 inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700"
         >
           <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
             <path

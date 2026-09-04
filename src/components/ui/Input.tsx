@@ -49,7 +49,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
           aria-invalid={error ? 'true' : 'false'}
           aria-describedby={
-            error ? `${inputId}-error` : helperText ? `${inputId}-helper` : undefined
+            error
+              ? `${inputId}-error`
+              : helperText
+                ? `${inputId}-helper`
+                : undefined
           }
           {...props}
         />
@@ -63,10 +67,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           </span>
         )}
         {!error && helperText && (
-          <span
-            id={`${inputId}-helper`}
-            className="text-sm text-gray-600"
-          >
+          <span id={`${inputId}-helper`} className="text-sm text-gray-600">
             {helperText}
           </span>
         )}

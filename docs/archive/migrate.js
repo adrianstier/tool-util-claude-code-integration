@@ -140,7 +140,10 @@ function createMigration(name) {
     process.exit(1)
   }
 
-  const timestamp = new Date().toISOString().replace(/[-:T.]/g, '').slice(0, 14)
+  const timestamp = new Date()
+    .toISOString()
+    .replace(/[-:T.]/g, '')
+    .slice(0, 14)
   const filename = `${timestamp}_${name}.sql`
   const filePath = path.join(MIGRATIONS_DIR, filename)
 

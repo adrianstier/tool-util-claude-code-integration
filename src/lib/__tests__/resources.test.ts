@@ -461,7 +461,10 @@ describe('validateResource', () => {
   })
 
   it('catches invalid category', () => {
-    const invalid = { ...validResource, category: 'invalid' as Resource['category'] }
+    const invalid = {
+      ...validResource,
+      category: 'invalid' as Resource['category'],
+    }
     const result = validateResource(invalid, [invalid])
     expect(result.valid).toBe(false)
     expect(result.errors.some((e) => e.includes('category'))).toBe(true)
