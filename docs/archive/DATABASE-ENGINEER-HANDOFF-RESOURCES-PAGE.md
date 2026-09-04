@@ -1,3 +1,5 @@
+> **Archived 2026-09-04 — superseded.** Companion to the tech-lead handoff; the resources data layer it specifies has shipped. Kept for the rationale, not as a to-do list.
+
 # Database Engineer Implementation Specification: Resources Page Data Layer
 
 **Document Version:** 1.0

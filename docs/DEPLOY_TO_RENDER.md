@@ -1,3 +1,7 @@
+> **Status 2026-09-04 — alternative deployment.** The site deploys to **Vercel**
+> (`vercel.json`); this Render path is a documented fallback and `render.yaml` is
+> kept in sync for it. Use it only if you are deliberately moving off Vercel.
+
 # Deploy to Render
 
 ## Quick Deploy (5 minutes)

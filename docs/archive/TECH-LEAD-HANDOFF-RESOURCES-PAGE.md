@@ -1,3 +1,5 @@
+> **Archived 2026-09-04 — superseded.** This spec was implemented in `0779158` ("refactor: Resources page data layer"). The data layer it describes now lives in `src/data/resources.ts`, `src/lib/resources.ts` and `src/types/resources.ts`. Kept for the rationale, not as a to-do list.
+
 # Technical Architecture Handoff: Resources Page Improvements
 
 **Document Version:** 1.0

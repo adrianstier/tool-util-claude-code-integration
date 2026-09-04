@@ -1,3 +1,5 @@
+> **Archived 2026-09-04 — historical.** Written 2026-01-12 for the V1 launch, which has since shipped at codewithclaude.net. Its status line still reads "Awaiting Stakeholder Review"; the decisions it records were resolved and are reflected in the site. Kept for the positioning, audience and monetization rationale.
+
 # Business Requirements Document (BRD)
 ## Claude Code Learning Hub - V1 Launch
 
