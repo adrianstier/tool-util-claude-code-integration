@@ -65,7 +65,12 @@ export function InfoTable({
       )}
     >
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm">
+        {/* `min-w` keeps the columns readable and lets the wrapper above scroll
+            sideways on a phone. Without it the table shrank to the viewport and
+            crushed a URL column to two characters per line — technically no
+            overflow, but far worse to read than scrolling. `break-words` then
+            stops any single token exceeding that floor. */}
+        <table className="w-full min-w-[34rem] table-auto text-left text-sm [&_td]:break-words [&_th]:break-words">
           <thead>
             <tr className="border-b border-ink-200 bg-ink-50 dark:border-ink-700 dark:bg-ink-800/50">
               {columns.map((col) => (

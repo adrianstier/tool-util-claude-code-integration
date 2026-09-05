@@ -240,6 +240,12 @@
     @apply px-1.5 py-0.5;
     @apply text-primary-700 dark:text-primary-300;
     @apply border border-ink-100 dark:border-ink-700;
+    /* A long unbreakable token — a URL, a package name, a file path — sets the
+       min-content width of whatever contains it. Inside a table cell that
+       forces the table wider than the viewport and pushes the page sideways on
+       a phone. Allow a break anywhere rather than let one token dictate the
+       layout. Applies only to INLINE code; <pre> blocks scroll instead. */
+    overflow-wrap: anywhere;
   }
 
   /* Tables */
