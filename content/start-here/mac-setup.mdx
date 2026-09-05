@@ -84,6 +84,7 @@ Ever downloaded a sketchy `.pkg` file from a random website to install a develop
 <Diagram type="flowchart" caption="Why Homebrew is better">
 {`flowchart LR
     subgraph old["Without Homebrew"]
+        direction LR
         A1[Google the tool] --> A2[Find download page]
         A2 --> A3[Download .pkg/.dmg]
         A3 --> A4[Run installer]
@@ -91,6 +92,7 @@ Ever downloaded a sketchy `.pkg` file from a random website to install a develop
     end
 
     subgraph new["With Homebrew"]
+        direction LR
         B1[brew install tool] --> B2[Done]
         B2 --> B3[Auto-updates]
     end

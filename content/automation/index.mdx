@@ -297,29 +297,16 @@ python undo_rename.py
 **The solution**: An automated ETL (Extract, Transform, Load) pipeline.
 
 <Diagram title="ETL Pipeline Architecture" type="flowchart">
-{`flowchart TB
-    subgraph extract[Extract]
-        E1[API] --> E2[Fetch Data]
-        E2 --> E3[Validate Response]
-    end
+{`flowchart LR
+    extract["Extract<br/>Call the API<br/>Fetch data<br/>Validate response"]
+    transform["Transform<br/>Clean data<br/>Apply business logic<br/>Format output"]
+    load["Load<br/>Write to database<br/>Generate report<br/>Send notification"]
 
-    subgraph transform[Transform]
-        T1[Clean Data]
-        T2[Apply Business Logic]
-        T3[Format Output]
-        T1 --> T2 --> T3
-    end
+    extract --> transform --> load
 
-    subgraph load[Load]
-        L1[Database]
-        L2[Generate Report]
-        L3[Send Notification]
-    end
-
-    E3 --> T1
-    T3 --> L1
-    L1 --> L2
-    L2 --> L3
+    class extract data
+    class transform process
+    class load result
 `}
 </Diagram>
 

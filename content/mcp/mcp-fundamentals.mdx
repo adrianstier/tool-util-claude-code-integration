@@ -39,6 +39,10 @@ MCP uses a three-layer architecture. This is not a simple "client talks to serve
     C1 ---|"dedicated\nconnection"| S1
     C2 ---|"dedicated\nconnection"| S2
     C3 ---|"dedicated\nconnection"| S3
+
+    class LLM actor
+    class C1,C2,C3 process
+    class S1,S2,S3 data
 `}
 </Diagram>
 
@@ -332,7 +336,7 @@ This works in `command`, `args`, `env`, `url`, and `headers` fields. Essential f
 Here is what happens when you ask Claude a question that requires external data:
 
 <Diagram title="MCP Lifecycle" type="flowchart">
-{`flowchart TB
+{`flowchart LR
     A["You ask:\n'Check Sentry for auth errors'"] --> B["Claude Code connects\nto configured servers"]
     B --> C["Tool Discovery\n(tools/list)"]
     C --> D["Claude sees tools,\ndecides to call\nsentry.list_issues"]

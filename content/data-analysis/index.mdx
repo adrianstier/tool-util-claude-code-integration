@@ -73,29 +73,16 @@ You'll use: tidyverse, ggplot2, dplyr, RMarkdown.
 ## What You'll Learn
 
 <Diagram title="Skills You'll Build" type="flowchart">
-{`flowchart TB
-    subgraph foundation["Foundation"]
-        A[Project Setup]
-        B[Data Import]
-    end
+{`flowchart LR
+    foundation["Foundation<br/>Project setup<br/>Data import"]
+    core["Core Skills<br/>Data cleaning<br/>Transformation<br/>Visualization"]
+    advanced["Advanced<br/>Modeling<br/>Reporting"]
 
-    subgraph core["Core Skills"]
-        C[Data Cleaning]
-        D[Transformation]
-        E[Visualization]
-    end
+    foundation --> core --> advanced
 
-    subgraph advanced["Advanced"]
-        F[Modeling]
-        G[Reporting]
-    end
-
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-    F --> G
+    class foundation actor
+    class core process
+    class advanced result
 `}
 </Diagram>
 
@@ -115,7 +102,7 @@ You'll use: tidyverse, ggplot2, dplyr, RMarkdown.
 Every data project follows the same pattern:
 
 <Diagram title="Analysis Workflow" type="flowchart" caption="This cycle repeats constantly">
-{`flowchart TB
+{`flowchart LR
     A[1. Ask a question] --> B[2. Get the data]
     B --> C[3. Clean it]
     C --> D[4. Explore]

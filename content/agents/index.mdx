@@ -12,16 +12,22 @@ An agent can research a topic across dozens of sources, write a report, and emai
 <Diagram title="The Agent Difference" type="flowchart" caption="Chatbots wait for you. Agents work for you.">
 {`flowchart LR
     subgraph chatbot["Chatbot"]
+        direction LR
         A1[You ask] --> A2[It answers]
         A2 --> A3[You ask again]
     end
 
     subgraph agent["Agent"]
+        direction LR
         B1[You set goal] --> B2[It plans]
         B2 --> B3[It acts]
         B3 --> B4[It adapts]
         B4 --> B5[Goal achieved]
     end
+
+    class A1,B1 actor
+    class A2,A3,B2,B3,B4 process
+    class B5 result
 `}
 </Diagram>
 
@@ -40,13 +46,16 @@ This track assumes you've completed [Start Here](/start-here) and are comfortabl
 Every agent follows the same loop:
 
 <Diagram title="The Agent Loop" type="flowchart">
-{`flowchart TB
+{`flowchart LR
     A[Observe] --> B[Think]
     B --> C[Plan]
     C --> D[Act]
     D --> E[Reflect]
     E -->|Continue?| A
     E -->|Done| F[Return Result]
+
+    class A,B,C,D,E process
+    class F result
 `}
 </Diagram>
 

@@ -147,7 +147,11 @@ export default function CodeBlock({
       {/* Code Content */}
       <div className="relative bg-ink-950 dark:bg-ink-950">
         <pre className="overflow-x-auto p-0 text-sm">
-          <code className={`language-${language} block`}>
+          {/* `min-w-max` makes the rows as wide as their longest line so the
+              <pre> above actually scrolls. Without it the rows were capped at
+              the container width and long lines escaped sideways, widening the
+              whole document on a phone. */}
+          <code className={`language-${language} block min-w-max`}>
             {lines.map((line, index) => {
               const lineNumber = index + 1
               const isHighlighted = highlightLines.includes(lineNumber)
@@ -175,7 +179,11 @@ export default function CodeBlock({
                   )}
                   <span
                     className={cn(
-                      'flex-1 px-4 py-0.5 text-ink-100',
+                      // `whitespace-pre` + no flex-grow: the line is sized by
+                      // its content, which is what lets the <pre> scroll.
+                      // `flex-1` sized it to the container instead, so the text
+                      // overflowed the element rather than the scroll box.
+                      'whitespace-pre px-4 py-0.5 text-ink-100',
                       !shouldShowLineNumbers && 'px-6'
                     )}
                   >

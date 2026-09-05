@@ -130,32 +130,17 @@ Claude updates CLAUDE.md for you.
 **The most important workflow. Master this first.**
 
 <Diagram title="Detailed Workflow Steps" type="flowchart">
-{`flowchart TB
-    subgraph explore[1. Explore]
-        E1[Read relevant files]
-        E2[Understand architecture]
-        E3[Ask clarifying questions]
-    end
-
-    subgraph plan[2. Plan]
-        P1[Use 'think' mode]
-        P2[Break into steps]
-        P3[Identify risks]
-    end
-
-    subgraph code[3. Code]
-        C1[Follow the plan]
-        C2[One step at a time]
-        C3[Test as you go]
-    end
-
-    subgraph commit[4. Commit]
-        D1[Review changes]
-        D2[Write clear message]
-        D3[Push to remote]
-    end
+{`flowchart LR
+    explore["1. Explore<br/>Read relevant files<br/>Understand architecture<br/>Ask clarifying questions"]
+    plan["2. Plan<br/>Use 'think' mode<br/>Break into steps<br/>Identify risks"]
+    code["3. Code<br/>Follow the plan<br/>One step at a time<br/>Test as you go"]
+    commit["4. Commit<br/>Review changes<br/>Write clear message<br/>Push to remote"]
 
     explore --> plan --> code --> commit
+
+    class explore actor
+    class plan,code process
+    class commit result
 `}
 </Diagram>
 

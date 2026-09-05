@@ -277,26 +277,16 @@ Cursor shows diffs for all affected files. Review and apply.
 Use all three together:
 
 <Diagram title="Full Integration" type="flowchart">
-{`flowchart TB
-    subgraph exploration[1. Explore]
-        E1[Claude Code + MCP]
-        E2[Query database]
-        E3[Search codebase]
-    end
-
-    subgraph development[2. Develop]
-        D1[Cursor IDE]
-        D2[Inline edits]
-        D3[Multi-file changes]
-    end
-
-    subgraph integration[3. Integrate]
-        I1[Claude Code]
-        I2[Git operations]
-        I3[Deploy]
-    end
+{`flowchart LR
+    exploration["1. Explore<br/>Claude Code + MCP<br/>Query database<br/>Search codebase"]
+    development["2. Develop<br/>Cursor IDE<br/>Inline edits<br/>Multi-file changes"]
+    integration["3. Integrate<br/>Claude Code<br/>Git operations<br/>Deploy"]
 
     exploration --> development --> integration
+
+    class exploration actor
+    class development process
+    class integration result
 `}
 </Diagram>
 
