@@ -10,7 +10,7 @@ Chatbots answer questions. Agents get things done.
 An agent can research a topic across dozens of sources, write a report, and email it to your team—all while you're in a meeting. This track teaches you to build autonomous systems that work independently on complex, multi-step tasks.
 
 <Diagram title="The Agent Difference" type="flowchart" caption="Chatbots wait for you. Agents work for you.">
-{`flowchart LR
+{`flowchart TB
     subgraph chatbot["Chatbot"]
         direction LR
         A1[You ask] --> A2[It answers]
@@ -24,6 +24,8 @@ An agent can research a topic across dozens of sources, write a report, and emai
         B3 --> B4[It adapts]
         B4 --> B5[Goal achieved]
     end
+
+    chatbot ~~~ agent
 
     class A1,B1 actor
     class A2,A3,B2,B3,B4 process

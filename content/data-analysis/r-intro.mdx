@@ -292,11 +292,10 @@ sales %>%
 
 <Diagram title="dplyr Verbs" type="flowchart">
 {`flowchart LR
-    A[filter] -->|"Keep rows matching condition"| B[select]
-    B -->|"Keep/drop columns"| C[mutate]
-    C -->|"Create new columns"| D[group_by]
-    D -->|"Group for aggregation"| E[summarize]
-    E -->|"Calculate summaries"| F[Result]
+    A[filter] --> B[select] --> C[mutate] --> D[group_by] --> E[summarize] --> F[Result]
+
+    class A,B,C,D,E process
+    class F result
 `}
 </Diagram>
 
