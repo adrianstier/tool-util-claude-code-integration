@@ -103,7 +103,7 @@ export default function Navigation({
               <span className="font-display text-lg font-bold tracking-tight text-ink-900 dark:text-paper-50">
                 Claude Code
               </span>
-              <span className="block text-xs font-medium uppercase tracking-wide text-ink-500 dark:text-ink-400">
+              <span className="block text-xs font-medium uppercase tracking-wide text-ink-600 dark:text-ink-300">
                 Learning Hub
               </span>
             </div>
@@ -205,7 +205,7 @@ export default function Navigation({
                     <span className="font-medium">{item.name}</span>
                     {item.description && (
                       <span
-                        className={`mt-0.5 block text-xs ${active ? 'text-primary-600 dark:text-primary-400' : 'text-ink-500 dark:text-ink-400'}`}
+                        className={`mt-0.5 block text-xs ${active ? 'text-primary-600 dark:text-primary-400' : 'text-ink-600 dark:text-ink-300'}`}
                       >
                         {item.description}
                       </span>

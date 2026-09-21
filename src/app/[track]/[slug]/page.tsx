@@ -359,7 +359,7 @@ export default async function ContentPage({ params }: PageProps) {
                   </div>
                 )}
                 {frontmatter.platform && (
-                  <div className="flex items-center gap-1.5 text-ink-500 dark:text-ink-400">
+                  <div className="flex items-center gap-1.5 text-ink-600 dark:text-ink-300">
                     <PlatformIcon className="h-4 w-4" />
                     <span className="capitalize">{frontmatter.platform}</span>
                   </div>

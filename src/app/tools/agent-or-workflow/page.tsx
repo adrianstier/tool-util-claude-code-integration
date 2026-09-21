@@ -167,7 +167,7 @@ export default function AgentOrWorkflowPage() {
         <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
           <Link
             href="/agents"
-            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-600 dark:text-ink-400 dark:hover:text-primary-400"
+            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
           >
             <ArrowLeft className="h-4 w-4" />
             Agents track
@@ -191,7 +191,7 @@ export default function AgentOrWorkflowPage() {
 
       <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <div className="mb-2 flex items-center justify-between text-sm text-ink-500 dark:text-ink-400">
+          <div className="mb-2 flex items-center justify-between text-sm text-ink-600 dark:text-ink-300">
             <span>
               {answered} of {QUESTIONS.length} answered
             </span>
@@ -226,7 +226,7 @@ export default function AgentOrWorkflowPage() {
                 </span>
                 {q.question}
               </h2>
-              <p className="mb-4 text-sm text-ink-500 dark:text-ink-400">
+              <p className="mb-4 text-sm text-ink-600 dark:text-ink-300">
                 {q.help}
               </p>
 
@@ -279,7 +279,7 @@ export default function AgentOrWorkflowPage() {
 
             {notes.length > 0 && (
               <div className="mb-4 rounded-lg bg-white/70 p-4 dark:bg-ink-900/60">
-                <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-ink-500 dark:text-ink-400">
+                <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-ink-600 dark:text-ink-300">
                   Worth noting
                 </h3>
                 <ul className="list-disc space-y-1.5 pl-5 text-sm text-ink-600 dark:text-ink-300">
@@ -293,19 +293,19 @@ export default function AgentOrWorkflowPage() {
             <div className="flex flex-wrap gap-4 text-sm font-medium">
               <Link
                 href="/agents/building-agents"
-                className="text-primary-600 hover:underline dark:text-primary-400"
+                className="text-primary-600 underline underline-offset-2 dark:text-primary-400"
               >
                 Building agents →
               </Link>
               <Link
                 href="/tools/slash-commands"
-                className="text-primary-600 hover:underline dark:text-primary-400"
+                className="text-primary-600 underline underline-offset-2 dark:text-primary-400"
               >
                 Slash commands →
               </Link>
               <Link
                 href="/advanced-topics/plugins-and-hooks"
-                className="text-primary-600 hover:underline dark:text-primary-400"
+                className="text-primary-600 underline underline-offset-2 dark:text-primary-400"
               >
                 Hooks →
               </Link>
@@ -313,7 +313,7 @@ export default function AgentOrWorkflowPage() {
           </div>
         )}
 
-        <p className="mt-8 text-sm text-ink-500 dark:text-ink-400">
+        <p className="mt-8 text-sm text-ink-600 dark:text-ink-300">
           The criteria here follow the evaluation checklist in Anthropic&apos;s
           &ldquo;How We Build Effective Agents&rdquo;. The scoring is ours, and
           is meant to surface the trade-offs rather than settle them.

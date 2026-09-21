@@ -122,13 +122,13 @@ export default function VideoEmbed({
         </div>
       </div>
 
-      <figcaption className="mt-2 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm text-ink-600 dark:text-ink-400">
+      <figcaption className="mt-2 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm text-ink-600 dark:text-ink-300">
         {caption ? <span className="max-w-prose">{caption}</span> : <span />}
         <a
           href={watchUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex shrink-0 items-center gap-1 text-ink-500 hover:text-primary-600 dark:text-ink-500 dark:hover:text-primary-400"
+          className="inline-flex shrink-0 items-center gap-1 text-ink-600 underline underline-offset-2 hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
         >
           Watch on YouTube
           <ExternalLink className="h-3 w-3" aria-hidden="true" />

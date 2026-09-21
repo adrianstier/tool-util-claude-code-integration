@@ -246,6 +246,16 @@ export default function Diagram({
         <div
           ref={scrollRef}
           onScroll={measure}
+          // A container that scrolls but cannot be focused is unreachable by
+          // keyboard (WCAG 2.1.1). Only take a tab stop when there is actually
+          // something to scroll to, so non-overflowing diagrams add no dead stops.
+          tabIndex={canScroll || isExpanded ? 0 : undefined}
+          role={canScroll || isExpanded ? 'group' : undefined}
+          aria-label={
+            canScroll || isExpanded
+              ? `${title || 'Diagram'} — scrollable, use arrow keys`
+              : undefined
+          }
           className={cn(
             // Scroll rather than shrink. The previous `overflow-hidden` with
             // `max-w-full` scaled an 800px diagram into a 308px phone column,

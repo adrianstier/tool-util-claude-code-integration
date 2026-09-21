@@ -199,7 +199,7 @@ export default function CodeBlock({
       {/* Caption */}
       {caption && (
         <div className="border-t border-ink-200 bg-ink-50 px-4 py-2 dark:border-ink-700 dark:bg-ink-800/50">
-          <p className="text-center text-xs text-ink-500 dark:text-ink-400">
+          <p className="text-center text-xs text-ink-600 dark:text-ink-300">
             {caption}
           </p>
         </div>

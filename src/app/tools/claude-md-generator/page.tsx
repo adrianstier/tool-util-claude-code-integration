@@ -273,10 +273,11 @@ their own file, referenced here, and loaded only when the task matches:
 
             {/* Project Type */}
             <div>
-              <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-300">
+              <label htmlFor="cmd-projectType" className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-300">
                 Project Type *
               </label>
               <select
+                id="cmd-projectType"
                 value={config.projectType}
                 onChange={(e) =>
                   setConfig({ ...config, projectType: e.target.value })
@@ -293,10 +294,11 @@ their own file, referenced here, and loaded only when the task matches:
 
             {/* Language */}
             <div>
-              <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-300">
+              <label htmlFor="cmd-language" className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-300">
                 Primary Language *
               </label>
               <select
+                id="cmd-language"
                 value={config.language}
                 onChange={(e) =>
                   setConfig({
@@ -317,10 +319,11 @@ their own file, referenced here, and loaded only when the task matches:
 
             {/* Framework */}
             <div>
-              <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-300">
+              <label htmlFor="cmd-framework" className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-300">
                 Framework
               </label>
               <select
+                id="cmd-framework"
                 value={config.framework}
                 onChange={(e) =>
                   setConfig({ ...config, framework: e.target.value })

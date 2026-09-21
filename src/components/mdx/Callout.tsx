@@ -83,7 +83,7 @@ const calloutConfig: Record<
     bgColor: 'bg-ink-50/50 dark:bg-ink-900/50',
     borderColor: 'border-l-ink-500',
     titleColor: 'text-ink-900 dark:text-ink-100',
-    accentColor: 'bg-ink-500',
+    accentColor: 'bg-ink-600',
   },
   note: {
     icon: Zap,

@@ -77,7 +77,7 @@ export default function Footer() {
                 <span className="block font-display text-lg font-bold tracking-tight text-ink-900 dark:text-paper-50">
                   Claude Code
                 </span>
-                <span className="block text-xs font-medium uppercase tracking-wide text-ink-500 dark:text-ink-400">
+                <span className="block text-xs font-medium uppercase tracking-wide text-ink-600 dark:text-ink-300">
                   Learning Hub
                 </span>
               </div>
@@ -203,7 +203,7 @@ export default function Footer() {
                 href="https://opensource.org/licenses/MIT"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
+                className="text-primary-600 underline underline-offset-2 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
               >
                 MIT License
               </a>

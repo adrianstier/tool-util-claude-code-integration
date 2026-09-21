@@ -42,7 +42,7 @@ export function InfoTable({
                     {row[col.key]}
                   </h4>
                 ) : (
-                  <p className="text-sm leading-relaxed text-ink-600 dark:text-ink-400">
+                  <p className="text-sm leading-relaxed text-ink-600 dark:text-ink-300">
                     <span className="font-medium text-ink-600 dark:text-ink-300">
                       {col.header}:
                     </span>{' '}
@@ -105,7 +105,7 @@ export function InfoTable({
                       'px-4 py-3',
                       colIndex === 0
                         ? 'font-medium text-ink-900 dark:text-ink-100'
-                        : 'text-ink-600 dark:text-ink-400',
+                        : 'text-ink-600 dark:text-ink-300',
                       col.className
                     )}
                   >
@@ -202,7 +202,7 @@ export function InfoCard({
         {title}
       </h4>
       {description && (
-        <p className="mb-2 text-sm leading-relaxed text-ink-600 dark:text-ink-400">
+        <p className="mb-2 text-sm leading-relaxed text-ink-600 dark:text-ink-300">
           {description}
         </p>
       )}

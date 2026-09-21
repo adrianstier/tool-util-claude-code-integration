@@ -64,7 +64,7 @@ export default async function PresetPage({
         <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
           <Link
             href="/tools/claude-md-generator"
-            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-600 dark:text-ink-400 dark:hover:text-primary-400"
+            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
           >
             <ArrowLeft className="h-4 w-4" />
             CLAUDE.md generator
@@ -117,7 +117,12 @@ export default async function PresetPage({
           <CopyButton text={file} filename="CLAUDE.md" />
         </div>
 
-        <pre className="mb-8 overflow-x-auto rounded-xl bg-ink-950 p-6 text-sm leading-relaxed text-paper-100">
+        <pre
+          tabIndex={0}
+          role="group"
+          aria-label="CLAUDE.md file contents, scrollable"
+          className="mb-8 overflow-x-auto rounded-xl bg-ink-950 p-6 text-sm leading-relaxed text-paper-100"
+        >
           <code>{file}</code>
         </pre>
 
@@ -139,7 +144,7 @@ export default async function PresetPage({
                 <code className="rounded bg-paper-100 px-2 py-0.5 text-sm dark:bg-ink-800">
                   .claude/playbooks/{p.file}
                 </code>
-                <span className="text-sm text-ink-500 dark:text-ink-400">
+                <span className="text-sm text-ink-600 dark:text-ink-300">
                   {p.when}
                 </span>
               </li>

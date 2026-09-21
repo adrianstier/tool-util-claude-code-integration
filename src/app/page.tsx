@@ -338,7 +338,7 @@ export default function Home() {
               </div>
 
               {/* Social proof */}
-              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-sm text-ink-500 dark:text-ink-400">
+              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-sm text-ink-600 dark:text-ink-300">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="h-4 w-4 text-ink-400" />
                   <span>Free</span>
@@ -410,7 +410,7 @@ export default function Home() {
 
                     {/* Footer */}
                     <div className="mt-auto flex items-center justify-between border-t border-ink-100 pt-4 dark:border-ink-800">
-                      <span className="text-xs text-ink-500 dark:text-ink-400">
+                      <span className="text-xs text-ink-600 dark:text-ink-300">
                         {stats.durationLabel}
                       </span>
                       <span
@@ -422,7 +422,7 @@ export default function Home() {
 
                     {/* Arrow indicator */}
                     <div className="absolute right-6 top-6 -translate-x-2 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-                      <ArrowRight className="h-4 w-4 text-ink-500 dark:text-ink-400" />
+                      <ArrowRight className="h-4 w-4 text-ink-600 dark:text-ink-300" />
                     </div>
                   </Link>
                 )

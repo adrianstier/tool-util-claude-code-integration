@@ -177,7 +177,7 @@ export default function WhatsNewPage() {
         <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
           <Link
             href="/"
-            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-600 dark:text-ink-400 dark:hover:text-primary-400"
+            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
@@ -199,14 +199,14 @@ export default function WhatsNewPage() {
             it changes about the way you work.
           </p>
 
-          <p className="mt-4 text-sm text-ink-500 dark:text-ink-400">
+          <p className="mt-4 text-sm text-ink-600 dark:text-ink-300">
             Covering releases through <strong>2.1.278</strong> · last reviewed{' '}
             <time dateTime="2026-09-21">21 September 2026</time> ·{' '}
             <a
               href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-primary-600 hover:underline dark:text-primary-400"
+              className="inline-flex items-center gap-1 text-primary-600 underline underline-offset-2 dark:text-primary-400"
             >
               official changelog
               <ExternalLink className="h-3 w-3" aria-hidden="true" />

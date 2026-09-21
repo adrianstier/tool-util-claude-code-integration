@@ -58,9 +58,9 @@ function getFileIcon(filename: string) {
     return <FileJson className="h-4 w-4 text-yellow-500 dark:text-yellow-400" />
   }
   if (textExtensions.includes(ext || '')) {
-    return <FileText className="h-4 w-4 text-ink-600 dark:text-ink-400" />
+    return <FileText className="h-4 w-4 text-ink-600 dark:text-ink-300" />
   }
-  return <File className="h-4 w-4 text-ink-500 dark:text-ink-400" />
+  return <File className="h-4 w-4 text-ink-600 dark:text-ink-300" />
 }
 
 // FileTree component with static properties for dot notation
@@ -133,7 +133,7 @@ function FileNodeComponent({
       className={cn(
         '-ml-2 flex items-center gap-2 rounded-md px-2 py-1',
         highlight && 'bg-primary-100/50 dark:bg-primary-900/30',
-        'text-ink-600 dark:text-ink-400',
+        'text-ink-600 dark:text-ink-300',
         className
       )}
     >

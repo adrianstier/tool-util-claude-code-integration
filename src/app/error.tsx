@@ -24,7 +24,7 @@ export default function Error({
         <h1 className="mb-4 text-3xl font-bold text-ink-900 dark:text-white">
           Something went wrong
         </h1>
-        <p className="mx-auto mb-8 max-w-md text-ink-600 dark:text-ink-400">
+        <p className="mx-auto mb-8 max-w-md text-ink-600 dark:text-ink-300">
           An unexpected error occurred. You can try again or head back to the
           homepage to continue your learning journey.
         </p>

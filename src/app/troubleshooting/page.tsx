@@ -182,7 +182,7 @@ export default function TroubleshootingPage() {
         <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
           <Link
             href="/"
-            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-600 dark:text-ink-400 dark:hover:text-primary-400"
+            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
@@ -239,12 +239,17 @@ export default function TroubleshootingPage() {
               </div>
 
               {issue.error && (
-                <pre className="mb-4 overflow-x-auto rounded-lg bg-ink-950 p-4 text-sm text-red-300">
+                <pre
+                  tabIndex={0}
+                  role="group"
+                  aria-label="Error message, scrollable"
+                  className="mb-4 overflow-x-auto rounded-lg bg-ink-950 p-4 text-sm text-red-300"
+                >
                   <code>{issue.error}</code>
                 </pre>
               )}
 
-              <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-ink-500 dark:text-ink-400">
+              <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-ink-600 dark:text-ink-300">
                 What is actually going on
               </h3>
               <ul className="mb-4 list-disc space-y-1.5 pl-5 text-ink-600 dark:text-ink-300">
@@ -253,13 +258,18 @@ export default function TroubleshootingPage() {
                 ))}
               </ul>
 
-              <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-ink-500 dark:text-ink-400">
+              <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-ink-600 dark:text-ink-300">
                 The fix
               </h3>
               <p className="mb-3 text-ink-700 dark:text-ink-200">{issue.fix}</p>
 
               {issue.code && (
-                <pre className="mb-3 overflow-x-auto rounded-lg bg-ink-950 p-4 text-sm text-paper-100">
+                <pre
+                  tabIndex={0}
+                  role="group"
+                  aria-label="Commands, scrollable"
+                  className="mb-3 overflow-x-auto rounded-lg bg-ink-950 p-4 text-sm text-paper-100"
+                >
                   <code>{issue.code}</code>
                 </pre>
               )}
@@ -291,7 +301,7 @@ export default function TroubleshootingPage() {
             configuration in depth, and{' '}
             <Link
               href="/whats-new"
-              className="text-primary-600 hover:underline dark:text-primary-400"
+              className="text-primary-600 underline underline-offset-2 dark:text-primary-400"
             >
               What&apos;s New
             </Link>{' '}
