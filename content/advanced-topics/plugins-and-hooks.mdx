@@ -3,7 +3,7 @@ title: 'Plugins and Hooks — Extend and Customize Claude Code'
 description: 'Find, install, and create plugins for Claude Code, and use hooks to control agent behavior'
 order: 4
 duration: '35 minutes'
-lastUpdated: "2026-03-28"
+lastUpdated: "2026-09-21"
 ---
 
 Skills are single markdown files. Plugins are full packages — bundling skills, agents, hooks, and MCP servers into one installable unit. If skills are functions, plugins are libraries.
@@ -319,6 +319,13 @@ Users can override these defaults in their own settings.
 ---
 
 ## Hooks Deep Dive
+
+<VideoEmbed
+  id="IkaPHiMDazM"
+  title="Hooks in Claude Code"
+  channel="Claude"
+  caption="Three minutes on what a hook intercepts and when it fires — worth watching before the event reference below."
+/>
 
 Hooks are the lowest-level extension mechanism in Claude Code. They intercept specific points in Claude's lifecycle and run your code — a shell command or an HTTP request — before or after the action proceeds.
 
