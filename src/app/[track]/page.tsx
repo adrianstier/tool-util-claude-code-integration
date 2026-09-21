@@ -25,6 +25,7 @@ import {
   InfoGrid,
   InfoRow,
   InfoRows,
+  VideoEmbed,
 } from '@/components/mdx'
 import {
   getTrackPageMetadata,
@@ -184,6 +185,7 @@ const components = {
   InfoGrid,
   InfoRow,
   InfoRows,
+  VideoEmbed,
   // Map MDX code blocks to our CodeBlock component
   pre: ({ children }: { children?: React.ReactNode }) => {
     // Extract code content and language from children

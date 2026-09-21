@@ -18,6 +18,7 @@ import {
   Checklist,
   ChecklistItem,
   Diagram,
+  VideoEmbed,
 } from '@/components/mdx'
 
 interface BlogPostPageProps {
@@ -73,6 +74,7 @@ const components = {
   Checklist,
   ChecklistItem,
   Diagram,
+  VideoEmbed,
   pre: ({ children }: { children?: React.ReactNode }) => {
     const child = (
       children as { props?: { children?: string; className?: string } }

@@ -2,8 +2,8 @@
 title: 'Claude Code Best Practices'
 description: 'Master Claude Code with proven workflows, optimization strategies, and expert techniques'
 order: 1
-duration: '20 minutes'
-lastUpdated: "2026-03-25"
+duration: '23 minutes'
+lastUpdated: "2026-09-21"
 ---
 
 These aren't theoretical suggestions. They're battle-tested workflows from Anthropic engineers who use Claude Code every day. Follow these patterns, and you'll avoid 80% of common frustrations.
@@ -30,6 +30,14 @@ Following "Explore → Plan → Code → Commit" prevents 80% of common issues. 
 ### CLAUDE.md — Your Secret Weapon
 
 CLAUDE.md files are persistent instructions that Claude reads every time. Think of them as programming Claude for your specific project.
+
+<VideoEmbed
+  id="rfDvkSkelhg"
+  title="6 Months of Claude Code Lessons in 27 Minutes"
+  channel="AI with Avthar"
+  start="8:05"
+  caption="Two minutes on treating CLAUDE.md as your project's memory, and on telling Claude to keep it updated as the project changes."
+/>
 
 <Diagram title="CLAUDE.md Hierarchy" type="flowchart">
 {`flowchart TB
@@ -68,6 +76,40 @@ NEVER: Use `any` type—use `unknown` instead.
 - Avoid mocks unless necessary
 - Test edge cases: empty arrays, null, errors
 ```
+
+#### Keep It Thin: Route to Playbooks
+
+CLAUDE.md is read at the start of every task, so everything in it costs context on
+every task — including the long procedure you only need once a month. Past a few
+hundred lines it starts crowding out the actual work.
+
+The fix is to move long procedures into their own files and leave a routing rule behind:
+
+<FileTree>
+  <FolderNode name=".claude">
+    <FolderNode name="playbooks">
+      <FileNode name="release.md" />
+      <FileNode name="data-migration.md" />
+    </FolderNode>
+  </FolderNode>
+  <FileNode name="CLAUDE.md" />
+</FileTree>
+
+Then in CLAUDE.md, one line per playbook:
+
+```markdown
+## Playbooks
+- Cutting a release → read `.claude/playbooks/release.md` first
+- Migrating production data → read `.claude/playbooks/data-migration.md` first
+```
+
+Claude loads the playbook only when the task matches. You keep the detail without
+paying for it on every unrelated request.
+
+<Callout type="tip">
+A good rule of thumb: if a section of CLAUDE.md applies to fewer than one task in ten,
+it belongs in a playbook.
+</Callout>
 
 #### Emphasis Keywords
 
@@ -128,6 +170,14 @@ Claude updates CLAUDE.md for you.
 ### Workflow 1: Explore → Plan → Code → Commit
 
 **The most important workflow. Master this first.**
+
+<VideoEmbed
+  id="rfDvkSkelhg"
+  title="6 Months of Claude Code Lessons in 27 Minutes"
+  channel="AI with Avthar"
+  start="11:15"
+  caption="Plan mode in practice — press Shift+Tab until the mode indicator changes, and Claude proposes a plan before touching any code."
+/>
 
 <Diagram title="Detailed Workflow Steps" type="flowchart">
 {`flowchart LR

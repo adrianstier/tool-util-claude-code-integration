@@ -3,8 +3,8 @@ title: 'macOS Setup Guide'
 description: 'Complete setup guide for Claude Code, VS Code, and Git/GitHub on macOS'
 order: 1
 platform: 'mac'
-duration: '60 minutes'
-lastUpdated: "2026-03-25"
+duration: '63 minutes'
+lastUpdated: "2026-09-21"
 ---
 
 By the end of this guide, you'll have a professional development environment on your Mac—the same setup used by engineers at top tech companies.
@@ -298,6 +298,13 @@ npm --version   # Should show 10+ or similar
 
 Now the reason you're here. Claude Code understands your entire codebase and can read files, write code, run commands, and help you ship real projects.
 
+<VideoEmbed
+  id="kddjxKEeCuM"
+  title="How to Set Up Claude Code in 2026 (Beginner Tutorial)"
+  channel="Leon van Zyl"
+  caption="If you'd rather watch the install before doing it, this covers the same ground as the steps below."
+/>
+
 <Tabs>
   <TabList>
     <Tab>VS Code Extension</Tab>
@@ -341,6 +348,23 @@ claude login
 
 <Callout type="note">
 The CLI is optional. Most people just use the VS Code extension.
+</Callout>
+
+#### Run `/terminal-setup` first
+
+Once you're in a session, run this before anything else:
+
+```
+/terminal-setup
+```
+
+It rebinds <Kbd>Shift</Kbd>+<Kbd>Enter</Kbd> to insert a newline. Without it, pressing
+Enter to start a second line submits your half-written prompt instead — the single most
+common thing that makes a first session feel broken.
+
+<Callout type="tip">
+Two more worth knowing on day one: `/context` shows how much of the context window
+you've used, and `/clear` resets the conversation between unrelated tasks.
 </Callout>
 
   </TabPanel>
