@@ -201,9 +201,7 @@ ${SHARED_WORKFLOW}`,
     name: 'CLI Tool',
     tagline: 'A command-line tool where the interface is the contract.',
     stack: ['TypeScript or Python', 'argument parser', 'integration tests'],
-    playbooks: [
-      { file: 'release.md', when: 'Publishing a new version' },
-    ],
+    playbooks: [{ file: 'release.md', when: 'Publishing a new version' }],
     content: `# <project name>
 
 <What the tool does, in one line, as a user would describe it.>

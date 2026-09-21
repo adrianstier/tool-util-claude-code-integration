@@ -36,9 +36,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       secondary:
         'bg-gray-100 text-gray-900 hover:bg-gray-200 focus-visible:ring-gray-500',
       outline:
-        'border-2 border-primary-600 text-primary-600 hover:bg-primary-50 focus-visible:ring-primary-500',
+        'border-2 border-primary-700 text-primary-700 hover:bg-primary-50 focus-visible:ring-primary-500',
       ghost:
-        'text-gray-700 hover:bg-gray-100 hover:text-primary-600 focus-visible:ring-gray-500',
+        'text-gray-700 hover:bg-gray-100 hover:text-primary-700 focus-visible:ring-gray-500',
       danger:
         'bg-error-600 text-white shadow-md hover:bg-error-700 hover:shadow-lg focus-visible:ring-error-500',
     }

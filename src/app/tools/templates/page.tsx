@@ -458,7 +458,7 @@ export default function TemplatesPage() {
         <div className="mb-8">
           <Link
             href="/"
-            className="mb-4 inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+            className="mb-4 inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary-700 dark:text-gray-400 dark:hover:text-primary-400"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
@@ -480,7 +480,7 @@ export default function TemplatesPage() {
               onClick={() => setSelectedCategory(category)}
               className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                 selectedCategory === category
-                  ? 'bg-primary-600 text-white'
+                  ? 'bg-primary-700 text-white'
                   : 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
               }`}
             >
@@ -499,7 +499,7 @@ export default function TemplatesPage() {
               <div className="p-6">
                 <div className="mb-4 flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400">
                       {template.icon}
                     </div>
                     <div>
@@ -550,7 +550,7 @@ export default function TemplatesPage() {
                   </button>
                   <button
                     onClick={() => handleDownloadAll(template)}
-                    className="flex items-center gap-1 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700"
+                    className="flex items-center gap-1 rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-800"
                   >
                     <Download className="h-4 w-4" />
                     Download
@@ -608,7 +608,7 @@ export default function TemplatesPage() {
         {/* Feedback Note */}
         <div className="mt-12 rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
           <div className="flex items-start gap-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400">
               <Bot className="h-5 w-5" />
             </div>
             <div>

@@ -92,7 +92,7 @@ export default function TableOfContents({ className }: TableOfContentsProps) {
                 '-ml-px block border-l-2 py-1 transition-colors',
                 heading.level === 3 ? 'pl-6' : 'pl-4',
                 activeId === heading.id
-                  ? 'border-primary-500 font-medium text-primary-600 dark:text-primary-400'
+                  ? 'border-primary-500 font-medium text-primary-700 dark:text-primary-400'
                   : 'border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-300'
               )}
             >

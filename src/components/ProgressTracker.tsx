@@ -278,7 +278,7 @@ export function ProgressStats({ className = '' }: { className?: string }) {
   return (
     <div className={`grid grid-cols-3 gap-4 ${className}`}>
       <div className="text-center">
-        <div className="text-2xl font-bold text-primary-600 dark:text-primary-400">
+        <div className="text-2xl font-bold text-primary-700 dark:text-primary-400">
           {progress.completedModules.length}
         </div>
         <div className="text-xs text-gray-500 dark:text-gray-400">

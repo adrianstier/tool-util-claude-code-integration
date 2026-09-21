@@ -68,7 +68,7 @@ export default function Card({
       {children && <div className="mt-4">{children}</div>}
 
       {href && (
-        <div className="mt-4 flex items-center gap-1.5 text-sm font-semibold text-primary-600 transition-colors group-hover:text-primary-500 dark:text-primary-400 dark:group-hover:text-primary-300">
+        <div className="mt-4 flex items-center gap-1.5 text-sm font-semibold text-primary-700 transition-colors group-hover:text-primary-800 dark:text-primary-400 dark:group-hover:text-primary-300">
           <span>Learn more</span>
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </div>
@@ -82,7 +82,7 @@ export default function Card({
     'bg-white dark:bg-ink-900',
     'p-6',
     'transition-all duration-200',
-    'hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-700',
+    'hover:shadow-lg hover:border-primary-300 dark:hover:border-primary-600',
     'hover:-translate-y-0.5'
   )
 

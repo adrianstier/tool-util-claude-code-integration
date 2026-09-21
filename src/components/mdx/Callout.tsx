@@ -71,7 +71,7 @@ const calloutConfig: Record<
   },
   tip: {
     icon: Lightbulb,
-    iconColor: 'text-primary-600 dark:text-primary-400',
+    iconColor: 'text-primary-700 dark:text-primary-400',
     bgColor: 'bg-primary-50/50 dark:bg-primary-950/30',
     borderColor: 'border-l-primary-500',
     titleColor: 'text-primary-900 dark:text-primary-100',

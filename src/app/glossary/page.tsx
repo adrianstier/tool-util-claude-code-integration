@@ -285,7 +285,7 @@ export default function GlossaryPage() {
         <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
           <Link
             href="/"
-            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
+            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-700 dark:text-ink-300 dark:hover:text-primary-400"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
@@ -293,7 +293,7 @@ export default function GlossaryPage() {
 
           <div className="mb-4 flex items-center gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 dark:bg-primary-900/50">
-              <Book className="h-6 w-6 text-primary-600 dark:text-primary-400" />
+              <Book className="h-6 w-6 text-primary-700 dark:text-primary-400" />
             </div>
             <h1 className="text-3xl font-bold text-ink-900 dark:text-paper-50">
               Glossary
@@ -376,7 +376,7 @@ export default function GlossaryPage() {
         <div className="border-t border-ink-200 pt-8 text-center dark:border-ink-700">
           <a
             href="#"
-            className="inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
+            className="inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-700 dark:text-ink-300 dark:hover:text-primary-400"
           >
             Back to top ↑
           </a>

@@ -297,7 +297,7 @@ export default function Home() {
               >
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-500 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-primary-600" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-primary-700" />
                 </span>
                 <span>New to Claude Code? Start here</span>
                 <ArrowRight className="h-3.5 w-3.5 text-ink-400 transition-transform group-hover:translate-x-0.5" />
@@ -456,7 +456,7 @@ export default function Home() {
                   <Link
                     key={tool.title}
                     href={tool.href}
-                    className="group relative flex flex-col rounded-2xl border border-ink-100 bg-white p-8 transition-all duration-200 hover:border-primary-300 hover:shadow-lg dark:border-ink-800 dark:bg-ink-900 dark:hover:border-primary-700"
+                    className="group relative flex flex-col rounded-2xl border border-ink-100 bg-white p-8 transition-all duration-200 hover:border-primary-300 hover:shadow-lg dark:border-ink-800 dark:bg-ink-900 dark:hover:border-primary-600"
                   >
                     {/* Icon */}
                     <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-amber-500 shadow-lg">
@@ -485,7 +485,7 @@ export default function Home() {
                     </ul>
 
                     {/* CTA */}
-                    <div className="mt-auto flex items-center gap-2 text-sm font-semibold text-primary-600 dark:text-primary-400">
+                    <div className="mt-auto flex items-center gap-2 text-sm font-semibold text-primary-700 dark:text-primary-400">
                       <span>Try it now</span>
                       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </div>
@@ -498,7 +498,7 @@ export default function Home() {
             <div className="mt-10 text-center">
               <Link
                 href="/resources"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-ink-600 transition-colors hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-ink-600 transition-colors hover:text-primary-700 dark:text-ink-300 dark:hover:text-primary-400"
               >
                 <span>Browse all resources</span>
                 <ArrowRight className="h-4 w-4" />
@@ -535,7 +535,7 @@ export default function Home() {
                 return (
                   <div key={feature.title} className="text-center lg:text-left">
                     <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-ink-100 bg-white dark:border-ink-800 dark:bg-ink-800 lg:mx-0">
-                      <Icon className="h-7 w-7 text-primary-600 dark:text-primary-400" />
+                      <Icon className="h-7 w-7 text-primary-700 dark:text-primary-400" />
                     </div>
                     <h3 className="mb-3 font-display text-xl font-bold text-ink-900 dark:text-paper-50">
                       {feature.title}

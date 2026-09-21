@@ -211,10 +211,10 @@
   }
 
   .prose a {
-    @apply text-primary-600 dark:text-primary-400 font-medium;
+    @apply text-primary-700 dark:text-primary-400 font-medium;
     @apply underline decoration-primary-300 dark:decoration-primary-700 underline-offset-2;
     @apply transition-colors duration-200;
-    @apply hover:text-primary-700 dark:hover:text-primary-300;
+    @apply hover:text-primary-800 dark:hover:text-primary-300;
     @apply hover:decoration-primary-500;
   }
 
@@ -339,8 +339,8 @@
 
   .btn-accent {
     @apply btn px-5 py-2.5 rounded-xl;
-    @apply bg-primary-600 text-white;
-    @apply hover:bg-primary-500;
+    @apply bg-primary-700 text-white;
+    @apply hover:bg-primary-800;
     @apply active:scale-[0.98];
     @apply shadow-sm hover:shadow-md hover:shadow-primary-500/20;
     @apply focus-visible:ring-primary-500;

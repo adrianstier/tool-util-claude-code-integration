@@ -181,7 +181,7 @@ export default function AuthorPage({ params }: PageProps) {
         {/* Back Link */}
         <Link
           href="/authors"
-          className="mb-8 inline-flex items-center gap-2 text-sm text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+          className="mb-8 inline-flex items-center gap-2 text-sm text-gray-500 hover:text-primary-700 dark:text-gray-400 dark:hover:text-primary-400"
         >
           <ArrowLeft className="h-4 w-4" />
           All Authors
@@ -202,7 +202,7 @@ export default function AuthorPage({ params }: PageProps) {
               <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
                 {author.name}
               </h1>
-              <p className="mt-1 text-lg font-medium text-primary-600 dark:text-primary-400">
+              <p className="mt-1 text-lg font-medium text-primary-700 dark:text-primary-400">
                 {author.role}
               </p>
 
@@ -226,7 +226,7 @@ export default function AuthorPage({ params }: PageProps) {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400"
+                    className="inline-flex items-center gap-1.5 text-sm text-gray-600 transition-colors hover:text-primary-700 dark:text-gray-300 dark:hover:text-primary-400"
                   >
                     <ExternalLink className="h-3.5 w-3.5" />
                     {link.name}
@@ -280,7 +280,7 @@ export default function AuthorPage({ params }: PageProps) {
                 href={`/${article.track}/${article.slug}`}
                 className="block rounded-xl border border-gray-200 bg-white p-4 transition-all hover:border-primary-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800/50 dark:hover:border-primary-600"
               >
-                <span className="text-xs font-medium text-primary-600 dark:text-primary-400">
+                <span className="text-xs font-medium text-primary-700 dark:text-primary-400">
                   {trackNames[article.track] || article.track}
                 </span>
                 <h3 className="mt-1 line-clamp-2 font-semibold text-gray-900 dark:text-white">
@@ -299,7 +299,7 @@ export default function AuthorPage({ params }: PageProps) {
             <div className="mt-6 text-center">
               <Link
                 href="/start-here"
-                className="inline-flex items-center gap-2 font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300"
+                className="inline-flex items-center gap-2 font-medium text-primary-700 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300"
               >
                 View all content
                 <ArrowLeft className="h-4 w-4 rotate-180" />

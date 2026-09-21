@@ -30,7 +30,7 @@ export function InfoTable({
         {rows.map((row, rowIndex) => (
           <div
             key={rowIndex}
-            className="rounded-xl border border-ink-200 bg-white p-5 transition-colors duration-200 hover:border-primary-300 dark:border-ink-700 dark:bg-ink-900/50 dark:hover:border-primary-700"
+            className="rounded-xl border border-ink-200 bg-white p-5 transition-colors duration-200 hover:border-primary-300 dark:border-ink-700 dark:bg-ink-900/50 dark:hover:border-primary-600"
           >
             {columns.map((col, colIndex) => (
               <div
@@ -215,7 +215,7 @@ export function InfoCard({
       <a
         href={href}
         className={cn(
-          'block rounded-xl border border-ink-200 bg-white p-5 transition-all duration-200 hover:border-primary-300 hover:shadow-md dark:border-ink-700 dark:bg-ink-900/50 dark:hover:border-primary-700',
+          'block rounded-xl border border-ink-200 bg-white p-5 transition-all duration-200 hover:border-primary-300 hover:shadow-md dark:border-ink-700 dark:bg-ink-900/50 dark:hover:border-primary-600',
           className
         )}
       >
@@ -227,7 +227,7 @@ export function InfoCard({
   return (
     <div
       className={cn(
-        'rounded-xl border border-ink-200 bg-white p-5 transition-all duration-200 hover:border-primary-300 hover:shadow-md dark:border-ink-700 dark:bg-ink-900/50 dark:hover:border-primary-700',
+        'rounded-xl border border-ink-200 bg-white p-5 transition-all duration-200 hover:border-primary-300 hover:shadow-md dark:border-ink-700 dark:bg-ink-900/50 dark:hover:border-primary-600',
         className
       )}
     >

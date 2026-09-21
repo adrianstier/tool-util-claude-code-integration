@@ -167,7 +167,7 @@ export default function AgentOrWorkflowPage() {
         <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
           <Link
             href="/agents"
-            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
+            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-700 dark:text-ink-300 dark:hover:text-primary-400"
           >
             <ArrowLeft className="h-4 w-4" />
             Agents track
@@ -175,7 +175,7 @@ export default function AgentOrWorkflowPage() {
 
           <div className="mb-4 flex items-center gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 dark:bg-primary-900/50">
-              <GitBranch className="h-6 w-6 text-primary-600 dark:text-primary-400" />
+              <GitBranch className="h-6 w-6 text-primary-700 dark:text-primary-400" />
             </div>
             <h1 className="text-3xl font-bold text-ink-900 dark:text-paper-50">
               Agent or Workflow?
@@ -198,7 +198,7 @@ export default function AgentOrWorkflowPage() {
             {answered > 0 && (
               <button
                 onClick={() => setAnswers({})}
-                className="inline-flex items-center gap-1.5 hover:text-primary-600 dark:hover:text-primary-400"
+                className="inline-flex items-center gap-1.5 hover:text-primary-700 dark:hover:text-primary-400"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
                 Start over
@@ -221,7 +221,7 @@ export default function AgentOrWorkflowPage() {
             >
               <legend className="sr-only">{q.question}</legend>
               <h2 className="mb-1 font-display text-lg font-semibold text-ink-900 dark:text-paper-50">
-                <span className="mr-2 text-primary-600 dark:text-primary-400">
+                <span className="mr-2 text-primary-700 dark:text-primary-400">
                   {i + 1}.
                 </span>
                 {q.question}
@@ -239,7 +239,7 @@ export default function AgentOrWorkflowPage() {
                       className={`flex cursor-pointer items-start gap-3 rounded-lg border p-3 transition-colors ${
                         selected
                           ? 'border-primary-500 bg-primary-50 dark:bg-primary-950/40'
-                          : 'border-ink-200 hover:border-primary-300 dark:border-ink-700 dark:hover:border-primary-700'
+                          : 'border-ink-200 hover:border-primary-300 dark:border-ink-700 dark:hover:border-primary-600'
                       }`}
                     >
                       <input
@@ -293,19 +293,19 @@ export default function AgentOrWorkflowPage() {
             <div className="flex flex-wrap gap-4 text-sm font-medium">
               <Link
                 href="/agents/building-agents"
-                className="text-primary-600 underline underline-offset-2 dark:text-primary-400"
+                className="text-primary-700 underline underline-offset-2 dark:text-primary-400"
               >
                 Building agents →
               </Link>
               <Link
                 href="/tools/slash-commands"
-                className="text-primary-600 underline underline-offset-2 dark:text-primary-400"
+                className="text-primary-700 underline underline-offset-2 dark:text-primary-400"
               >
                 Slash commands →
               </Link>
               <Link
                 href="/advanced-topics/plugins-and-hooks"
-                className="text-primary-600 underline underline-offset-2 dark:text-primary-400"
+                className="text-primary-700 underline underline-offset-2 dark:text-primary-400"
               >
                 Hooks →
               </Link>

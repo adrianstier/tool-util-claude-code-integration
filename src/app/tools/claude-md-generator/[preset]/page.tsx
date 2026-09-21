@@ -64,7 +64,7 @@ export default async function PresetPage({
         <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
           <Link
             href="/tools/claude-md-generator"
-            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
+            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-700 dark:text-ink-300 dark:hover:text-primary-400"
           >
             <ArrowLeft className="h-4 w-4" />
             CLAUDE.md generator
@@ -72,7 +72,7 @@ export default async function PresetPage({
 
           <div className="mb-4 flex items-center gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 dark:bg-primary-900/50">
-              <FileText className="h-6 w-6 text-primary-600 dark:text-primary-400" />
+              <FileText className="h-6 w-6 text-primary-700 dark:text-primary-400" />
             </div>
             <h1 className="text-3xl font-bold text-ink-900 dark:text-paper-50">
               CLAUDE.md for {preset.name}
@@ -104,9 +104,9 @@ export default async function PresetPage({
           <p className="text-ink-600 dark:text-ink-300">
             Save it as <code>CLAUDE.md</code> in your repository root and
             replace the placeholders in angle brackets. Claude reads it before
-            every task, so keep it short — the{' '}
-            <strong>Playbooks</strong> table at the bottom is how you add detail
-            without paying for it on every unrelated request.
+            every task, so keep it short — the <strong>Playbooks</strong> table
+            at the bottom is how you add detail without paying for it on every
+            unrelated request.
           </p>
         </div>
 
@@ -152,7 +152,7 @@ export default async function PresetPage({
           </ul>
           <Link
             href="/advanced-topics/best-practices"
-            className="mt-4 inline-block text-sm font-medium text-primary-600 hover:underline dark:text-primary-400"
+            className="mt-4 inline-block text-sm font-medium text-primary-700 hover:underline dark:text-primary-400"
           >
             Why CLAUDE.md should stay thin →
           </Link>
@@ -183,7 +183,7 @@ export default async function PresetPage({
             Need something else?{' '}
             <Link
               href="/tools/claude-md-generator"
-              className="font-medium text-primary-600 hover:underline dark:text-primary-400"
+              className="font-medium text-primary-700 hover:underline dark:text-primary-400"
             >
               Build one from scratch with the generator
             </Link>

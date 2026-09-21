@@ -47,8 +47,8 @@ export default function CodeBlock({
     ts: { color: 'bg-blue-600', label: 'TypeScript', icon: 'file' },
     tsx: { color: 'bg-blue-600', label: 'TSX', icon: 'file' },
     jsx: { color: 'bg-yellow-600', label: 'JSX', icon: 'file' },
-    python: { color: 'bg-blue-500', label: 'Python', icon: 'file' },
-    py: { color: 'bg-blue-500', label: 'Python', icon: 'file' },
+    python: { color: 'bg-blue-700', label: 'Python', icon: 'file' },
+    py: { color: 'bg-blue-700', label: 'Python', icon: 'file' },
     r: { color: 'bg-blue-700', label: 'R', icon: 'file' },
     json: { color: 'bg-ink-600', label: 'JSON', icon: 'file' },
     css: { color: 'bg-purple-600', label: 'CSS', icon: 'file' },
@@ -115,7 +115,7 @@ export default function CodeBlock({
 
         <div className="flex items-center gap-3">
           {/* Language badge */}
-          <span className="rounded-md bg-white/15 px-2 py-0.5 text-xs font-medium uppercase tracking-wide backdrop-blur-sm">
+          <span className="rounded-md bg-ink-700/60 px-2 py-0.5 text-xs font-medium uppercase tracking-wide backdrop-blur-sm">
             {config.label}
           </span>
 
@@ -168,7 +168,7 @@ export default function CodeBlock({
                   {shouldShowLineNumbers && (
                     <span
                       className={cn(
-                        'flex-shrink-0 select-none px-4 py-0.5 text-right text-ink-500',
+                        'flex-shrink-0 select-none px-4 py-0.5 text-right text-ink-400',
                         'w-12 border-r border-ink-800',
                         isHighlighted && 'text-primary-400'
                       )}

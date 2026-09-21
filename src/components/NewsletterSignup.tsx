@@ -91,7 +91,7 @@ export default function NewsletterSignup({
             <button
               type="submit"
               disabled={status === 'loading'}
-              className="inline-flex items-center justify-center rounded-lg bg-primary-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-500 disabled:opacity-50"
+              className="inline-flex items-center justify-center rounded-lg bg-primary-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-800 disabled:opacity-50"
             >
               {status === 'loading' ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -199,7 +199,7 @@ export default function NewsletterSignup({
     >
       <div className="mb-4 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 dark:bg-primary-900/50">
-          <Mail className="h-5 w-5 text-primary-600 dark:text-primary-400" />
+          <Mail className="h-5 w-5 text-primary-700 dark:text-primary-400" />
         </div>
         <div>
           <h4 className="font-semibold text-gray-900 dark:text-white">
@@ -239,7 +239,7 @@ export default function NewsletterSignup({
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-500 disabled:opacity-50"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-800 disabled:opacity-50"
           >
             {status === 'loading' ? (
               <Loader2 className="h-4 w-4 animate-spin" />

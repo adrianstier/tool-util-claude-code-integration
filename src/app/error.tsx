@@ -16,7 +16,7 @@ export default function Error({
         {/* Error Visual */}
         <div className="mb-8 flex justify-center">
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary-100 dark:bg-primary-900/50">
-            <AlertTriangle className="h-10 w-10 text-primary-600 dark:text-primary-400" />
+            <AlertTriangle className="h-10 w-10 text-primary-700 dark:text-primary-400" />
           </div>
         </div>
 
@@ -40,7 +40,7 @@ export default function Error({
           </button>
           <Link
             href="/"
-            className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-primary-600 px-6 py-3 text-base font-semibold text-primary-600 transition-all hover:bg-primary-50 dark:text-primary-400 dark:hover:bg-primary-900/30"
+            className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-primary-700 px-6 py-3 text-base font-semibold text-primary-700 transition-all hover:bg-primary-50 dark:text-primary-400 dark:hover:bg-primary-900/30"
           >
             <Home className="h-5 w-5" />
             Go home
@@ -71,7 +71,7 @@ export default function Error({
             href="https://github.com/anthropics/claude-code/issues"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary-600 hover:underline dark:text-primary-400"
+            className="text-primary-700 hover:underline dark:text-primary-400"
           >
             report an issue
           </a>

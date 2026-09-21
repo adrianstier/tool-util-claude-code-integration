@@ -4,16 +4,12 @@
   "description": "Learn Claude Code, VS Code, Git/GitHub, Python, and R with hands-on tutorials. Build real-world projects with AI assistance.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0f172a",
-  "theme_color": "#f59e0b",
+  "background_color": "#22272f",
+  "theme_color": "#c45a3a",
   "orientation": "portrait-primary",
   "scope": "/",
   "lang": "en",
-  "categories": [
-    "education",
-    "developer tools",
-    "productivity"
-  ],
+  "categories": ["education", "developer tools", "productivity"],
   "icons": [
     {
       "src": "/icon-192.png",

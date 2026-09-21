@@ -122,7 +122,8 @@ source ~/.zshrc`,
   {
     id: 'context-window-full',
     area: 'Context',
-    symptom: 'Answers get vague, or the session warns that context is nearly full',
+    symptom:
+      'Answers get vague, or the session warns that context is nearly full',
     diagnose: [
       'Every file read and command output stays in the conversation, so long sessions accumulate material that is no longer relevant.',
       'A session that has drifted across several unrelated tasks is usually carrying all of them at once.',
@@ -182,7 +183,7 @@ export default function TroubleshootingPage() {
         <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
           <Link
             href="/"
-            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
+            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-700 dark:text-ink-300 dark:hover:text-primary-400"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
@@ -190,7 +191,7 @@ export default function TroubleshootingPage() {
 
           <div className="mb-4 flex items-center gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 dark:bg-primary-900/50">
-              <LifeBuoy className="h-6 w-6 text-primary-600 dark:text-primary-400" />
+              <LifeBuoy className="h-6 w-6 text-primary-700 dark:text-primary-400" />
             </div>
             <h1 className="text-3xl font-bold text-ink-900 dark:text-paper-50">
               Troubleshooting
@@ -283,7 +284,7 @@ export default function TroubleshootingPage() {
               {issue.href && (
                 <Link
                   href={issue.href}
-                  className="mt-4 inline-block text-sm font-medium text-primary-600 hover:underline dark:text-primary-400"
+                  className="mt-4 inline-block text-sm font-medium text-primary-700 hover:underline dark:text-primary-400"
                 >
                   {issue.hrefLabel} →
                 </Link>
@@ -301,7 +302,7 @@ export default function TroubleshootingPage() {
             configuration in depth, and{' '}
             <Link
               href="/whats-new"
-              className="text-primary-600 underline underline-offset-2 dark:text-primary-400"
+              className="text-primary-700 underline underline-offset-2 dark:text-primary-400"
             >
               What&apos;s New
             </Link>{' '}
@@ -310,7 +311,7 @@ export default function TroubleshootingPage() {
           </p>
           <Link
             href="/mcp/workflows-and-troubleshooting"
-            className="mt-4 inline-block text-sm font-medium text-primary-600 hover:underline dark:text-primary-400"
+            className="mt-4 inline-block text-sm font-medium text-primary-700 hover:underline dark:text-primary-400"
           >
             MCP workflows and troubleshooting →
           </Link>

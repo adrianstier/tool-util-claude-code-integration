@@ -57,19 +57,19 @@ function ResourceCard({ resource }: { resource: Resource }) {
       )}
 
       {/* Icon */}
-      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary-100 text-primary-600 transition-colors group-hover:bg-primary-200 dark:bg-primary-900/50 dark:text-primary-400 dark:group-hover:bg-primary-900">
+      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary-100 text-primary-700 transition-colors group-hover:bg-primary-200 dark:bg-primary-900/50 dark:text-primary-400 dark:group-hover:bg-primary-900">
         <Icon className="h-5 w-5" aria-hidden="true" />
       </div>
 
       {/* Content */}
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">
-          <h3 className="font-semibold text-gray-900 transition-colors group-hover:text-primary-600 dark:text-white dark:group-hover:text-primary-400">
+          <h3 className="font-semibold text-gray-900 transition-colors group-hover:text-primary-700 dark:text-white dark:group-hover:text-primary-400">
             {title}
           </h3>
           {!internal && (
             <ExternalLink
-              className="h-4 w-4 text-gray-400 group-hover:text-primary-500"
+              className="h-4 w-4 text-gray-400 group-hover:text-primary-800"
               aria-hidden="true"
             />
           )}
@@ -169,7 +169,7 @@ export default function ResourcesPage() {
         <nav className="mb-6 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
           <Link
             href="/"
-            className="transition-colors hover:text-primary-600 dark:hover:text-primary-400"
+            className="transition-colors hover:text-primary-700 dark:hover:text-primary-400"
           >
             Home
           </Link>
@@ -195,7 +195,7 @@ export default function ResourcesPage() {
         <div className="flex flex-wrap gap-3">
           <Link
             href="/start-here"
-            className="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-500"
+            className="inline-flex items-center gap-2 rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-800"
           >
             <GraduationCapIcon className="h-4 w-4" aria-hidden="true" />
             Start Learning
@@ -256,7 +256,7 @@ export default function ResourcesPage() {
                 aria-pressed={selectedCategory === cat.id}
                 className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                   selectedCategory === cat.id
-                    ? 'bg-primary-600 text-white'
+                    ? 'bg-primary-700 text-white'
                     : 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
                 }`}
               >
@@ -286,10 +286,10 @@ export default function ResourcesPage() {
                 <a
                   key={id}
                   href={`#section-${id}`}
-                  className="whitespace-nowrap text-sm font-medium text-gray-500 transition-colors hover:text-gray-900 dark:hover:text-gray-100"
+                  className="whitespace-nowrap text-sm font-medium text-ink-600 transition-colors hover:text-ink-900 dark:text-ink-300 dark:hover:text-paper-50"
                 >
                   {config.title}
-                  <span className="ml-1 text-gray-400">
+                  <span className="ml-1 text-ink-600 dark:text-ink-300">
                     ({groupedResources[id].length})
                   </span>
                 </a>
@@ -317,7 +317,7 @@ export default function ResourcesPage() {
               setSearchQuery('')
               setSelectedCategory('all')
             }}
-            className="mt-4 font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400"
+            className="mt-4 font-medium text-primary-700 hover:text-primary-800 dark:text-primary-400"
           >
             Clear all filters
           </button>
@@ -346,7 +346,7 @@ export default function ResourcesPage() {
           href="https://github.com/anthropics/claude-code/issues/new"
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 inline-flex items-center gap-2 font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
+          className="mt-4 inline-flex items-center gap-2 font-medium text-primary-700 hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300"
         >
           <GitBranchIcon className="h-4 w-4" aria-hidden="true" />
           Suggest a resource on GitHub

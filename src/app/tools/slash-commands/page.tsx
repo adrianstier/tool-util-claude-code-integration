@@ -262,7 +262,7 @@ export default function SlashCommandsLibrary() {
       <nav className="mb-8 flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
         <Link
           href="/"
-          className="hover:text-primary-600 dark:hover:text-primary-400"
+          className="hover:text-primary-700 dark:hover:text-primary-400"
         >
           Home
         </Link>
@@ -394,7 +394,7 @@ export default function SlashCommandsLibrary() {
       {/* How to Use */}
       <div className="mt-12 rounded-2xl border border-primary-200 bg-primary-50 p-8 dark:border-gray-700 dark:bg-gray-800">
         <div className="mb-4 flex items-center gap-2">
-          <BookOpen className="h-6 w-6 text-primary-600 dark:text-primary-400" />
+          <BookOpen className="h-6 w-6 text-primary-700 dark:text-primary-400" />
           <h3 className="text-xl font-bold text-gray-900 dark:text-white">
             How to Use Slash Commands
           </h3>

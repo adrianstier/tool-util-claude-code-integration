@@ -14,7 +14,9 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "typecheck": "tsc --noEmit",
-    "validate:resources": "tsx scripts/validate-resources.ts"
+    "validate:resources": "tsx scripts/validate-resources.ts",
+    "test:e2e": "playwright test",
+    "test:a11y": "playwright test tests/accessibility.spec.ts"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.0.1",
@@ -35,6 +37,7 @@
     "tailwind-merge": "^2.6.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@babel/preset-env": "^7.28.6",
     "@babel/preset-react": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",

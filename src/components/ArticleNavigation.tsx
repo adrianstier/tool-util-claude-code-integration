@@ -34,11 +34,11 @@ export default function ArticleNavigation({
           className={cn(
             'group flex items-center gap-4 rounded-xl border border-gray-200 dark:border-gray-700',
             'bg-white p-4 transition-all dark:bg-gray-800',
-            'hover:border-primary-300 hover:shadow-md dark:hover:border-primary-700',
+            'hover:border-primary-300 hover:shadow-md dark:hover:border-primary-600',
             'sm:col-start-1'
           )}
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-400 transition-colors group-hover:bg-primary-100 group-hover:text-primary-500 dark:bg-gray-700 dark:text-gray-500 dark:group-hover:bg-primary-900/50 dark:group-hover:text-primary-400">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-400 transition-colors group-hover:bg-primary-100 group-hover:text-primary-800 dark:bg-gray-700 dark:text-gray-500 dark:group-hover:bg-primary-900/50 dark:group-hover:text-primary-400">
             <ChevronLeft className="h-5 w-5" />
           </div>
           <div className="min-w-0 flex-1">
@@ -65,7 +65,7 @@ export default function ArticleNavigation({
           className={cn(
             'group flex items-center gap-4 rounded-xl border border-gray-200 dark:border-gray-700',
             'bg-white p-4 transition-all dark:bg-gray-800',
-            'hover:border-primary-300 hover:shadow-md dark:hover:border-primary-700',
+            'hover:border-primary-300 hover:shadow-md dark:hover:border-primary-600',
             'text-right sm:col-start-2'
           )}
         >
@@ -82,7 +82,7 @@ export default function ArticleNavigation({
               </p>
             )}
           </div>
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-400 transition-colors group-hover:bg-primary-100 group-hover:text-primary-500 dark:bg-gray-700 dark:text-gray-500 dark:group-hover:bg-primary-900/50 dark:group-hover:text-primary-400">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-gray-400 transition-colors group-hover:bg-primary-100 group-hover:text-primary-800 dark:bg-gray-700 dark:text-gray-500 dark:group-hover:bg-primary-900/50 dark:group-hover:text-primary-400">
             <ChevronRight className="h-5 w-5" />
           </div>
         </Link>

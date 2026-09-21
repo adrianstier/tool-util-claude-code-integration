@@ -73,7 +73,7 @@ export default async function BlogPage() {
 
               {/* Title & Description */}
               <div>
-                <h2 className="text-xl font-bold text-gray-900 transition-colors group-hover:text-primary-600 dark:text-white dark:group-hover:text-primary-400">
+                <h2 className="text-xl font-bold text-gray-900 transition-colors group-hover:text-primary-700 dark:text-white dark:group-hover:text-primary-400">
                   <Link href={`/blog/${post.slug}`} className="hover:underline">
                     {post.title}
                   </Link>
@@ -86,7 +86,7 @@ export default async function BlogPage() {
               </div>
 
               {/* Read More */}
-              <div className="flex items-center gap-1 text-sm font-semibold text-primary-600 dark:text-primary-400">
+              <div className="flex items-center gap-1 text-sm font-semibold text-primary-700 dark:text-primary-400">
                 <span>Read more</span>
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </div>
@@ -112,7 +112,7 @@ export default async function BlogPage() {
       <div className="mt-12 text-center">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
+          className="inline-flex items-center gap-2 font-medium text-primary-700 transition-colors hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300"
         >
           <svg
             className="h-5 w-5"

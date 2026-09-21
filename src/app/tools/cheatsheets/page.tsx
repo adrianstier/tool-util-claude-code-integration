@@ -540,7 +540,7 @@ export default function CheatsheetsPage() {
         <div className="mb-8">
           <Link
             href="/"
-            className="mb-4 inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+            className="mb-4 inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary-700 dark:text-gray-400 dark:hover:text-primary-400"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
@@ -562,7 +562,7 @@ export default function CheatsheetsPage() {
             >
               <div className="p-6">
                 <div className="mb-3 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-400">
                     {sheet.icon}
                   </div>
                   <div>
@@ -592,7 +592,7 @@ export default function CheatsheetsPage() {
                   </button>
                   <button
                     onClick={() => handlePrint(sheet)}
-                    className="flex items-center gap-1 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700"
+                    className="flex items-center gap-1 rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-800"
                   >
                     <Printer className="h-4 w-4" />
                     Print

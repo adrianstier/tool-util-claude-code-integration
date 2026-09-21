@@ -24,7 +24,8 @@ interface VideoEmbedProps {
  */
 function toSeconds(start?: string | number): number {
   if (start === undefined) return 0
-  if (typeof start === 'number') return Number.isFinite(start) && start > 0 ? Math.floor(start) : 0
+  if (typeof start === 'number')
+    return Number.isFinite(start) && start > 0 ? Math.floor(start) : 0
 
   const parts = start.split(':').map((p) => Number(p.trim()))
   if (parts.some((p) => !Number.isFinite(p) || p < 0)) return 0
@@ -87,7 +88,9 @@ export default function VideoEmbed({
               type="button"
               onClick={() => setLoaded(true)}
               aria-label={`Play video: ${title}${
-                startSeconds > 0 ? `, starting at ${formatTimestamp(startSeconds)}` : ''
+                startSeconds > 0
+                  ? `, starting at ${formatTimestamp(startSeconds)}`
+                  : ''
               }`}
               className="group absolute inset-0 h-full w-full cursor-pointer"
             >
@@ -101,7 +104,7 @@ export default function VideoEmbed({
               />
               <span className="absolute inset-0 bg-gradient-to-t from-ink-950/80 via-ink-950/20 to-transparent" />
 
-              <span className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary-600 shadow-lg transition-transform duration-200 group-hover:scale-110 group-focus-visible:scale-110">
+              <span className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary-700 shadow-lg transition-transform duration-200 group-hover:scale-110 group-focus-visible:scale-110">
                 <Play className="ml-1 h-7 w-7 fill-white text-white" />
               </span>
 
@@ -113,7 +116,8 @@ export default function VideoEmbed({
                   <span className="mt-1 block text-xs text-ink-300">
                     {channel}
                     {channel && startSeconds > 0 && ' · '}
-                    {startSeconds > 0 && `starts at ${formatTimestamp(startSeconds)}`}
+                    {startSeconds > 0 &&
+                      `starts at ${formatTimestamp(startSeconds)}`}
                   </span>
                 )}
               </span>
@@ -128,7 +132,7 @@ export default function VideoEmbed({
           href={watchUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex shrink-0 items-center gap-1 text-ink-600 underline underline-offset-2 hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
+          className="inline-flex shrink-0 items-center gap-1 text-ink-600 underline underline-offset-2 hover:text-primary-700 dark:text-ink-300 dark:hover:text-primary-400"
         >
           Watch on YouTube
           <ExternalLink className="h-3 w-3" aria-hidden="true" />

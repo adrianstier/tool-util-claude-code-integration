@@ -200,7 +200,7 @@ export default function Diagram({
         )}
       >
         <div className="flex min-w-0 items-center gap-2">
-          <Icon className="h-4 w-4 shrink-0 text-primary-600 dark:text-primary-400" />
+          <Icon className="h-4 w-4 shrink-0 text-primary-700 dark:text-primary-400" />
           {title ? (
             <span className="truncate font-display text-sm font-semibold text-ink-900 dark:text-ink-100">
               {title}

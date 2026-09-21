@@ -102,7 +102,7 @@ const components = {
   a: ({ href, children }: { href?: string; children?: React.ReactNode }) => (
     <Link
       href={href || '#'}
-      className="text-primary-600 hover:underline dark:text-primary-400"
+      className="text-primary-700 hover:underline dark:text-primary-400"
     >
       {children}
     </Link>
@@ -152,7 +152,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         {/* Back Link */}
         <Link
           href="/blog"
-          className="mb-8 inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+          className="mb-8 inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-primary-700 dark:text-gray-400 dark:hover:text-primary-400"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Blog
@@ -209,7 +209,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="mt-10 border-t border-gray-200 pt-8 dark:border-gray-700">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
+            className="inline-flex items-center gap-2 font-medium text-primary-700 transition-colors hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300"
           >
             <ArrowLeft className="h-5 w-5" />
             Back to all posts

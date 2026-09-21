@@ -7,7 +7,7 @@ import NewsletterSignup from '@/components/NewsletterSignup'
 export const metadata: Metadata = {
   title: "What's New in Claude Code — Changes That Matter",
   description:
-    "A plain-English digest of recent Claude Code releases: what changed, and what it actually means for how you work. Updated as new versions ship.",
+    'A plain-English digest of recent Claude Code releases: what changed, and what it actually means for how you work. Updated as new versions ship.',
   keywords: [
     'Claude Code changelog',
     "Claude Code what's new",
@@ -58,8 +58,7 @@ const CATEGORY_LABEL: Record<Change['category'], string> = {
 const CATEGORY_STYLE: Record<Change['category'], string> = {
   config:
     'bg-cobalt-100 text-cobalt-800 dark:bg-cobalt-900/50 dark:text-cobalt-200',
-  workflow:
-    'bg-sage-100 text-sage-800 dark:bg-sage-900/50 dark:text-sage-200',
+  workflow: 'bg-sage-100 text-sage-800 dark:bg-sage-900/50 dark:text-sage-200',
   safety:
     'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-200',
   extend: 'bg-plum-100 text-plum-800 dark:bg-plum-900/50 dark:text-plum-200',
@@ -177,7 +176,7 @@ export default function WhatsNewPage() {
         <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
           <Link
             href="/"
-            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
+            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-700 dark:text-ink-300 dark:hover:text-primary-400"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
@@ -185,7 +184,7 @@ export default function WhatsNewPage() {
 
           <div className="mb-4 flex items-center gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 dark:bg-primary-900/50">
-              <Sparkles className="h-6 w-6 text-primary-600 dark:text-primary-400" />
+              <Sparkles className="h-6 w-6 text-primary-700 dark:text-primary-400" />
             </div>
             <h1 className="text-3xl font-bold text-ink-900 dark:text-paper-50">
               What&apos;s New in Claude Code
@@ -206,7 +205,7 @@ export default function WhatsNewPage() {
               href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-primary-600 underline underline-offset-2 dark:text-primary-400"
+              className="inline-flex items-center gap-1 text-primary-700 underline underline-offset-2 dark:text-primary-400"
             >
               official changelog
               <ExternalLink className="h-3 w-3" aria-hidden="true" />
@@ -254,7 +253,7 @@ export default function WhatsNewPage() {
                   {c.href && (
                     <Link
                       href={c.href}
-                      className="mt-4 inline-block text-sm font-medium text-primary-600 hover:underline dark:text-primary-400"
+                      className="mt-4 inline-block text-sm font-medium text-primary-700 hover:underline dark:text-primary-400"
                     >
                       {c.hrefLabel} →
                     </Link>

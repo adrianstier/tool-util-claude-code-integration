@@ -64,7 +64,7 @@ export default function NotFound() {
           </Link>
           <Link
             href="/start-here"
-            className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-primary-600 px-6 py-3 text-base font-semibold text-primary-600 transition-all hover:bg-primary-50 dark:text-primary-400 dark:hover:bg-primary-900/30"
+            className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-primary-700 px-6 py-3 text-base font-semibold text-primary-700 transition-all hover:bg-primary-50 dark:text-primary-400 dark:hover:bg-primary-900/30"
           >
             Start Learning
             <ArrowRight className="h-5 w-5" />
@@ -86,10 +86,10 @@ export default function NotFound() {
                   className="group rounded-xl border border-gray-200 p-4 transition-all hover:border-primary-500 hover:shadow-md dark:border-gray-700 dark:hover:border-primary-500"
                 >
                   <div className="mb-2 flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 text-primary-600 transition-colors group-hover:bg-primary-600 group-hover:text-white dark:bg-primary-900/50 dark:text-primary-400">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-100 text-primary-700 transition-colors group-hover:bg-primary-700 group-hover:text-white dark:bg-primary-900/50 dark:text-primary-400">
                       <Icon className="h-5 w-5" />
                     </div>
-                    <h4 className="font-semibold text-gray-900 transition-colors group-hover:text-primary-600 dark:text-white dark:group-hover:text-primary-400">
+                    <h4 className="font-semibold text-gray-900 transition-colors group-hover:text-primary-700 dark:text-white dark:group-hover:text-primary-400">
                       {page.title}
                     </h4>
                   </div>
@@ -109,14 +109,14 @@ export default function NotFound() {
             href={`https://github.com/anthropics/claude-code/issues`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary-600 hover:underline dark:text-primary-400"
+            className="text-primary-700 hover:underline dark:text-primary-400"
           >
             Report an issue
           </a>{' '}
           or{' '}
           <Link
             href="/resources"
-            className="text-primary-600 hover:underline dark:text-primary-400"
+            className="text-primary-700 hover:underline dark:text-primary-400"
           >
             browse resources
           </Link>

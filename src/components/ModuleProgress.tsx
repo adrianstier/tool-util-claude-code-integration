@@ -34,7 +34,7 @@ export function ModuleProgress({
         className={`flex flex-1 items-center gap-3 text-left transition-colors ${
           completed
             ? 'text-green-600 dark:text-green-400'
-            : 'text-ink-600 hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400'
+            : 'text-ink-600 hover:text-primary-700 dark:text-ink-300 dark:hover:text-primary-400'
         }`}
       >
         {completed ? (
@@ -74,7 +74,7 @@ export function ModuleProgressMini({ moduleId }: { moduleId: string }) {
       className={`flex items-center gap-2 text-sm transition-colors ${
         completed
           ? 'text-green-600 dark:text-green-400'
-          : 'text-ink-500 hover:text-primary-600 dark:text-ink-400 dark:hover:text-primary-400'
+          : 'text-ink-600 hover:text-primary-700 dark:text-ink-300 dark:hover:text-primary-400'
       }`}
       title={completed ? 'Mark incomplete' : 'Mark complete'}
     >

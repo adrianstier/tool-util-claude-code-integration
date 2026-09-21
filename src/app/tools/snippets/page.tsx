@@ -404,7 +404,7 @@ export default function SnippetsPage() {
         <div className="mb-8">
           <Link
             href="/"
-            className="mb-4 inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+            className="mb-4 inline-flex items-center gap-2 text-sm text-gray-600 hover:text-primary-700 dark:text-gray-400 dark:hover:text-primary-400"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
@@ -442,7 +442,7 @@ export default function SnippetsPage() {
                 onClick={() => setSelectedCategory(category.name)}
                 className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                   selectedCategory === category.name
-                    ? 'bg-primary-600 text-white'
+                    ? 'bg-primary-700 text-white'
                     : 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
                 }`}
               >

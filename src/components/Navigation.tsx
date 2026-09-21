@@ -140,7 +140,7 @@ export default function Navigation({
               href="https://docs.claude.com/en/docs/claude-code/overview"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-medium text-ink-500 transition-colors hover:text-ink-900 dark:text-ink-400 dark:hover:text-paper-50"
+              className="text-sm font-medium text-ink-600 transition-colors hover:text-ink-900 dark:text-ink-400 dark:hover:text-paper-50"
             >
               Docs
             </a>
@@ -205,7 +205,7 @@ export default function Navigation({
                     <span className="font-medium">{item.name}</span>
                     {item.description && (
                       <span
-                        className={`mt-0.5 block text-xs ${active ? 'text-primary-600 dark:text-primary-400' : 'text-ink-600 dark:text-ink-300'}`}
+                        className={`mt-0.5 block text-xs ${active ? 'text-primary-700 dark:text-primary-400' : 'text-ink-600 dark:text-ink-300'}`}
                       >
                         {item.description}
                       </span>

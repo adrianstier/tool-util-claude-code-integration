@@ -90,8 +90,7 @@ const TOOLS: Tool[] = [
       'Reasoning across a repository before making a decision',
       'Running and verifying its own work end to end',
     ],
-    reachFor:
-      'You know exactly what to write and want to write it faster.',
+    reachFor: 'You know exactly what to write and want to write it faster.',
   },
   {
     id: 'codex',
@@ -118,7 +117,7 @@ export default function ComparePage() {
         <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
           <Link
             href="/"
-            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
+            className="mb-6 inline-flex items-center gap-2 text-sm text-ink-600 hover:text-primary-700 dark:text-ink-300 dark:hover:text-primary-400"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Home
@@ -126,7 +125,7 @@ export default function ComparePage() {
 
           <div className="mb-4 flex items-center gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 dark:bg-primary-900/50">
-              <GitCompare className="h-6 w-6 text-primary-600 dark:text-primary-400" />
+              <GitCompare className="h-6 w-6 text-primary-700 dark:text-primary-400" />
             </div>
             <h1 className="text-3xl font-bold text-ink-900 dark:text-paper-50">
               Claude Code vs Cursor, Copilot &amp; Codex
@@ -216,13 +215,13 @@ export default function ComparePage() {
           <div className="flex flex-wrap gap-4 text-sm font-medium">
             <Link
               href="/advanced-topics/mcp-and-cursor"
-              className="text-primary-600 underline underline-offset-2 dark:text-primary-400"
+              className="text-primary-700 underline underline-offset-2 dark:text-primary-400"
             >
               Using Claude Code alongside Cursor →
             </Link>
             <Link
               href="/start-here/claude-code-vs-web"
-              className="text-primary-600 underline underline-offset-2 dark:text-primary-400"
+              className="text-primary-700 underline underline-offset-2 dark:text-primary-400"
             >
               Claude Code vs Claude on the web →
             </Link>

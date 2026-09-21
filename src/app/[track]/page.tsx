@@ -299,7 +299,7 @@ export default async function TrackPage({ params }: TrackPageProps) {
         >
           <Link
             href="/"
-            className="transition-colors hover:text-primary-600 dark:hover:text-primary-400"
+            className="transition-colors hover:text-primary-700 dark:hover:text-primary-400"
           >
             Home
           </Link>

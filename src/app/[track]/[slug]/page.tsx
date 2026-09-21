@@ -311,14 +311,14 @@ export default async function ContentPage({ params }: PageProps) {
             <nav className="mb-8 flex items-center gap-2 text-sm text-ink-600 dark:text-ink-300">
               <Link
                 href="/"
-                className="transition-colors hover:text-primary-600 dark:hover:text-primary-400"
+                className="transition-colors hover:text-primary-700 dark:hover:text-primary-400"
               >
                 Home
               </Link>
               <ChevronRight className="h-4 w-4" />
               <Link
                 href={`/${track}`}
-                className="transition-colors hover:text-primary-600 dark:hover:text-primary-400"
+                className="transition-colors hover:text-primary-700 dark:hover:text-primary-400"
               >
                 {trackNames[track] || track}
               </Link>
@@ -426,7 +426,7 @@ export default async function ContentPage({ params }: PageProps) {
             <nav className="mt-8 border-t border-gray-200 pt-8 dark:border-gray-700">
               <Link
                 href={`/${track}`}
-                className="inline-flex items-center gap-2 font-medium text-primary-600 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
+                className="inline-flex items-center gap-2 font-medium text-primary-700 transition-colors hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300"
               >
                 <svg
                   className="h-5 w-5"
@@ -463,7 +463,7 @@ export default async function ContentPage({ params }: PageProps) {
                   <li>
                     <Link
                       href={`/${track}`}
-                      className="text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+                      className="text-gray-600 transition-colors hover:text-primary-700 dark:text-gray-400 dark:hover:text-primary-400"
                     >
                       {trackNames[track]} Overview
                     </Link>
@@ -471,7 +471,7 @@ export default async function ContentPage({ params }: PageProps) {
                   <li>
                     <Link
                       href="/start-here"
-                      className="text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+                      className="text-gray-600 transition-colors hover:text-primary-700 dark:text-gray-400 dark:hover:text-primary-400"
                     >
                       Getting Started
                     </Link>
@@ -479,7 +479,7 @@ export default async function ContentPage({ params }: PageProps) {
                   <li>
                     <Link
                       href="/advanced-topics/best-practices"
-                      className="text-gray-600 transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+                      className="text-gray-600 transition-colors hover:text-primary-700 dark:text-gray-400 dark:hover:text-primary-400"
                     >
                       Best Practices
                     </Link>

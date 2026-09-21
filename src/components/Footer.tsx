@@ -123,7 +123,7 @@ export default function Footer() {
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="group inline-flex items-center gap-2 text-sm text-ink-600 transition-colors hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
+                      className="group inline-flex items-center gap-2 text-sm text-ink-600 transition-colors hover:text-primary-700 dark:text-ink-300 dark:hover:text-primary-400"
                     >
                       <Icon className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                       <span>{link.name}</span>
@@ -147,7 +147,7 @@ export default function Footer() {
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group inline-flex items-center gap-1 text-sm text-ink-600 transition-colors hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
+                      className="group inline-flex items-center gap-1 text-sm text-ink-600 transition-colors hover:text-primary-700 dark:text-ink-300 dark:hover:text-primary-400"
                     >
                       <span>{link.name}</span>
                       <ExternalLink className="h-3 w-3 opacity-50" />
@@ -155,7 +155,7 @@ export default function Footer() {
                   ) : (
                     <Link
                       href={link.href}
-                      className="text-sm text-ink-600 transition-colors hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
+                      className="text-sm text-ink-600 transition-colors hover:text-primary-700 dark:text-ink-300 dark:hover:text-primary-400"
                     >
                       {link.name}
                     </Link>
@@ -177,7 +177,7 @@ export default function Footer() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-1 text-sm text-ink-600 transition-colors hover:text-primary-600 dark:text-ink-300 dark:hover:text-primary-400"
+                    className="group inline-flex items-center gap-1 text-sm text-ink-600 transition-colors hover:text-primary-700 dark:text-ink-300 dark:hover:text-primary-400"
                   >
                     <span>{link.name}</span>
                     <ExternalLink className="h-3 w-3 opacity-50" />
@@ -203,7 +203,7 @@ export default function Footer() {
                 href="https://opensource.org/licenses/MIT"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary-600 underline underline-offset-2 transition-colors hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
+                className="text-primary-700 underline underline-offset-2 transition-colors hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-300"
               >
                 MIT License
               </a>

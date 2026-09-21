@@ -104,7 +104,7 @@ export default function SocialShare({ title, url }: SocialShareProps) {
           className={`group flex h-10 w-10 items-center justify-center rounded-lg transition-all ${
             copied
               ? 'bg-green-500 text-white'
-              : 'bg-gray-100 text-gray-600 hover:bg-primary-500 hover:text-white dark:bg-gray-800 dark:text-gray-400'
+              : 'bg-gray-100 text-gray-600 hover:bg-primary-800 hover:text-white dark:bg-gray-800 dark:text-gray-400'
           }`}
           aria-label={copied ? 'Link copied!' : 'Copy link'}
         >
@@ -213,7 +213,7 @@ export function FloatingShareBar({
       {/* Main share button */}
       <button
         onClick={handleNativeShare}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-600 text-white shadow-xl transition-transform hover:scale-110"
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-700 text-white shadow-xl transition-transform hover:scale-110"
         aria-label="Share this article"
       >
         <svg

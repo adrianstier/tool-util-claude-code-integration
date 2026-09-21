@@ -296,7 +296,7 @@ export default function SearchModal({
                       <div
                         className={`flex h-8 w-8 items-center justify-center rounded-lg ${
                           isSelected
-                            ? 'bg-primary-100 text-primary-600 dark:bg-primary-800/50 dark:text-primary-400'
+                            ? 'bg-primary-100 text-primary-700 dark:bg-primary-800/50 dark:text-primary-400'
                             : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
                         }`}
                       >

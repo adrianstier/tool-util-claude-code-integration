@@ -203,7 +203,7 @@ their own file, referenced here, and loaded only when the task matches:
       <nav className="mb-8 flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
         <Link
           href="/"
-          className="hover:text-primary-600 dark:hover:text-primary-400"
+          className="hover:text-primary-700 dark:hover:text-primary-400"
         >
           Home
         </Link>
@@ -273,7 +273,10 @@ their own file, referenced here, and loaded only when the task matches:
 
             {/* Project Type */}
             <div>
-              <label htmlFor="cmd-projectType" className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="cmd-projectType"
+                className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-300"
+              >
                 Project Type *
               </label>
               <select
@@ -294,7 +297,10 @@ their own file, referenced here, and loaded only when the task matches:
 
             {/* Language */}
             <div>
-              <label htmlFor="cmd-language" className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="cmd-language"
+                className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-300"
+              >
                 Primary Language *
               </label>
               <select
@@ -319,7 +325,10 @@ their own file, referenced here, and loaded only when the task matches:
 
             {/* Framework */}
             <div>
-              <label htmlFor="cmd-framework" className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="cmd-framework"
+                className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-300"
+              >
                 Framework
               </label>
               <select
@@ -464,7 +473,7 @@ their own file, referenced here, and loaded only when the task matches:
                 </button>
                 <button
                   onClick={handleDownload}
-                  className="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700"
+                  className="rounded-lg bg-primary-700 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-800"
                 >
                   Download
                 </button>
@@ -491,30 +500,30 @@ their own file, referenced here, and loaded only when the task matches:
       {/* Tips */}
       <div className="mt-12 rounded-2xl border border-primary-200 bg-primary-50 p-8 dark:border-gray-700 dark:bg-gray-800">
         <div className="mb-4 flex items-center gap-2">
-          <Lightbulb className="h-6 w-6 text-primary-600 dark:text-primary-400" />
+          <Lightbulb className="h-6 w-6 text-primary-700 dark:text-primary-400" />
           <h3 className="text-xl font-bold text-gray-900 dark:text-white">
             Tips for a Great CLAUDE.md
           </h3>
         </div>
         <ul className="space-y-2 text-gray-700 dark:text-gray-300">
           <li className="flex items-start">
-            <CheckCircle2 className="mr-2 h-5 w-5 flex-shrink-0 text-primary-600 dark:text-primary-400" />
+            <CheckCircle2 className="mr-2 h-5 w-5 flex-shrink-0 text-primary-700 dark:text-primary-400" />
             <span>Be specific about your project structure and key files</span>
           </li>
           <li className="flex items-start">
-            <CheckCircle2 className="mr-2 h-5 w-5 flex-shrink-0 text-primary-600 dark:text-primary-400" />
+            <CheckCircle2 className="mr-2 h-5 w-5 flex-shrink-0 text-primary-700 dark:text-primary-400" />
             <span>Include coding conventions and style preferences</span>
           </li>
           <li className="flex items-start">
-            <CheckCircle2 className="mr-2 h-5 w-5 flex-shrink-0 text-primary-600 dark:text-primary-400" />
+            <CheckCircle2 className="mr-2 h-5 w-5 flex-shrink-0 text-primary-700 dark:text-primary-400" />
             <span>Mention testing approach and requirements</span>
           </li>
           <li className="flex items-start">
-            <CheckCircle2 className="mr-2 h-5 w-5 flex-shrink-0 text-primary-600 dark:text-primary-400" />
+            <CheckCircle2 className="mr-2 h-5 w-5 flex-shrink-0 text-primary-700 dark:text-primary-400" />
             <span>List files and directories to avoid modifying</span>
           </li>
           <li className="flex items-start">
-            <CheckCircle2 className="mr-2 h-5 w-5 flex-shrink-0 text-primary-600 dark:text-primary-400" />
+            <CheckCircle2 className="mr-2 h-5 w-5 flex-shrink-0 text-primary-700 dark:text-primary-400" />
             <span>Update CLAUDE.md as your project evolves</span>
           </li>
         </ul>
