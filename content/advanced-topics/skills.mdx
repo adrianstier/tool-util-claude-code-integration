@@ -3,12 +3,19 @@ title: 'Claude Code Skills'
 description: 'Create reusable workflows with just-in-time loading, bundled scripts, and automatic invocation'
 order: 3
 duration: '60 minutes'
-lastUpdated: "2026-03-25"
+lastUpdated: "2026-09-21"
 ---
 
 Skills are Claude Code's reusable workflow engine. Unlike `CLAUDE.md` (which loads into every session), skills load **just-in-time** — Claude sees only the name and description until a skill is needed, then loads the full instructions on demand. This keeps your context window clean while giving Claude access to dozens of capabilities.
 
 A skill can be as simple as a set of instructions or as powerful as a multi-file package with bundled scripts, templates, and reference docs.
+
+<VideoEmbed
+  id="bjdBVZa66oU"
+  title="What are skills?"
+  channel="Claude"
+  caption="Anthropic's own three-minute explanation of the just-in-time loading model described above."
+/>
 
 <Diagram title="How Skills Work" type="flowchart" caption="Skills load progressively — metadata first, full content only when needed">
 {`flowchart LR
