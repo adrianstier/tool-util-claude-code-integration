@@ -12,6 +12,7 @@ import {
   X,
   ChevronRight,
   Terminal,
+  Sparkles,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import SearchModal from './SearchModal'
@@ -29,6 +30,12 @@ const navigationItems: Array<{
     href: '/start-here',
     icon: Rocket,
     description: 'Begin your journey',
+  },
+  {
+    name: "What's New",
+    href: '/whats-new',
+    icon: Sparkles,
+    description: 'Recent Claude Code changes',
   },
   {
     name: 'Learning Tracks',

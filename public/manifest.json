@@ -9,7 +9,11 @@
   "orientation": "portrait-primary",
   "scope": "/",
   "lang": "en",
-  "categories": ["education", "developer tools", "productivity"],
+  "categories": [
+    "education",
+    "developer tools",
+    "productivity"
+  ],
   "icons": [
     {
       "src": "/icon-192.png",
@@ -29,35 +33,42 @@
       "type": "image/png"
     }
   ],
-  "screenshots": [
-    {
-      "src": "/screenshots/home.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "label": "Home page showing learning tracks"
-    }
-  ],
   "shortcuts": [
     {
       "name": "Start Here",
       "short_name": "Start",
       "description": "Begin your learning journey",
       "url": "/start-here",
-      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "Data Analysis",
       "short_name": "Data",
       "description": "Learn Python and R for data analysis",
       "url": "/data-analysis",
-      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "Git & GitHub",
       "short_name": "Git",
       "description": "Master version control",
       "url": "/git-github",
-      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ],
   "related_applications": [],

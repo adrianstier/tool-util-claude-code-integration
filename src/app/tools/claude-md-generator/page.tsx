@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Lightbulb, CheckCircle2 } from 'lucide-react'
+import { PRESETS } from '@/lib/claude-md-presets'
 
 interface ProjectConfig {
   projectName: string
@@ -140,6 +141,14 @@ ${
 
 ${config.specialInstructions || 'No special instructions.'}
 
+## Playbooks
+
+Keep this file short — it is read before every task. Long procedures belong in
+their own file, referenced here, and loaded only when the task matches:
+
+- Cutting a release → read \`.claude/playbooks/release.md\` first
+- <another long procedure> → read \`.claude/playbooks/<name>.md\` first
+
 ## Working with Claude Code
 
 ### Preferred Workflow
@@ -164,7 +173,7 @@ ${config.specialInstructions || 'No special instructions.'}
 
 ---
 
-*Generated with Claude Code Learning Hub - [https://your-site.com/tools/claude-md-generator](https://your-site.com/tools/claude-md-generator)*
+*Generated with [Claude Code Learning Hub](https://codewithclaude.net/tools/claude-md-generator)*
 `
 
     setGenerated(content)
@@ -214,6 +223,28 @@ ${config.specialInstructions || 'No special instructions.'}
           Claude Code understand your project structure, preferences, and
           workflows.
         </p>
+      </div>
+
+      {/* Start from a preset instead of a blank form. Each of these is also its
+          own page, so they are reachable from search rather than only from here. */}
+      <div className="mb-12 rounded-2xl border border-gray-100 bg-white p-6 dark:border-gray-700 dark:bg-gray-800">
+        <h2 className="mb-2 text-lg font-bold text-gray-900 dark:text-white">
+          Start from a template
+        </h2>
+        <p className="mb-4 text-gray-600 dark:text-gray-300">
+          Faster than a blank form if one of these is close to your project.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {PRESETS.map((preset) => (
+            <Link
+              key={preset.slug}
+              href={`/tools/claude-md-generator/${preset.slug}`}
+              className="rounded-lg border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:border-primary-400 hover:text-primary-700 dark:border-gray-600 dark:text-gray-200 dark:hover:border-primary-500 dark:hover:text-primary-400"
+            >
+              {preset.name}
+            </Link>
+          ))}
+        </div>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-2">

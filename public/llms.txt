@@ -76,6 +76,13 @@ Claude Code Learning Hub teaches developers and researchers how to:
 
 /resources - External resources and links
 
+## Reference Pages
+
+/whats-new - Recent Claude Code releases explained in plain English, with what each change means for your workflow
+/troubleshooting - Fixes for common Claude Code errors (MCP connection failures, servers not loading, terminal key bindings, PATH problems, context exhaustion)
+/compare - How Claude Code differs from Cursor, GitHub Copilot and Codex, and when to use each
+/glossary - Definitions for Claude Code, Git, VS Code and general programming terms
+
 ## Blog & Updates
 
 /blog - Latest tutorials, announcements, and tips
@@ -95,12 +102,10 @@ Claude Code Learning Hub teaches developers and researchers how to:
 - TypeScript
 - Tailwind CSS
 - MDX for content
-- Deployed on Render
 
 ## Contact
 
 Website: https://codewithclaude.net
-GitHub: https://github.com/anthropics/claude-code
 
 ## License
 

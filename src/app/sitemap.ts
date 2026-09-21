@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next'
 import { getAllTracks, getAllContent } from '@/lib/mdx'
 import { getAllBlogPosts } from '@/lib/blog'
 import { siteConfig } from '@/lib/metadata'
+import { PRESETS } from '@/lib/claude-md-presets'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url
@@ -58,6 +59,36 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/tools/snippets`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/tools/agent-or-workflow`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    ...PRESETS.map((preset) => ({
+      url: `${baseUrl}/tools/claude-md-generator/${preset.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
+    {
+      url: `${baseUrl}/whats-new`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/troubleshooting`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/compare`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
