@@ -68,6 +68,36 @@ const CATEGORY_STYLE: Record<Change['category'], string> = {
 
 const CHANGES: Change[] = [
   {
+    title: 'Opus 5.5 is the new default model',
+    category: 'models',
+    what: 'Claude Opus 5.5 shipped with a 1M-token context window, and replaced Sonnet as the default model on Pro and Team Standard plans (Max, Team Premium and Enterprise already defaulted to Opus).',
+    meaning:
+      'If you are on Pro or Team Standard, sessions now start on Opus instead of Sonnet by default -- more capable, but priced higher per token, so watch usage if you were relying on Sonnet cost. Switch back any time with /model.',
+  },
+  {
+    title: '/doctor prompt-audit flags stale prompting patterns',
+    category: 'extend',
+    what: 'A new /doctor prompt-audit (also /checkup prompt-audit) command scans your CLAUDE.md files, skills, agents and commands for prompting patterns written for older Claude models.',
+    meaning:
+      'If your CLAUDE.md or custom skills have accumulated workaround instructions over many months, this gives you a concrete list of what may no longer be needed instead of leaving you to guess which lines still earn their keep.',
+    href: '/advanced-topics/best-practices',
+    hrefLabel: 'Writing an effective CLAUDE.md',
+  },
+  {
+    title: '/insights estimates what auto mode would have caught',
+    category: 'safety',
+    what: '/insights now includes a recommendation showing how many permission prompts in your recent sessions auto mode could have resolved on its own.',
+    meaning:
+      'Instead of guessing whether auto mode fits how you work, you get a number pulled from your own session history before deciding to turn it on.',
+  },
+  {
+    title: 'attribution: false hides commit and PR credit lines',
+    category: 'config',
+    what: 'A new attribution: false setting in settings.json turns off the Co-Authored-By and Claude Code footer lines added to commits and pull requests, in one place.',
+    meaning:
+      'Teams that do not want AI attribution in git history get an official switch instead of a CLAUDE.md workaround. Older Claude Code versions ignore a settings file that holds this as a plain boolean, so check compatibility before rolling it out on a team running mixed versions.',
+  },
+  {
     title: 'AGENTS.md now works without a CLAUDE.md',
     category: 'config',
     what: 'Projects that use the cross-tool AGENTS.md convention are read directly, rather than needing a CLAUDE.md to exist first.',
@@ -151,13 +181,6 @@ const CHANGES: Change[] = [
     href: '/start-here/voice-and-remote',
     hrefLabel: 'Voice and remote control',
   },
-  {
-    title: 'A warning when memory runs critically low',
-    category: 'workflow',
-    what: 'Sessions now warn before memory exhaustion rather than failing without explanation.',
-    meaning:
-      'Long agentic runs on large repositories were the usual way to hit this. The warning gives you a chance to clear context before losing the session.',
-  },
 ]
 
 export default function WhatsNewPage() {
@@ -199,8 +222,8 @@ export default function WhatsNewPage() {
           </p>
 
           <p className="mt-4 text-sm text-ink-600 dark:text-ink-300">
-            Covering releases through <strong>2.1.278</strong> · last reviewed{' '}
-            <time dateTime="2026-09-21">21 September 2026</time> ·{' '}
+            Covering releases through <strong>2.1.283</strong> · last reviewed{' '}
+            <time dateTime="2026-09-28">28 September 2026</time> ·{' '}
             <a
               href="https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md"
               target="_blank"
